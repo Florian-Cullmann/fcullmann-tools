@@ -1,0 +1,117 @@
+{
+  "title": "Choose fcullmann.com's visual world",
+  "question": "This is a completely fresh hand. Choose a direction, steer the next re-roll, or take the quiet category-standard exit.",
+  "options": [
+    {
+      "id": "assigned",
+      "label": "Request Waterfall",
+      "kicker": "THE ROLL",
+      "lineage": "browser network inspectors, request waterfalls, and performance traces",
+      "thesis": "The homepage behaves like a live request trace: Florian's work enters, resolves, and becomes useful output along one precise timeline.",
+      "palette": ["#F6F7F4", "#14191F", "#2E6CF6", "#FF6B4A"],
+      "materials": ["performance trace", "timing ruler", "inspectable rows"],
+      "viewport": "A slim navigation and bold introduction occupy the left timing rail while a live formatter resolves across the main timeline; popular tools continue below as ranked, inspectable traces.",
+      "risk": "The native developer reference is immediately credible, but it must avoid looking like a DevTools skin pasted over a portfolio.",
+      "raised": [
+        {"from": "Torn flyer depth", "raise": "Earlier work remains visible as useful history instead of disappearing behind the newest item."},
+        {"from": "Nixie transitions", "raise": "Changing tool state receives one physically legible transition rather than generic loading chrome."},
+        {"from": "Multiplane focus", "raise": "The active task stays sharp while supporting biography and writing recede without vanishing."}
+      ],
+      "comp": ".impeccable/mocks/decision/request-waterfall.webp"
+    },
+    {
+      "id": "model-pick",
+      "label": "API Atlas",
+      "kicker": "IMPECCABLE’S PICK",
+      "lineage": "technical atlases, RFC diagrams, and field navigation charts",
+      "thesis": "A navigable atlas maps Florian's tools, projects, and writing as destinations in one practical software territory.",
+      "palette": ["#F3F0E7", "#13252C", "#EA4E32", "#5C86A6"],
+      "materials": ["folded map stock", "route notation", "reference coordinates"],
+      "viewport": "A clear professional statement anchors the map legend; one route opens into a live JSON tool while featured destinations and recent field notes remain visible around it.",
+      "risk": "Maps are a familiar information metaphor, so the live tool and route logic must carry more weight than decorative cartography.",
+      "comp": ".impeccable/mocks/decision/api-atlas.webp"
+    },
+    {
+      "id": "challenger-nixie",
+      "label": "Measured Output",
+      "verdict": "competitive",
+      "lineage": "nixie-tube laboratory counters and precision instrument panels",
+      "thesis": "Every tool is judged by visible output: characters formatted, bytes converted, and tasks completed become the interface's measured pulse.",
+      "palette": ["#17191C", "#FF7A1A", "#E8E3D8", "#6E7378"],
+      "materials": ["blackened steel", "glass envelopes", "engraved labels"],
+      "viewport": "Florian's concise introduction shares a dark instrument panel with a bright working formatter; popular tools read as calm output banks rather than marketing cards.",
+      "case": "It communicates precision and feedback strongly, but product breadth survives only if glowing counters stay secondary to readable tools and articles.",
+      "risk": "Too much warm glow would turn a professional site into retro-futurist theater.",
+      "comp": ".impeccable/mocks/decision/measured-output.webp",
+      "hero": "https://impeccable.style/worlds/cards/signals-instruments-nixie-laboratory-counter-hero.webp",
+      "board": "https://impeccable.style/worlds/cards/signals-instruments-nixie-laboratory-counter.webp"
+    },
+    {
+      "id": "challenger-algorave",
+      "label": "Live Source",
+      "verdict": "competitive",
+      "lineage": "algorave source projections and live-coded visual systems",
+      "thesis": "The source is the stage: visitors edit a real value immediately and watch the site explain Florian's practice through the result.",
+      "palette": ["#111213", "#8BFF80", "#FF4FA3", "#F1EEE6"],
+      "materials": ["projected source", "cycle cursor", "synchronized output"],
+      "viewport": "An oversized live code buffer carries the first interaction while Florian's identity, featured tools, and writing lock to its execution rhythm.",
+      "case": "The live mechanism earns developer attention and makes utility undeniable; broader visitors need a disciplined reading layer outside the source stage.",
+      "risk": "Without editorial restraint it can resemble the terminal aesthetic the category already overuses.",
+      "comp": ".impeccable/mocks/decision/live-source.webp",
+      "hero": "https://impeccable.style/worlds/cards/medium-native-algorave-source-floor-hero.webp",
+      "board": "https://impeccable.style/worlds/cards/medium-native-algorave-source-floor.webp"
+    },
+    {
+      "id": "challenger-flyer",
+      "label": "Working Layers",
+      "verdict": "declined",
+      "lineage": "torn photocopied flyer walls",
+      "thesis": "New tools layer over an honest archive of shipped work, with older releases always recoverable beneath.",
+      "palette": ["#111111", "#F5FF4E", "#FF5F8E", "#7CE5DE"],
+      "materials": ["fluorescent stock", "photocopy toner", "stapled layers"],
+      "viewport": "The newest tool occupies a crisp top sheet while visitors peel back releases, projects, and articles underneath.",
+      "case": "The chronological layering is strong, but torn-paper interaction conflicts with the calm reliability expected of everyday utilities.",
+      "kept": "The archive must remain tangible when new work ships.",
+      "risk": "Visual noise and distressed material would overwhelm scanning."
+    },
+    {
+      "id": "challenger-catalog",
+      "label": "Tool Cast",
+      "verdict": "declined",
+      "lineage": "ranked character-goods catalogues",
+      "thesis": "Each tool has a distinct personality and live popularity rank inside a growing roster.",
+      "palette": ["#FFF9F2", "#34313A", "#F29AB2", "#75C8B4"],
+      "materials": ["pastel catalogue stock", "name plates", "rank ribbons"],
+      "viewport": "A friendly ranked roster follows Florian's introduction, with every tool carrying a concise character-like profile.",
+      "case": "Ranking maps cleanly to usage, but mascots weaken senior professional positioning and create a costly illustration dependency.",
+      "kept": "A large catalogue needs distinct, memorable identities without losing consistency.",
+      "risk": "It would feel playful where the brief calls for composed technical authority."
+    },
+    {
+      "id": "challenger-cel",
+      "label": "Layered Depth",
+      "verdict": "declined",
+      "lineage": "multiplane cel animation and rack-focus cinematography",
+      "thesis": "Biography, tools, and writing occupy separate planes that come into focus as visitors move through the site.",
+      "palette": ["#263A35", "#A9BCC1", "#F3B45E", "#EEE8DC"],
+      "materials": ["painted planes", "mist depth", "focus glass"],
+      "viewport": "The interface travels through layered professional work, bringing one working tool into sharp focus against quieter context.",
+      "case": "The focus model is useful, but painted scenery has little authentic connection to software utilities and raises performance cost.",
+      "kept": "Attention should shift deliberately between the active task and contextual content.",
+      "risk": "Cinematic atmosphere would make the tool collection feel indirect."
+    }
+  ],
+  "reroll": {"registers": ["safer", "bolder"]},
+  "buildPath": {"value": "comp", "toggle": true},
+  "canon": true,
+  "canonCard": {
+    "label": "The category standard",
+    "thesis": "A polished developer portfolio with a conventional hero, tool cards, article list, and restrained blue accents.",
+    "palette": ["#FFFFFF", "#12213A", "#2563EB", "#E9EEF5"],
+    "materials": ["clean interface grid", "soft neutral panels"],
+    "viewport": "A centered navigation sits above a two-column introduction, followed by a uniform row of featured tools.",
+    "risk": "Immediately legible, but intentionally close to the Bootstrap-like pattern the brief asks to move beyond.",
+    "comp": ".impeccable/mocks/decision/category-standard.webp"
+  },
+  "steer": true
+}

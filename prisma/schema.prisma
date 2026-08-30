@@ -1,0 +1,96 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../lib/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum PublicationStatus {
+  DRAFT
+  SCHEDULED
+  PUBLISHED
+  ARCHIVED
+}
+
+enum ToolStatus {
+  DRAFT
+  PUBLISHED
+  ARCHIVED
+}
+
+model Tool {
+  id            String     @id @default(cuid())
+  slug          String     @unique
+  nameEn        String
+  nameDe        String
+  summaryEn     String
+  summaryDe     String
+  descriptionEn String
+  descriptionDe String
+  category      String
+  icon          String
+  status        ToolStatus @default(DRAFT)
+  featured      Boolean    @default(false)
+  sortOrder     Int        @default(0)
+  usageCount    BigInt     @default(0)
+  createdAt     DateTime   @default(now())
+  updatedAt     DateTime   @updatedAt
+  usageEvents   ToolUsage[]
+
+  @@index([status, usageCount])
+  @@index([category, sortOrder])
+}
+
+model ToolUsage {
+  id        String   @id @default(cuid())
+  toolId    String
+  sessionId String?
+  createdAt DateTime @default(now())
+  tool      Tool     @relation(fields: [toolId], references: [id], onDelete: Cascade)
+
+  @@index([toolId, createdAt])
+}
+
+model Article {
+  id            String            @id @default(cuid())
+  slug          String            @unique
+  titleEn       String
+  titleDe       String
+  excerptEn     String
+  excerptDe     String
+  contentEn     String            @db.Text
+  contentDe     String            @db.Text
+  seoTitleEn    String?
+  seoTitleDe    String?
+  seoDescriptionEn String?
+  seoDescriptionDe String?
+  status        PublicationStatus @default(DRAFT)
+  publishedAt   DateTime?
+  createdAt     DateTime          @default(now())
+  updatedAt     DateTime          @updatedAt
+
+  @@index([status, publishedAt])
+}
+
+model Project {
+  id            String            @id @default(cuid())
+  slug          String            @unique
+  title         String
+  summaryEn     String
+  summaryDe     String
+  descriptionEn String            @db.Text
+  descriptionDe String            @db.Text
+  url           String?
+  repositoryUrl String?
+  technologies  String[]
+  status        PublicationStatus @default(DRAFT)
+  featured      Boolean           @default(false)
+  sortOrder     Int               @default(0)
+  publishedAt   DateTime?
+  createdAt     DateTime          @default(now())
+  updatedAt     DateTime          @updatedAt
+
+  @@index([status, featured, sortOrder])
+}

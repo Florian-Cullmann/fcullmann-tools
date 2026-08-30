@@ -60,6 +60,42 @@ export const demoTools: ToolRecord[] = [
     usageCount: 0,
   },
   {
+    id: "demo-pdf-to-jpg",
+    slug: "pdf-to-jpg",
+    name: { en: "PDF to JPG", de: "PDF in JPG" },
+    summary: {
+      en: "Extract embedded images or convert every PDF page to JPG.",
+      de: "Alle Bilder aus einer PDF-Datei extrahieren oder jede Seite in ein JPG-Bild konvertieren.",
+    },
+    description: {
+      en: "Render every PDF page as a high-quality JPG or export embedded raster images directly in your browser without uploading the document.",
+      de: "Jede PDF-Seite als hochwertiges JPG rendern oder eingebettete Rasterbilder direkt im Browser exportieren, ohne das Dokument hochzuladen.",
+    },
+    category: "documents",
+    icon: "pdf-image",
+    featured: true,
+    sortOrder: 3,
+    usageCount: 0,
+  },
+  {
+    id: "demo-jpg-to-pdf",
+    slug: "jpg-to-pdf",
+    name: { en: "JPG to PDF", de: "JPG in PDF" },
+    summary: {
+      en: "Convert images to PDF and adjust orientation and margins.",
+      de: "Konvertieren Sie Ihre Bilder in PDFs. Passen Sie dabei die Ausrichtung und die Ränder an.",
+    },
+    description: {
+      en: "Arrange JPG images, choose page size, orientation, and margins, and create one downloadable PDF locally in your browser.",
+      de: "JPG-Bilder sortieren, Seitengröße, Ausrichtung und Ränder festlegen und lokal im Browser eine herunterladbare PDF erstellen.",
+    },
+    category: "documents",
+    icon: "image-pdf",
+    featured: true,
+    sortOrder: 4,
+    usageCount: 0,
+  },
+  {
     id: "demo-excel-to-csv",
     slug: "excel-to-csv",
     name: { en: "Excel to CSV", de: "Excel zu CSV" },

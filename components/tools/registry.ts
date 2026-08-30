@@ -1,9 +1,11 @@
 import { createElement, type ComponentType, type ReactElement } from "react";
 import { ExcelToCsv } from "@/components/tools/excel-to-csv";
+import { JpgToPdf } from "@/components/tools/jpg-to-pdf";
 import { JsonFormatter } from "@/components/tools/json-formatter";
 import { PdfCompress } from "@/components/tools/pdf-compress";
 import { PdfMerge } from "@/components/tools/pdf-merge";
 import { PdfSplit } from "@/components/tools/pdf-split";
+import { PdfToJpg } from "@/components/tools/pdf-to-jpg";
 import { WordToPdf } from "@/components/tools/word-to-pdf";
 import {
   Base64Tool,
@@ -28,6 +30,8 @@ const toolWorkspaceRegistry = {
   "pdf-compress": PdfCompress,
   "pdf-merge": PdfMerge,
   "pdf-split": PdfSplit,
+  "pdf-to-jpg": PdfToJpg,
+  "jpg-to-pdf": JpgToPdf,
   "json-formatter": JsonFormatter,
   base64: Base64Tool,
   "uuid-generator": UuidTool,

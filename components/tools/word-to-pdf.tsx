@@ -17,6 +17,7 @@ import {
   getWordFormat,
   isWordFile,
   MAX_WORD_BYTES,
+  MAX_WORD_PAGES,
   renderDocxPreview,
   wordBaseName,
   type WordFormat,
@@ -137,6 +138,9 @@ export function WordToPdf({ locale }: { locale: Locale }) {
             sourceFile,
             docxPreviewRef.current,
           );
+          if (pages.length > MAX_WORD_PAGES) {
+            throw new Error("TOO_MANY_WORD_PAGES");
+          }
           if (!cancelled && currentPreparation === preparationId.current) {
             setPreviewPageCount(pages.length);
           }
@@ -144,16 +148,26 @@ export function WordToPdf({ locale }: { locale: Locale }) {
           const pages = await extractLegacyWordPages(
             await sourceFile.arrayBuffer(),
           );
+          if (pages.length > MAX_WORD_PAGES) {
+            throw new Error("TOO_MANY_WORD_PAGES");
+          }
           if (!cancelled && currentPreparation === preparationId.current) {
             setLegacyPages(pages);
             setPreviewPageCount(pages.length);
           }
         }
-      } catch {
+      } catch (reason) {
         if (!cancelled && currentPreparation === preparationId.current) {
+          if (docxPreviewRef.current) {
+            docxPreviewRef.current.replaceChildren();
+          }
           setFile(null);
           setFormat(null);
-          setError(copy.readError);
+          setError(
+            reason instanceof Error && reason.message === "TOO_MANY_WORD_PAGES"
+              ? copy.tooManyPages
+              : copy.readError,
+          );
         }
       } finally {
         if (!cancelled && currentPreparation === preparationId.current) {
@@ -166,7 +180,7 @@ export function WordToPdf({ locale }: { locale: Locale }) {
     return () => {
       cancelled = true;
     };
-  }, [file, format, copy.readError]);
+  }, [file, format, copy.readError, copy.tooManyPages]);
 
   function discardResult() {
     if (resultUrl.current) URL.revokeObjectURL(resultUrl.current);
@@ -187,6 +201,9 @@ export function WordToPdf({ locale }: { locale: Locale }) {
 
     discardResult();
     setError(null);
+    setIsReading(true);
+    setLegacyPages(null);
+    setPreviewPageCount(0);
     setFile(nextFile);
     setFormat(nextFormat);
   }
@@ -358,7 +375,12 @@ export function WordToPdf({ locale }: { locale: Locale }) {
                 {copy.legacyNotice}
               </p>
             )}
-            <div className="word-preview__viewport" tabIndex={0}>
+            <div
+              className="word-preview__viewport"
+              role="region"
+              aria-labelledby="word-preview-title"
+              tabIndex={0}
+            >
               {format === "docx" ? (
                 <div className="word-docx-preview" ref={docxPreviewRef} />
               ) : (

@@ -88,6 +88,12 @@ for (const viewport of [
     await page.locator(".office-file-summary small").textContent(),
     /DOCX · 1 page/,
   );
+  const previewViewport = page.locator(".word-preview__viewport");
+  assert.equal(await previewViewport.getAttribute("role"), "region");
+  assert.equal(
+    await previewViewport.getAttribute("aria-labelledby"),
+    "word-preview-title",
+  );
   const dimensions = await page.evaluate(() => ({
     width: document.documentElement.scrollWidth,
     viewport: window.innerWidth,

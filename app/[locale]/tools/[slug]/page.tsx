@@ -3,17 +3,9 @@ import Link from "next/link";
 import { ArrowLeft, LockKeyhole } from "lucide-react";
 import { notFound } from "next/navigation";
 import {
-  Base64Tool,
-  CaseConverterTool,
-  ColorConverterTool,
-  HashGeneratorTool,
-  SlugGeneratorTool,
-  TimestampConverterTool,
-  UrlCodecTool,
-  UuidTool,
-  WordCounterTool,
-} from "@/components/tools/simple-tools";
-import { JsonFormatter } from "@/components/tools/json-formatter";
+  hasToolWorkspace,
+  renderToolWorkspace,
+} from "@/components/tools/registry";
 import { getTool, getTools } from "@/lib/content/repository";
 import { isLocale } from "@/lib/i18n/config";
 import { getMessages } from "@/lib/i18n/messages";
@@ -22,7 +14,9 @@ import { jsonLd, localizedAlternates } from "@/lib/seo";
 export async function generateStaticParams() {
   const tools = await getTools();
   return ["en", "de"].flatMap((locale) =>
-    tools.map((tool) => ({ locale, slug: tool.slug })),
+    tools
+      .filter((tool) => hasToolWorkspace(tool.slug))
+      .map((tool) => ({ locale, slug: tool.slug })),
   );
 }
 
@@ -48,28 +42,7 @@ export default async function ToolPage({
   const tool = await getTool(slug);
   if (!tool) notFound();
   const messages = getMessages(locale).tools;
-  const workspace =
-    slug === "json-formatter" ? (
-      <JsonFormatter locale={locale} />
-    ) : slug === "base64" ? (
-      <Base64Tool locale={locale} />
-    ) : slug === "uuid-generator" ? (
-      <UuidTool locale={locale} />
-    ) : slug === "url-encoder" ? (
-      <UrlCodecTool locale={locale} />
-    ) : slug === "hash-generator" ? (
-      <HashGeneratorTool locale={locale} />
-    ) : slug === "timestamp-converter" ? (
-      <TimestampConverterTool locale={locale} />
-    ) : slug === "case-converter" ? (
-      <CaseConverterTool locale={locale} />
-    ) : slug === "color-converter" ? (
-      <ColorConverterTool locale={locale} />
-    ) : slug === "word-counter" ? (
-      <WordCounterTool locale={locale} />
-    ) : slug === "slug-generator" ? (
-      <SlugGeneratorTool locale={locale} />
-    ) : null;
+  const workspace = renderToolWorkspace(slug, { locale });
   if (!workspace) notFound();
 
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://fcullmann.com";

@@ -1,6 +1,7 @@
 import { createElement, type ComponentType, type ReactElement } from "react";
 import { JsonFormatter } from "@/components/tools/json-formatter";
 import { PdfMerge } from "@/components/tools/pdf-merge";
+import { PdfSplit } from "@/components/tools/pdf-split";
 import {
   Base64Tool,
   CaseConverterTool,
@@ -20,6 +21,7 @@ export type ToolWorkspaceProps = Readonly<{
 
 const toolWorkspaceRegistry = {
   "pdf-merge": PdfMerge,
+  "pdf-split": PdfSplit,
   "json-formatter": JsonFormatter,
   base64: Base64Tool,
   "uuid-generator": UuidTool,

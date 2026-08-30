@@ -12,11 +12,16 @@ import {
   X,
 } from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
+import {
+  formatFileSize,
+  isPdfFile,
+  MAX_PDF_BYTES,
+} from "@/components/tools/pdf-utils";
 import type { Locale } from "@/lib/content/types";
 import { getPdfPageCount, mergePdfDocuments } from "@/lib/tools/pdf";
 
 const MAX_FILES = 20;
-const MAX_TOTAL_BYTES = 200 * 1024 * 1024;
+const MAX_TOTAL_BYTES = MAX_PDF_BYTES * 2;
 
 type PdfFile = {
   id: string;
@@ -29,26 +34,6 @@ type MergeResult = {
   size: number;
   pageCount: number;
 };
-
-function isPdf(file: File) {
-  return (
-    file.type === "application/pdf" || file.name.toLowerCase().endsWith(".pdf")
-  );
-}
-
-function formatBytes(bytes: number, locale: Locale) {
-  if (bytes < 1024) return `${bytes} B`;
-  const units = ["KB", "MB", "GB"];
-  let value = bytes / 1024;
-  let unit = units[0];
-
-  for (let index = 1; value >= 1024 && index < units.length; index += 1) {
-    value /= 1024;
-    unit = units[index];
-  }
-
-  return `${new Intl.NumberFormat(locale, { maximumFractionDigits: 1 }).format(value)} ${unit}`;
-}
 
 export function PdfMerge({ locale }: { locale: Locale }) {
   const copy =
@@ -147,7 +132,7 @@ export function PdfMerge({ locale }: { locale: Locale }) {
     if (isAdding || isMerging) return;
     const selected = Array.from(incoming);
     if (!selected.length) return;
-    if (selected.some((file) => !isPdf(file))) {
+    if (selected.some((file) => !isPdfFile(file))) {
       setError(copy.invalidType);
       return;
     }
@@ -229,8 +214,8 @@ export function PdfMerge({ locale }: { locale: Locale }) {
   const busy = isAdding || isMerging;
 
   return (
-    <section className="pdf-merge" aria-labelledby="pdf-merge-title">
-      <header className="pdf-merge__header">
+    <section className="pdf-workspace" aria-labelledby="pdf-merge-title">
+      <header className="pdf-workspace__header">
         <div>
           <h2 id="pdf-merge-title">{copy.title}</h2>
           <p>{copy.intro}</p>
@@ -275,7 +260,7 @@ export function PdfMerge({ locale }: { locale: Locale }) {
           aria-disabled={busy}
         >
           {isAdding ? (
-            <LoaderCircle className="pdf-merge__spinner" aria-hidden="true" />
+            <LoaderCircle className="pdf-workspace__spinner" aria-hidden="true" />
           ) : (
             <FilePlus2 aria-hidden="true" size={28} />
           )}
@@ -296,7 +281,7 @@ export function PdfMerge({ locale }: { locale: Locale }) {
       )}
 
       {error && (
-        <p className="pdf-merge__error" role="alert">
+        <p className="pdf-workspace__error" role="alert">
           <X aria-hidden="true" size={17} />
           {error}
         </p>
@@ -312,7 +297,7 @@ export function PdfMerge({ locale }: { locale: Locale }) {
               <span className="pdf-file__details">
                 <strong title={item.file.name}>{item.file.name}</strong>
                 <small>
-                  {copy.pages(item.pageCount)} · {formatBytes(item.file.size, locale)}
+                  {copy.pages(item.pageCount)} · {formatFileSize(item.file.size, locale)}
                 </small>
               </span>
               <span className="pdf-file__actions">
@@ -354,11 +339,11 @@ export function PdfMerge({ locale }: { locale: Locale }) {
       )}
 
       {result && (
-        <div className="pdf-merge__result" role="status">
+        <div className="pdf-workspace__result" role="status">
           <CheckCircle2 aria-hidden="true" size={20} />
           <span>
             <strong>{copy.ready(result.pageCount)}</strong>
-            <small>{formatBytes(result.size, locale)}</small>
+            <small>{formatFileSize(result.size, locale)}</small>
           </span>
           <a href={result.url} download="merged.pdf">
             <Download aria-hidden="true" size={17} />
@@ -367,7 +352,7 @@ export function PdfMerge({ locale }: { locale: Locale }) {
         </div>
       )}
 
-      <footer className="pdf-merge__footer">
+      <footer className="pdf-workspace__footer">
         <p aria-live="polite">
           {files.length > 0
             ? copy.selected(files.length, totalPages)
@@ -393,7 +378,7 @@ export function PdfMerge({ locale }: { locale: Locale }) {
             >
               {isMerging ? (
                 <LoaderCircle
-                  className="pdf-merge__spinner"
+                  className="pdf-workspace__spinner"
                   aria-hidden="true"
                   size={17}
                 />

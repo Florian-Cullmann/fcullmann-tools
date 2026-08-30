@@ -24,6 +24,24 @@ export const demoTools: ToolRecord[] = [
     usageCount: 0,
   },
   {
+    id: "demo-pdf-split",
+    slug: "pdf-split",
+    name: { en: "PDF Split", de: "PDF teilen" },
+    summary: {
+      en: "Split one PDF into clearly defined page ranges.",
+      de: "Eine PDF an festgelegten Seiten in mehrere Dateien teilen.",
+    },
+    description: {
+      en: "Choose split points, preview every output range, and download the resulting PDF files as a ZIP archive without uploading the document.",
+      de: "Trennstellen festlegen, alle Ausgabebereiche prüfen und die erzeugten PDF-Dateien ohne Upload als ZIP-Archiv herunterladen.",
+    },
+    category: "documents",
+    icon: "scissors",
+    featured: true,
+    sortOrder: 1,
+    usageCount: 0,
+  },
+  {
     id: "demo-json-formatter",
     slug: "json-formatter",
     name: { en: "JSON Formatter", de: "JSON-Formatierer" },
@@ -38,7 +56,7 @@ export const demoTools: ToolRecord[] = [
     category: "formatters",
     icon: "braces",
     featured: true,
-    sortOrder: 1,
+    sortOrder: 2,
     usageCount: 0,
   },
   {
@@ -56,7 +74,7 @@ export const demoTools: ToolRecord[] = [
     category: "encoders",
     icon: "binary",
     featured: true,
-    sortOrder: 2,
+    sortOrder: 3,
     usageCount: 0,
   },
   {
@@ -74,7 +92,7 @@ export const demoTools: ToolRecord[] = [
     category: "generators",
     icon: "fingerprint",
     featured: true,
-    sortOrder: 3,
+    sortOrder: 4,
     usageCount: 0,
   },
   {
@@ -92,7 +110,7 @@ export const demoTools: ToolRecord[] = [
     category: "encoders",
     icon: "link",
     featured: false,
-    sortOrder: 4,
+    sortOrder: 5,
     usageCount: 0,
   },
   {
@@ -110,7 +128,7 @@ export const demoTools: ToolRecord[] = [
     category: "generators",
     icon: "hash",
     featured: true,
-    sortOrder: 5,
+    sortOrder: 6,
     usageCount: 0,
   },
   {
@@ -128,7 +146,7 @@ export const demoTools: ToolRecord[] = [
     category: "converters",
     icon: "clock",
     featured: true,
-    sortOrder: 6,
+    sortOrder: 7,
     usageCount: 0,
   },
   {
@@ -146,7 +164,7 @@ export const demoTools: ToolRecord[] = [
     category: "formatters",
     icon: "case",
     featured: false,
-    sortOrder: 7,
+    sortOrder: 8,
     usageCount: 0,
   },
   {
@@ -164,7 +182,7 @@ export const demoTools: ToolRecord[] = [
     category: "converters",
     icon: "palette",
     featured: false,
-    sortOrder: 8,
+    sortOrder: 9,
     usageCount: 0,
   },
   {
@@ -182,7 +200,7 @@ export const demoTools: ToolRecord[] = [
     category: "text",
     icon: "list",
     featured: false,
-    sortOrder: 9,
+    sortOrder: 10,
     usageCount: 0,
   },
   {
@@ -200,7 +218,7 @@ export const demoTools: ToolRecord[] = [
     category: "generators",
     icon: "wand",
     featured: false,
-    sortOrder: 10,
+    sortOrder: 11,
     usageCount: 0,
   },
 ];

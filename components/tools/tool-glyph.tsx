@@ -9,12 +9,14 @@ import {
   Link as LinkIcon,
   ListOrdered,
   Palette,
+  Scissors,
   WandSparkles,
   Wrench,
 } from "lucide-react";
 
 const glyphs = {
   files: Files,
+  scissors: Scissors,
   braces: Braces,
   binary: Binary,
   fingerprint: Fingerprint,

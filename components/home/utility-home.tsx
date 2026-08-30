@@ -202,8 +202,8 @@ export function UtilityHome({
                   </strong>
                   <small>
                     {locale === "de"
-                      ? "Teilen, komprimieren und konvertieren."
-                      : "Split, compress, and convert documents."}
+                      ? "Komprimieren und konvertieren."
+                      : "Compress and convert documents."}
                   </small>
                 </span>
                 <span className="planned-label">

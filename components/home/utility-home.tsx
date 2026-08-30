@@ -39,7 +39,10 @@ function ToolCard({
   tool: ToolRecord;
   compact?: boolean;
 }) {
-  const tone = categoryColors[tool.category] ?? "blue";
+  const tone =
+    tool.icon === "word-pdf"
+      ? "blue"
+      : (categoryColors[tool.category] ?? "blue");
   return (
     <Link
       className={`utility-card ${compact ? "utility-card--compact" : ""}`}
@@ -239,8 +242,8 @@ export function UtilityHome({
                 <h2 id="office-tools-title">Office Tools</h2>
                 <p>
                   {locale === "de"
-                    ? "Excel-Dateien direkt im Browser konvertieren, ohne Upload."
-                    : "Convert Excel files directly in your browser, without uploads."}
+                    ? "Office-Dateien direkt im Browser konvertieren, ohne Upload."
+                    : "Convert Office files directly in your browser, without uploads."}
                 </p>
               </div>
             </div>

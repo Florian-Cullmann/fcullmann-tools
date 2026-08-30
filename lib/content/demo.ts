@@ -78,6 +78,24 @@ export const demoTools: ToolRecord[] = [
     usageCount: 0,
   },
   {
+    id: "demo-word-to-pdf",
+    slug: "word-to-pdf",
+    name: { en: "Word to PDF", de: "Word in PDF" },
+    summary: {
+      en: "Convert DOC and DOCX files into easy-to-share PDFs.",
+      de: "Machen Sie DOC- und DOCX-Dateien einfacher lesbar, indem Sie sie in PDFs umwandeln.",
+    },
+    description: {
+      en: "Convert DOC and DOCX documents into PDF files directly in your browser. DOCX layouts are retained where possible, while older DOC files become clean text documents.",
+      de: "DOC- und DOCX-Dokumente direkt im Browser in PDF-Dateien umwandeln. DOCX-Layouts werden bestmöglich erhalten; ältere DOC-Dateien werden als übersichtliches Textdokument ausgegeben.",
+    },
+    category: "office",
+    icon: "word-pdf",
+    featured: false,
+    sortOrder: 3,
+    usageCount: 0,
+  },
+  {
     id: "demo-json-formatter",
     slug: "json-formatter",
     name: { en: "JSON Formatter", de: "JSON-Formatierer" },

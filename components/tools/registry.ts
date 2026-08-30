@@ -4,6 +4,7 @@ import { JsonFormatter } from "@/components/tools/json-formatter";
 import { PdfCompress } from "@/components/tools/pdf-compress";
 import { PdfMerge } from "@/components/tools/pdf-merge";
 import { PdfSplit } from "@/components/tools/pdf-split";
+import { WordToPdf } from "@/components/tools/word-to-pdf";
 import {
   Base64Tool,
   CaseConverterTool,
@@ -23,6 +24,7 @@ export type ToolWorkspaceProps = Readonly<{
 
 const toolWorkspaceRegistry = {
   "excel-to-csv": ExcelToCsv,
+  "word-to-pdf": WordToPdf,
   "pdf-compress": PdfCompress,
   "pdf-merge": PdfMerge,
   "pdf-split": PdfSplit,

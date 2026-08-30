@@ -103,6 +103,7 @@ export function ToolEditor({ tool }: { tool?: ToolEditorValue }) {
               <option value="braces">Braces</option>
               <option value="pdf">PDF document</option>
               <option value="spreadsheet">Spreadsheet</option>
+              <option value="word-pdf">Word to PDF</option>
               <option value="binary">Binary</option>
               <option value="fingerprint">Fingerprint</option>
               <option value="link">Link</option>

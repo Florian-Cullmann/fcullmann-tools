@@ -32,7 +32,6 @@ const messages = {
       search: "Search tools",
       noResults: "No tools match this search.",
       open: "Open tool",
-      privacy: "Runs locally in your browser",
     },
     articles: {
       title: "Field notes",
@@ -98,7 +97,6 @@ const messages = {
       search: "Tools durchsuchen",
       noResults: "Keine passenden Tools gefunden.",
       open: "Tool öffnen",
-      privacy: "Läuft lokal in deinem Browser",
     },
     articles: {
       title: "Notizen aus der Praxis",

@@ -748,10 +748,6 @@ button {
   color: var(--coral-dark);
 }
 .tool-page__heading {
-  display: flex;
-  align-items: end;
-  justify-content: space-between;
-  gap: 32px;
   margin-bottom: 28px;
 }
 .tool-page__heading > div {
@@ -767,19 +763,6 @@ button {
   text-transform: uppercase;
   letter-spacing: 0.045em;
 }
-.privacy-note {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 9px 11px;
-  color: var(--success);
-  background: var(--green-soft);
-  border-radius: 9px;
-  font-size: 0.75rem;
-  font-weight: 700;
-  white-space: nowrap;
-}
-
 .formatter,
 .standalone-tool {
   border: 1px solid var(--line);
@@ -801,11 +784,6 @@ button {
 .standalone-tool__header h2 {
   margin: 0;
   font-size: 0.96rem;
-}
-.standalone-tool__header span {
-  color: var(--success);
-  font-size: 0.72rem;
-  font-weight: 700;
 }
 .status {
   display: inline-flex;
@@ -1538,13 +1516,6 @@ button {
     min-height: 0;
     padding-top: 40px;
     padding-bottom: 60px;
-  }
-  .tool-page__heading {
-    display: grid;
-    align-items: start;
-  }
-  .privacy-note {
-    width: max-content;
   }
   .formatter__panes,
   .standalone-tool__grid {

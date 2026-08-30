@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ArrowLeft, LockKeyhole } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 import { notFound } from "next/navigation";
 import {
   hasToolWorkspace,
@@ -75,10 +75,6 @@ export default async function ToolPage({
             <h1>{tool.name[locale]}</h1>
             <p>{tool.description[locale]}</p>
           </div>
-          <span className="privacy-note">
-            <LockKeyhole size={18} />
-            {messages.privacy}
-          </span>
         </header>
         {workspace}
       </div>

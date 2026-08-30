@@ -47,9 +47,6 @@ function ToolFrame({
     <section className="standalone-tool" aria-labelledby="tool-workspace-title">
       <div className="standalone-tool__header">
         <h2 id="tool-workspace-title">{title}</h2>
-        <span>
-          {locale === "de" ? "Lokal verarbeitet" : "Processed locally"}
-        </span>
       </div>
       <div className="standalone-tool__grid">
         <label>

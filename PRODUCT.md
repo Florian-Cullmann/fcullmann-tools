@@ -48,6 +48,7 @@ Visitors arrive through search, direct links, shared tool URLs, articles, or Flo
 - The supplied mockup is a structural reference only: professional introduction first, popular tools immediately below, followed by broader catalogue and editorial material.
 - The final visual system should feel more contemporary and bespoke than a Bootstrap-style card interface.
 - Voice should be direct, useful, technically credible, and free of inflated marketing language.
+- The public visual system follows the familiar light utility-platform category standard: compact navigation, concise personal context, prominent search and category controls, and a dense card catalogue. iLovePDF is the sole craft reference; its branding and exact layout are not to be copied.
 
 ## Evidence on Hand
 

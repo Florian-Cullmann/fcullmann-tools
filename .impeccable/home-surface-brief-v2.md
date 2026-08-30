@@ -1,17 +1,3 @@
----
-version: 1
-slug: "app-locale-page-tsx"
-primary_target: "app/[locale]/page.tsx"
-related_targets:
-  [
-    "components/home/utility-home.tsx",
-    "components/tools/tool-catalog.tsx",
-    "app/globals.css",
-    "components/layout/site-header.tsx",
-    "components/layout/site-footer.tsx",
-  ]
----
-
 # Public home
 
 - Scope: localized public homepage at `/en` and `/de`; mode: Persuade with a direct Operate path into the catalogue.

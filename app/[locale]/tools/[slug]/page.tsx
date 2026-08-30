@@ -4,8 +4,14 @@ import { ArrowLeft, LockKeyhole } from "lucide-react";
 import { notFound } from "next/navigation";
 import {
   Base64Tool,
+  CaseConverterTool,
+  ColorConverterTool,
+  HashGeneratorTool,
+  SlugGeneratorTool,
+  TimestampConverterTool,
   UrlCodecTool,
   UuidTool,
+  WordCounterTool,
 } from "@/components/tools/simple-tools";
 import { JsonFormatter } from "@/components/tools/json-formatter";
 import { getTool, getTools } from "@/lib/content/repository";
@@ -51,6 +57,18 @@ export default async function ToolPage({
       <UuidTool locale={locale} />
     ) : slug === "url-encoder" ? (
       <UrlCodecTool locale={locale} />
+    ) : slug === "hash-generator" ? (
+      <HashGeneratorTool locale={locale} />
+    ) : slug === "timestamp-converter" ? (
+      <TimestampConverterTool locale={locale} />
+    ) : slug === "case-converter" ? (
+      <CaseConverterTool locale={locale} />
+    ) : slug === "color-converter" ? (
+      <ColorConverterTool locale={locale} />
+    ) : slug === "word-counter" ? (
+      <WordCounterTool locale={locale} />
+    ) : slug === "slug-generator" ? (
+      <SlugGeneratorTool locale={locale} />
     ) : null;
   if (!workspace) notFound();
 
@@ -73,17 +91,14 @@ export default async function ToolPage({
         type="application/ld+json"
         dangerouslySetInnerHTML={jsonLd(structuredData)}
       />
-      <div className="tool-page atlas-shell">
+      <div className="tool-page site-shell">
         <Link className="back-link" href={`/${locale}/tools`}>
           <ArrowLeft size={16} />
           {messages.title}
         </Link>
         <header className="tool-page__heading">
           <div>
-            <p className="coordinate-label">
-              ROUTE T-{tool.sortOrder.toString().padStart(3, "0")} ·{" "}
-              {tool.category}
-            </p>
+            <p className="tool-category">{tool.category}</p>
             <h1>{tool.name[locale]}</h1>
             <p>{tool.description[locale]}</p>
           </div>

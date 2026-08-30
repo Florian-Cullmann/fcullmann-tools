@@ -11,15 +11,15 @@
 
 ## Composition inventory
 
-| Ingredient | Commitment | Medium |
-| --- | --- | --- |
-| Page ground | Warm uncoated map stock, sampled dominant `#F5F2E8`, with visible vertical and horizontal folds | Produced seamless WebP texture over a matching CSS base |
-| Typography | Editorial serif name at roughly twice the UI-heading scale; compact grotesk UI; monospace only for JSON and coordinates | Self-hosted through `next/font`; semantic text |
-| Navigation | One compact horizontal line with Tools, Projects, Articles, About and locale/theme utilities | Semantic HTML, inline SVG icons |
-| Route system | One vermilion primary route (`#D83911`) and one cartographic-blue secondary route (`#55728B`) with numbered waypoints | Responsive SVG and CSS borders |
-| Identity legend | Left rail with name, title, positioning line, and three destination types | Semantic HTML |
-| Working formatter | Dominant bordered field with adjacent input/output, line numbers, validation, copy, clear, and primary action | Accessible React client component |
-| Featured tools | Three compact list rows with authored glyphs, title, task description, and directional affordance | Semantic links and inline SVG icons |
-| Latest writing | Two compact dated article rows with honest demonstration copy | Semantic links; database-backed when configured |
-| Coordinate frame | Fine edge ticks, route IDs, scale bar, and registration marks at restrained density | CSS and SVG geometry |
-| Primary action | Wide vermilion Format JSON control tied directly to the route endpoint | Semantic button with real formatter behavior |
+| Ingredient        | Commitment                                                                                                              | Medium                                                  |
+| ----------------- | ----------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------- |
+| Page ground       | Warm uncoated map stock, sampled dominant `#F5F2E8`, with visible vertical and horizontal folds                         | Produced seamless WebP texture over a matching CSS base |
+| Typography        | Editorial serif name at roughly twice the UI-heading scale; compact grotesk UI; monospace only for JSON and coordinates | Self-hosted through `next/font`; semantic text          |
+| Navigation        | One compact horizontal line with Tools, Projects, Articles, About and locale/theme utilities                            | Semantic HTML, inline SVG icons                         |
+| Route system      | One vermilion primary route (`#D83911`) and one cartographic-blue secondary route (`#55728B`) with numbered waypoints   | Responsive SVG and CSS borders                          |
+| Identity legend   | Left rail with name, title, positioning line, and three destination types                                               | Semantic HTML                                           |
+| Working formatter | Dominant bordered field with adjacent input/output, line numbers, validation, copy, clear, and primary action           | Accessible React client component                       |
+| Featured tools    | Three compact list rows with authored glyphs, title, task description, and directional affordance                       | Semantic links and inline SVG icons                     |
+| Latest writing    | Two compact dated article rows with honest demonstration copy                                                           | Semantic links; database-backed when configured         |
+| Coordinate frame  | Fine edge ticks, route IDs, scale bar, and registration marks at restrained density                                     | CSS and SVG geometry                                    |
+| Primary action    | Wide vermilion Format JSON control tied directly to the route endpoint                                                  | Semantic button with real formatter behavior            |

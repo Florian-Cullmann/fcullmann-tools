@@ -13,9 +13,18 @@
       "viewport": "A slim navigation and bold introduction occupy the left timing rail while a live formatter resolves across the main timeline; popular tools continue below as ranked, inspectable traces.",
       "risk": "The native developer reference is immediately credible, but it must avoid looking like a DevTools skin pasted over a portfolio.",
       "raised": [
-        {"from": "Torn flyer depth", "raise": "Earlier work remains visible as useful history instead of disappearing behind the newest item."},
-        {"from": "Nixie transitions", "raise": "Changing tool state receives one physically legible transition rather than generic loading chrome."},
-        {"from": "Multiplane focus", "raise": "The active task stays sharp while supporting biography and writing recede without vanishing."}
+        {
+          "from": "Torn flyer depth",
+          "raise": "Earlier work remains visible as useful history instead of disappearing behind the newest item."
+        },
+        {
+          "from": "Nixie transitions",
+          "raise": "Changing tool state receives one physically legible transition rather than generic loading chrome."
+        },
+        {
+          "from": "Multiplane focus",
+          "raise": "The active task stays sharp while supporting biography and writing recede without vanishing."
+        }
       ],
       "comp": ".impeccable/mocks/decision/request-waterfall.webp"
     },
@@ -26,7 +35,11 @@
       "lineage": "technical atlases, RFC diagrams, and field navigation charts",
       "thesis": "A navigable atlas maps Florian's tools, projects, and writing as destinations in one practical software territory.",
       "palette": ["#F3F0E7", "#13252C", "#EA4E32", "#5C86A6"],
-      "materials": ["folded map stock", "route notation", "reference coordinates"],
+      "materials": [
+        "folded map stock",
+        "route notation",
+        "reference coordinates"
+      ],
       "viewport": "A clear professional statement anchors the map legend; one route opens into a live JSON tool while featured destinations and recent field notes remain visible around it.",
       "risk": "Maps are a familiar information metaphor, so the live tool and route logic must carry more weight than decorative cartography.",
       "comp": ".impeccable/mocks/decision/api-atlas.webp"
@@ -101,8 +114,8 @@
       "risk": "Cinematic atmosphere would make the tool collection feel indirect."
     }
   ],
-  "reroll": {"registers": ["safer", "bolder"]},
-  "buildPath": {"value": "comp", "toggle": true},
+  "reroll": { "registers": ["safer", "bolder"] },
+  "buildPath": { "value": "comp", "toggle": true },
   "canon": true,
   "canonCard": {
     "label": "The category standard",

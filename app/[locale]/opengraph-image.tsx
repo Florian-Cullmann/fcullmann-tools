@@ -1,6 +1,6 @@
 import { ImageResponse } from "next/og";
 
-export const alt = "Florian Ullmann — software engineer and developer tools";
+export const alt = "Florian Ullmann — developer tools and software projects";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -8,47 +8,76 @@ export default function OpenGraphImage() {
   return new ImageResponse(
     <div
       style={{
-        background: "#f3efe6",
-        color: "#101c2c",
+        background: "#f5f7fb",
+        color: "#252832",
         display: "flex",
         flexDirection: "column",
         fontFamily: "sans-serif",
         height: "100%",
         justifyContent: "space-between",
         padding: "72px 80px",
-        position: "relative",
-        width: "100%"
+        width: "100%",
       }}
     >
+      <div style={{ alignItems: "center", display: "flex", gap: 18 }}>
+        <div
+          style={{
+            alignItems: "center",
+            background: "#e84b3c",
+            borderRadius: 14,
+            color: "white",
+            display: "flex",
+            fontSize: 20,
+            fontWeight: 800,
+            height: 48,
+            justifyContent: "center",
+            width: 48,
+          }}
+        >
+          {"</>"}
+        </div>
+        <div style={{ display: "flex", fontSize: 22, fontWeight: 750 }}>
+          fcullmann.com
+        </div>
+      </div>
+      <div style={{ display: "flex", flexDirection: "column", maxWidth: 940 }}>
+        <div
+          style={{
+            display: "flex",
+            fontSize: 74,
+            fontWeight: 800,
+            letterSpacing: "-0.045em",
+            lineHeight: 1.04,
+          }}
+        >
+          Developer tools for focused work
+        </div>
+        <div
+          style={{
+            color: "#606673",
+            display: "flex",
+            fontSize: 28,
+            fontWeight: 500,
+            marginTop: 22,
+          }}
+        >
+          Fast, privacy-conscious browser utilities by Florian Ullmann
+        </div>
+      </div>
       <div
         style={{
-          border: "2px solid #101c2c",
+          alignItems: "center",
           display: "flex",
-          height: 26,
-          left: 80,
-          position: "absolute",
-          top: 72,
-          width: 26
+          fontSize: 21,
+          justifyContent: "space-between",
         }}
       >
-        <div style={{ background: "#df4a32", display: "flex", height: 10, width: 10 }} />
-      </div>
-      <div style={{ display: "flex", fontSize: 20, fontWeight: 700, letterSpacing: "0.16em", marginLeft: 44, textTransform: "uppercase" }}>
-        fcullmann.com · API Atlas
-      </div>
-      <div style={{ display: "flex", flexDirection: "column", maxWidth: 880 }}>
-        <div style={{ display: "flex", fontSize: 84, fontWeight: 800, letterSpacing: "-0.055em", lineHeight: 1 }}>
-          Florian Ullmann
-        </div>
-        <div style={{ color: "#df4a32", display: "flex", fontSize: 34, fontWeight: 600, marginTop: 22 }}>
-          Software engineer & developer tools
-        </div>
-      </div>
-      <div style={{ alignItems: "center", display: "flex", fontSize: 22, justifyContent: "space-between" }}>
         <span>Useful software, carefully made.</span>
-        <span style={{ color: "#377a8c", display: "flex", fontFamily: "monospace" }}>52.5200° N · 13.4050° E</span>
+        <span style={{ color: "#e84b3c", display: "flex", fontWeight: 700 }}>
+          Tools · Projects · Writing
+        </span>
       </div>
     </div>,
-    size
+    size,
   );
 }

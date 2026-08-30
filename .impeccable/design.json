@@ -1,225 +1,545 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-08-30T11:28:07Z",
-  "title": "Design System: fcullmann.com API Atlas",
+  "generatedAt": "2026-08-30T14:43:30Z",
+  "title": "Design System: fcullmann.com Search First",
   "extensions": {
     "colorMeta": {
-      "route-vermilion": {
-        "role": "primary",
-        "displayName": "Route Vermilion",
-        "canonical": "#b83212",
-        "tonalRamp": ["oklch(15% 0.07 35)", "oklch(27% 0.11 35)", "oklch(39% 0.15 35)", "#b83212", "oklch(63% 0.15 35)", "oklch(75% 0.11 35)", "oklch(87% 0.06 35)", "oklch(95% 0.025 35)"]
+      "cool-canvas": {
+        "role": "neutral",
+        "displayName": "Cool Canvas",
+        "canonical": "#f5f7fb",
+        "tonalRamp": [
+          "color-mix(in oklch, #f5f7fb 25%, black)",
+          "color-mix(in oklch, #f5f7fb 50%, black)",
+          "color-mix(in oklch, #f5f7fb 75%, black)",
+          "#f5f7fb",
+          "color-mix(in oklch, #f5f7fb 80%, white)",
+          "color-mix(in oklch, #f5f7fb 60%, white)",
+          "color-mix(in oklch, #f5f7fb 35%, white)",
+          "color-mix(in oklch, #f5f7fb 15%, white)"
+        ]
       },
-      "route-vermilion-dark": {
-        "role": "primary",
-        "displayName": "Route Vermilion Dark",
-        "canonical": "#a92c0d",
-        "tonalRamp": ["oklch(15% 0.065 35)", "oklch(27% 0.1 35)", "oklch(39% 0.14 35)", "#a92c0d", "oklch(63% 0.14 35)", "oklch(75% 0.1 35)", "oklch(87% 0.055 35)", "oklch(95% 0.02 35)"]
+      "utility-surface": {
+        "role": "neutral",
+        "displayName": "Utility Surface",
+        "canonical": "#ffffff",
+        "tonalRamp": [
+          "oklch(15% 0 0)",
+          "oklch(27% 0 0)",
+          "oklch(39% 0 0)",
+          "oklch(51% 0 0)",
+          "oklch(63% 0 0)",
+          "oklch(75% 0 0)",
+          "oklch(87% 0 0)",
+          "#ffffff"
+        ]
       },
-      "cartographic-blue": {
+      "soft-surface": {
+        "role": "neutral",
+        "displayName": "Soft Surface",
+        "canonical": "#fafbfe",
+        "tonalRamp": [
+          "color-mix(in oklch, #fafbfe 25%, black)",
+          "color-mix(in oklch, #fafbfe 50%, black)",
+          "color-mix(in oklch, #fafbfe 75%, black)",
+          "#fafbfe",
+          "color-mix(in oklch, #fafbfe 80%, white)",
+          "color-mix(in oklch, #fafbfe 60%, white)",
+          "color-mix(in oklch, #fafbfe 35%, white)",
+          "color-mix(in oklch, #fafbfe 15%, white)"
+        ]
+      },
+      "primary-ink": {
+        "role": "neutral",
+        "displayName": "Primary Ink",
+        "canonical": "#252832",
+        "tonalRamp": [
+          "color-mix(in oklch, #252832 55%, black)",
+          "#252832",
+          "color-mix(in oklch, #252832 80%, white)",
+          "color-mix(in oklch, #252832 65%, white)",
+          "color-mix(in oklch, #252832 50%, white)",
+          "color-mix(in oklch, #252832 35%, white)",
+          "color-mix(in oklch, #252832 20%, white)",
+          "color-mix(in oklch, #252832 8%, white)"
+        ]
+      },
+      "secondary-ink": {
+        "role": "neutral",
+        "displayName": "Secondary Ink",
+        "canonical": "#606673",
+        "tonalRamp": [
+          "color-mix(in oklch, #606673 45%, black)",
+          "color-mix(in oklch, #606673 70%, black)",
+          "#606673",
+          "color-mix(in oklch, #606673 80%, white)",
+          "color-mix(in oklch, #606673 60%, white)",
+          "color-mix(in oklch, #606673 40%, white)",
+          "color-mix(in oklch, #606673 22%, white)",
+          "color-mix(in oklch, #606673 8%, white)"
+        ]
+      },
+      "cool-line": {
+        "role": "neutral",
+        "displayName": "Cool Line",
+        "canonical": "#dfe3eb",
+        "tonalRamp": [
+          "color-mix(in oklch, #dfe3eb 25%, black)",
+          "color-mix(in oklch, #dfe3eb 50%, black)",
+          "color-mix(in oklch, #dfe3eb 75%, black)",
+          "#dfe3eb",
+          "color-mix(in oklch, #dfe3eb 75%, white)",
+          "color-mix(in oklch, #dfe3eb 55%, white)",
+          "color-mix(in oklch, #dfe3eb 30%, white)",
+          "color-mix(in oklch, #dfe3eb 10%, white)"
+        ]
+      },
+      "strong-line": {
+        "role": "neutral",
+        "displayName": "Strong Line",
+        "canonical": "#cfd5e0",
+        "tonalRamp": [
+          "color-mix(in oklch, #cfd5e0 25%, black)",
+          "color-mix(in oklch, #cfd5e0 50%, black)",
+          "color-mix(in oklch, #cfd5e0 75%, black)",
+          "#cfd5e0",
+          "color-mix(in oklch, #cfd5e0 75%, white)",
+          "color-mix(in oklch, #cfd5e0 55%, white)",
+          "color-mix(in oklch, #cfd5e0 30%, white)",
+          "color-mix(in oklch, #cfd5e0 10%, white)"
+        ]
+      },
+      "action-coral": {
+        "role": "primary",
+        "displayName": "Action Coral",
+        "canonical": "#e84b3c",
+        "tonalRamp": [
+          "color-mix(in oklch, #e84b3c 30%, black)",
+          "color-mix(in oklch, #e84b3c 52%, black)",
+          "color-mix(in oklch, #e84b3c 76%, black)",
+          "#e84b3c",
+          "color-mix(in oklch, #e84b3c 80%, white)",
+          "color-mix(in oklch, #e84b3c 58%, white)",
+          "color-mix(in oklch, #e84b3c 35%, white)",
+          "color-mix(in oklch, #e84b3c 14%, white)"
+        ]
+      },
+      "action-coral-dark": {
+        "role": "primary",
+        "displayName": "Action Coral Dark",
+        "canonical": "#cc392d",
+        "tonalRamp": [
+          "color-mix(in oklch, #cc392d 30%, black)",
+          "color-mix(in oklch, #cc392d 52%, black)",
+          "color-mix(in oklch, #cc392d 76%, black)",
+          "#cc392d",
+          "color-mix(in oklch, #cc392d 80%, white)",
+          "color-mix(in oklch, #cc392d 58%, white)",
+          "color-mix(in oklch, #cc392d 35%, white)",
+          "color-mix(in oklch, #cc392d 14%, white)"
+        ]
+      },
+      "action-coral-soft": {
+        "role": "primary",
+        "displayName": "Action Coral Soft",
+        "canonical": "#fff0ed",
+        "tonalRamp": [
+          "color-mix(in oklch, #fff0ed 25%, black)",
+          "color-mix(in oklch, #fff0ed 50%, black)",
+          "color-mix(in oklch, #fff0ed 75%, black)",
+          "color-mix(in oklch, #fff0ed 90%, black)",
+          "#fff0ed",
+          "color-mix(in oklch, #fff0ed 65%, white)",
+          "color-mix(in oklch, #fff0ed 40%, white)",
+          "color-mix(in oklch, #fff0ed 15%, white)"
+        ]
+      },
+      "category-violet": {
         "role": "secondary",
-        "displayName": "Cartographic Blue",
-        "canonical": "#55728b",
-        "tonalRamp": ["oklch(15% 0.03 245)", "oklch(27% 0.045 245)", "oklch(39% 0.055 245)", "#55728b", "oklch(63% 0.055 245)", "oklch(75% 0.045 245)", "oklch(87% 0.025 245)", "oklch(95% 0.012 245)"]
+        "displayName": "Category Violet",
+        "canonical": "#7257d4",
+        "tonalRamp": [
+          "color-mix(in oklch, #7257d4 30%, black)",
+          "color-mix(in oklch, #7257d4 52%, black)",
+          "color-mix(in oklch, #7257d4 76%, black)",
+          "#7257d4",
+          "color-mix(in oklch, #7257d4 80%, white)",
+          "color-mix(in oklch, #7257d4 58%, white)",
+          "color-mix(in oklch, #7257d4 35%, white)",
+          "color-mix(in oklch, #7257d4 14%, white)"
+        ]
       },
-      "map-paper": {
-        "role": "neutral",
-        "displayName": "Map Paper",
-        "canonical": "#f5f2e8",
-        "tonalRamp": ["oklch(15% 0.012 85)", "oklch(27% 0.012 85)", "oklch(39% 0.012 85)", "oklch(51% 0.012 85)", "oklch(63% 0.012 85)", "oklch(75% 0.012 85)", "oklch(87% 0.012 85)", "#f5f2e8"]
+      "category-violet-soft": {
+        "role": "secondary",
+        "displayName": "Category Violet Soft",
+        "canonical": "#f0edff",
+        "tonalRamp": [
+          "color-mix(in oklch, #f0edff 25%, black)",
+          "color-mix(in oklch, #f0edff 50%, black)",
+          "color-mix(in oklch, #f0edff 75%, black)",
+          "color-mix(in oklch, #f0edff 90%, black)",
+          "#f0edff",
+          "color-mix(in oklch, #f0edff 65%, white)",
+          "color-mix(in oklch, #f0edff 40%, white)",
+          "color-mix(in oklch, #f0edff 15%, white)"
+        ]
       },
-      "map-paper-deep": {
-        "role": "neutral",
-        "displayName": "Map Paper Deep",
-        "canonical": "#e8e0d2",
-        "tonalRamp": ["oklch(15% 0.018 75)", "oklch(27% 0.018 75)", "oklch(39% 0.018 75)", "oklch(51% 0.018 75)", "oklch(63% 0.018 75)", "oklch(75% 0.018 75)", "#e8e0d2", "oklch(95% 0.012 75)"]
+      "category-green": {
+        "role": "secondary",
+        "displayName": "Category Green",
+        "canonical": "#3f9858",
+        "tonalRamp": [
+          "color-mix(in oklch, #3f9858 30%, black)",
+          "color-mix(in oklch, #3f9858 52%, black)",
+          "color-mix(in oklch, #3f9858 76%, black)",
+          "#3f9858",
+          "color-mix(in oklch, #3f9858 80%, white)",
+          "color-mix(in oklch, #3f9858 58%, white)",
+          "color-mix(in oklch, #3f9858 35%, white)",
+          "color-mix(in oklch, #3f9858 14%, white)"
+        ]
       },
-      "deep-ink": {
-        "role": "neutral",
-        "displayName": "Deep Ink",
-        "canonical": "#1b2225",
-        "tonalRamp": ["#1b2225", "oklch(27% 0.012 220)", "oklch(39% 0.012 220)", "oklch(51% 0.012 220)", "oklch(63% 0.012 220)", "oklch(75% 0.01 220)", "oklch(87% 0.008 220)", "oklch(95% 0.004 220)"]
+      "category-green-soft": {
+        "role": "secondary",
+        "displayName": "Category Green Soft",
+        "canonical": "#ebf8ef",
+        "tonalRamp": [
+          "color-mix(in oklch, #ebf8ef 25%, black)",
+          "color-mix(in oklch, #ebf8ef 50%, black)",
+          "color-mix(in oklch, #ebf8ef 75%, black)",
+          "color-mix(in oklch, #ebf8ef 90%, black)",
+          "#ebf8ef",
+          "color-mix(in oklch, #ebf8ef 65%, white)",
+          "color-mix(in oklch, #ebf8ef 40%, white)",
+          "color-mix(in oklch, #ebf8ef 15%, white)"
+        ]
       },
-      "soft-ink": {
-        "role": "neutral",
-        "displayName": "Soft Ink",
-        "canonical": "#536064",
-        "tonalRamp": ["oklch(15% 0.014 220)", "oklch(27% 0.014 220)", "#536064", "oklch(51% 0.014 220)", "oklch(63% 0.012 220)", "oklch(75% 0.01 220)", "oklch(87% 0.007 220)", "oklch(95% 0.003 220)"]
+      "category-blue": {
+        "role": "secondary",
+        "displayName": "Category Blue",
+        "canonical": "#3977be",
+        "tonalRamp": [
+          "color-mix(in oklch, #3977be 30%, black)",
+          "color-mix(in oklch, #3977be 52%, black)",
+          "color-mix(in oklch, #3977be 76%, black)",
+          "#3977be",
+          "color-mix(in oklch, #3977be 80%, white)",
+          "color-mix(in oklch, #3977be 58%, white)",
+          "color-mix(in oklch, #3977be 35%, white)",
+          "color-mix(in oklch, #3977be 14%, white)"
+        ]
       },
-      "survey-line": {
-        "role": "neutral",
-        "displayName": "Survey Line",
-        "canonical": "color-mix(in srgb, #1b2225 27%, transparent)",
-        "tonalRamp": ["oklch(15% 0.01 220 / 0.27)", "oklch(27% 0.01 220 / 0.27)", "oklch(39% 0.01 220 / 0.27)", "oklch(51% 0.01 220 / 0.27)", "oklch(63% 0.008 220 / 0.27)", "oklch(75% 0.006 220 / 0.27)", "oklch(87% 0.004 220 / 0.27)", "oklch(95% 0.002 220 / 0.27)"]
+      "category-blue-dark": {
+        "role": "secondary",
+        "displayName": "Category Blue Dark",
+        "canonical": "#2462a9",
+        "tonalRamp": [
+          "color-mix(in oklch, #2462a9 30%, black)",
+          "color-mix(in oklch, #2462a9 52%, black)",
+          "color-mix(in oklch, #2462a9 76%, black)",
+          "#2462a9",
+          "color-mix(in oklch, #2462a9 80%, white)",
+          "color-mix(in oklch, #2462a9 58%, white)",
+          "color-mix(in oklch, #2462a9 35%, white)",
+          "color-mix(in oklch, #2462a9 14%, white)"
+        ]
       },
-      "survey-line-soft": {
-        "role": "neutral",
-        "displayName": "Survey Line Soft",
-        "canonical": "color-mix(in srgb, #1b2225 13%, transparent)",
-        "tonalRamp": ["oklch(15% 0.01 220 / 0.13)", "oklch(27% 0.01 220 / 0.13)", "oklch(39% 0.01 220 / 0.13)", "oklch(51% 0.01 220 / 0.13)", "oklch(63% 0.008 220 / 0.13)", "oklch(75% 0.006 220 / 0.13)", "oklch(87% 0.004 220 / 0.13)", "oklch(95% 0.002 220 / 0.13)"]
+      "category-blue-soft": {
+        "role": "secondary",
+        "displayName": "Category Blue Soft",
+        "canonical": "#eaf3ff",
+        "tonalRamp": [
+          "color-mix(in oklch, #eaf3ff 25%, black)",
+          "color-mix(in oklch, #eaf3ff 50%, black)",
+          "color-mix(in oklch, #eaf3ff 75%, black)",
+          "color-mix(in oklch, #eaf3ff 90%, black)",
+          "#eaf3ff",
+          "color-mix(in oklch, #eaf3ff 65%, white)",
+          "color-mix(in oklch, #eaf3ff 40%, white)",
+          "color-mix(in oklch, #eaf3ff 15%, white)"
+        ]
       },
-      "valid-green": {
+      "category-amber": {
+        "role": "secondary",
+        "displayName": "Category Amber",
+        "canonical": "#aa7414",
+        "tonalRamp": [
+          "color-mix(in oklch, #aa7414 30%, black)",
+          "color-mix(in oklch, #aa7414 52%, black)",
+          "color-mix(in oklch, #aa7414 76%, black)",
+          "#aa7414",
+          "color-mix(in oklch, #aa7414 80%, white)",
+          "color-mix(in oklch, #aa7414 58%, white)",
+          "color-mix(in oklch, #aa7414 35%, white)",
+          "color-mix(in oklch, #aa7414 14%, white)"
+        ]
+      },
+      "category-amber-soft": {
+        "role": "secondary",
+        "displayName": "Category Amber Soft",
+        "canonical": "#fff5dc",
+        "tonalRamp": [
+          "color-mix(in oklch, #fff5dc 25%, black)",
+          "color-mix(in oklch, #fff5dc 50%, black)",
+          "color-mix(in oklch, #fff5dc 75%, black)",
+          "color-mix(in oklch, #fff5dc 90%, black)",
+          "#fff5dc",
+          "color-mix(in oklch, #fff5dc 65%, white)",
+          "color-mix(in oklch, #fff5dc 40%, white)",
+          "color-mix(in oklch, #fff5dc 15%, white)"
+        ]
+      },
+      "danger": {
         "role": "tertiary",
-        "displayName": "Valid Green",
-        "canonical": "#19713f",
-        "tonalRamp": ["oklch(15% 0.045 150)", "oklch(27% 0.075 150)", "#19713f", "oklch(51% 0.09 150)", "oklch(63% 0.075 150)", "oklch(75% 0.055 150)", "oklch(87% 0.03 150)", "oklch(95% 0.012 150)"]
+        "displayName": "Danger",
+        "canonical": "#b42318",
+        "tonalRamp": [
+          "color-mix(in oklch, #b42318 30%, black)",
+          "color-mix(in oklch, #b42318 52%, black)",
+          "color-mix(in oklch, #b42318 76%, black)",
+          "#b42318",
+          "color-mix(in oklch, #b42318 80%, white)",
+          "color-mix(in oklch, #b42318 58%, white)",
+          "color-mix(in oklch, #b42318 35%, white)",
+          "color-mix(in oklch, #b42318 14%, white)"
+        ]
       },
-      "error-red": {
+      "success": {
         "role": "tertiary",
-        "displayName": "Error Red",
-        "canonical": "#a52119",
-        "tonalRamp": ["oklch(15% 0.06 28)", "oklch(27% 0.1 28)", "#a52119", "oklch(51% 0.14 28)", "oklch(63% 0.12 28)", "oklch(75% 0.085 28)", "oklch(87% 0.045 28)", "oklch(95% 0.018 28)"]
-      },
-      "admin-canvas": {
-        "role": "neutral",
-        "displayName": "Admin Canvas",
-        "canonical": "#f5f6f4",
-        "tonalRamp": ["oklch(15% 0.005 155)", "oklch(27% 0.005 155)", "oklch(39% 0.005 155)", "oklch(51% 0.005 155)", "oklch(63% 0.005 155)", "oklch(75% 0.005 155)", "oklch(87% 0.005 155)", "#f5f6f4"]
-      },
-      "admin-ink": {
-        "role": "neutral",
-        "displayName": "Admin Ink",
-        "canonical": "#18201e",
-        "tonalRamp": ["#18201e", "oklch(27% 0.012 165)", "oklch(39% 0.012 165)", "oklch(51% 0.012 165)", "oklch(63% 0.01 165)", "oklch(75% 0.008 165)", "oklch(87% 0.005 165)", "oklch(95% 0.002 165)"]
-      },
-      "admin-action": {
-        "role": "tertiary",
-        "displayName": "Admin Action Green",
-        "canonical": "#1f5e50",
-        "tonalRamp": ["oklch(15% 0.03 170)", "oklch(27% 0.055 170)", "#1f5e50", "oklch(51% 0.07 170)", "oklch(63% 0.06 170)", "oklch(75% 0.045 170)", "oklch(87% 0.025 170)", "oklch(95% 0.01 170)"]
+        "displayName": "Success",
+        "canonical": "#18743d",
+        "tonalRamp": [
+          "color-mix(in oklch, #18743d 30%, black)",
+          "color-mix(in oklch, #18743d 52%, black)",
+          "color-mix(in oklch, #18743d 76%, black)",
+          "#18743d",
+          "color-mix(in oklch, #18743d 80%, white)",
+          "color-mix(in oklch, #18743d 58%, white)",
+          "color-mix(in oklch, #18743d 35%, white)",
+          "color-mix(in oklch, #18743d 14%, white)"
+        ]
       }
     },
     "typographyMeta": {
-      "display": { "displayName": "Atlas Display", "purpose": "Identity-defining names and the strongest authored moments." },
-      "headline": { "displayName": "Page Headline", "purpose": "Interior page titles with a short editorial measure." },
-      "title": { "displayName": "Route Title", "purpose": "Route-close panels and editorial subheads." },
-      "body": { "displayName": "Interface Body", "purpose": "Public prose, explanations, and operational content." },
-      "label": { "displayName": "Coordinate Label", "purpose": "Route IDs, coordinates, dates, categories, and technical metadata." },
-      "code": { "displayName": "Code", "purpose": "JSON input, formatted output, and markdown editing." }
+      "display": {
+        "displayName": "Home Display",
+        "purpose": "The concise centered home introduction."
+      },
+      "headline": {
+        "displayName": "Page Headline",
+        "purpose": "Interior page and tool titles."
+      },
+      "title": {
+        "displayName": "Section Title",
+        "purpose": "Catalogue sections and compact content groups."
+      },
+      "body": {
+        "displayName": "Interface Body",
+        "purpose": "Explanations, summaries, and reading copy."
+      },
+      "label": {
+        "displayName": "Interface Label",
+        "purpose": "Navigation, filters, metadata, and actions."
+      },
+      "code": {
+        "displayName": "Technical Field",
+        "purpose": "Tool input, output, and code metadata."
+      }
     },
     "shadows": [
       {
-        "name": "workbench-lift",
-        "value": "0 15px 28px -25px color-mix(in srgb, #1b2225 45%, transparent)",
-        "purpose": "Separates the dominant active formatter from the mapped ground; not for ordinary containers."
+        "name": "search-ambient",
+        "value": "0 8px 26px rgba(35, 42, 58, 0.08)",
+        "purpose": "Low resting elevation for the primary search control."
+      },
+      {
+        "name": "search-focus",
+        "value": "0 0 0 4px #fff0ed, 0 12px 32px rgba(35, 42, 58, 0.10)",
+        "purpose": "Coral focus halo and deeper ambient layer for active search."
+      },
+      {
+        "name": "card-hover",
+        "value": "0 8px 22px rgba(35, 42, 58, 0.08)",
+        "purpose": "Temporary lift for actionable utility cards."
+      },
+      {
+        "name": "inset-field-focus",
+        "value": "inset 0 0 0 2px #fff0ed",
+        "purpose": "Dimension-stable focus inside borderless technical fields."
       }
     ],
     "motion": [
       {
-        "name": "route-draw",
-        "value": "900ms cubic-bezier(0.16, 1, 0.3, 1)",
-        "purpose": "Draws the numbered home route once as spatial orientation."
+        "name": "direct-state",
+        "value": "150ms ease",
+        "purpose": "Color and border changes on compact controls."
       },
       {
-        "name": "state-standard",
-        "value": "180ms cubic-bezier(0.2, 0.8, 0.2, 1)",
-        "purpose": "Navigation underline and small directional state changes."
+        "name": "utility-lift",
+        "value": "180ms cubic-bezier(0.16, 1, 0.3, 1)",
+        "purpose": "Small search and card translations plus directional arrow movement."
       },
       {
         "name": "reduced-motion",
-        "value": "0.001ms",
-        "purpose": "Collapses animation and transition duration when reduced motion is requested."
+        "value": "0.01ms",
+        "purpose": "Effectively removes transitions and animations when reduced motion is requested."
       }
     ],
     "breakpoints": [
-      { "name": "stack", "value": "980px" },
-      { "name": "mobile", "value": "700px" }
+      { "name": "catalogue-medium", "value": "1100px" },
+      { "name": "stack", "value": "760px" },
+      { "name": "single-column", "value": "500px" }
     ]
   },
   "components": [
     {
-      "name": "Primary Route Button",
+      "name": "Primary Button",
       "kind": "button",
       "refersTo": "button-primary",
-      "description": "The single high-priority route endpoint, used by Format JSON and comparable primary actions.",
-      "html": "<button class=\"ds-route-button\" type=\"button\"><svg aria-hidden=\"true\" viewBox=\"0 0 24 24\" width=\"17\" height=\"17\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><path d=\"m6 3 14 9-14 9V3z\"/></svg><span>Format JSON</span></button>",
-      "css": ".ds-route-button { min-width: 210px; min-height: 44px; display: inline-flex; align-items: center; justify-content: center; gap: 9px; border: 1px solid var(--route, #b83212); border-radius: 0; padding: 10px 20px; color: white; background: var(--route, #b83212); font-family: var(--font-sans, sans-serif); font-size: .82rem; font-weight: 760; cursor: pointer; transition: background 180ms cubic-bezier(.2,.8,.2,1); } .ds-route-button:hover { background: var(--route-dark, #a92c0d); } .ds-route-button:focus-visible { outline: 3px solid color-mix(in srgb, var(--water, #55728b) 80%, white); outline-offset: 3px; } .ds-route-button:active { background: var(--route-dark, #a92c0d); } .ds-route-button:disabled { opacity: .45; cursor: not-allowed; }"
+      "description": "The principal operation inside a tool workspace.",
+      "html": "<button class=\"ds-button-primary\" type=\"button\"><svg aria-hidden=\"true\" viewBox=\"0 0 24 24\" width=\"16\" height=\"16\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><path d=\"M20 11a8.1 8.1 0 0 0-15.5-2M4 4v5h5\"/><path d=\"M4 13a8.1 8.1 0 0 0 15.5 2M20 20v-5h-5\"/></svg>Format JSON</button>",
+      "css": ".ds-button-primary { min-height: 40px; display: inline-flex; align-items: center; justify-content: center; gap: 7px; border: 1px solid var(--coral, #e84b3c); border-radius: 9px; padding: 0 14px; color: white; background: var(--coral, #e84b3c); font: 700 .78rem/1.45 var(--font-sans, Arial, sans-serif); cursor: pointer; transition: background 150ms ease, border-color 150ms ease; } .ds-button-primary:hover, .ds-button-primary:active { border-color: var(--coral-dark, #cc392d); background: var(--coral-dark, #cc392d); } .ds-button-primary:focus-visible { outline: 3px solid color-mix(in srgb, var(--coral, #e84b3c) 72%, white); outline-offset: 3px; }"
     },
     {
-      "name": "Secondary Field Button",
+      "name": "Secondary Button",
       "kind": "button",
       "refersTo": "button-secondary",
-      "description": "A transparent square control for clear, cancel, or other supporting actions.",
-      "html": "<button class=\"ds-field-button\" type=\"button\">Clear</button>",
-      "css": ".ds-field-button { min-height: 44px; display: inline-flex; align-items: center; justify-content: center; border: 1px solid color-mix(in srgb, var(--ink, #1b2225) 27%, transparent); border-radius: 0; padding: 10px 20px; color: var(--ink, #1b2225); background: transparent; font-family: var(--font-sans, sans-serif); font-size: .82rem; font-weight: 760; cursor: pointer; transition: border-color 180ms cubic-bezier(.2,.8,.2,1), color 180ms cubic-bezier(.2,.8,.2,1); } .ds-field-button:hover { border-color: var(--water, #55728b); color: var(--water, #55728b); } .ds-field-button:focus-visible { outline: 3px solid color-mix(in srgb, var(--water, #55728b) 80%, white); outline-offset: 3px; } .ds-field-button:active { background: color-mix(in srgb, var(--water, #55728b) 6%, transparent); } .ds-field-button:disabled { opacity: .45; cursor: not-allowed; }"
+      "description": "A supporting or reversible action beside the primary operation.",
+      "html": "<button class=\"ds-button-secondary\" type=\"button\">Copy</button>",
+      "css": ".ds-button-secondary { min-height: 40px; display: inline-flex; align-items: center; justify-content: center; border: 1px solid var(--line, #dfe3eb); border-radius: 9px; padding: 0 14px; color: var(--ink, #252832); background: var(--surface, #fff); font: 700 .78rem/1.45 var(--font-sans, Arial, sans-serif); cursor: pointer; transition: background 150ms ease, border-color 150ms ease; } .ds-button-secondary:hover { border-color: var(--line-strong, #cfd5e0); background: var(--surface-soft, #fafbfe); } .ds-button-secondary:focus-visible { outline: 3px solid color-mix(in srgb, var(--coral, #e84b3c) 72%, white); outline-offset: 3px; } .ds-button-secondary:disabled { opacity: .45; cursor: not-allowed; }"
     },
     {
-      "name": "Coordinate Label",
-      "kind": "custom",
-      "refersTo": "coordinate-label",
-      "description": "Compact metadata that locates content in the atlas without competing with it.",
-      "html": "<p class=\"ds-coordinate\">ROUTE T-001 · TOOL CLASS: UTILITY</p>",
-      "css": ".ds-coordinate { margin: 0; color: var(--ink-soft, #536064); font-family: var(--font-mono, monospace); font-size: .67rem; line-height: 1.5; letter-spacing: .055em; text-transform: uppercase; }"
-    },
-    {
-      "name": "Atlas Text Field",
+      "name": "Focal Search",
       "kind": "input",
-      "refersTo": "formatter-field",
-      "description": "A square labeled work field for code or structured text.",
-      "html": "<label class=\"ds-code-field\"><span class=\"ds-code-field__label\">Input <small>JSON</small></span><textarea spellcheck=\"false\">{\"route\":\"T-001\"}</textarea></label>",
-      "css": ".ds-code-field { display: flex; flex-direction: column; border: 1px solid var(--ink, #1b2225); color: var(--ink, #1b2225); background: color-mix(in srgb, var(--paper, #f5f2e8) 94%, white); font-family: var(--font-sans, sans-serif); } .ds-code-field__label { min-height: 42px; display: flex; align-items: center; gap: 6px; padding: 9px 13px; border-bottom: 1px solid color-mix(in srgb, var(--ink, #1b2225) 13%, transparent); font-size: .73rem; font-weight: 760; } .ds-code-field__label small { padding: 2px 5px; color: var(--water, #55728b); background: color-mix(in srgb, var(--water, #55728b) 10%, transparent); font: .58rem var(--font-mono, monospace); } .ds-code-field textarea { min-height: 160px; border: 0; border-radius: 0; padding: 18px; resize: vertical; color: var(--ink, #1b2225); background: transparent; font: .72rem/1.7 var(--font-mono, monospace); } .ds-code-field textarea:focus-visible { outline: 3px solid color-mix(in srgb, var(--water, #55728b) 80%, white); outline-offset: -3px; } .ds-code-field textarea:disabled { opacity: .45; cursor: not-allowed; }"
+      "refersTo": "search-field",
+      "description": "The widest and most elevated control on catalogue surfaces.",
+      "html": "<label class=\"ds-search\"><svg aria-hidden=\"true\" viewBox=\"0 0 24 24\" width=\"21\" height=\"21\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><circle cx=\"11\" cy=\"11\" r=\"8\"/><path d=\"m21 21-4.3-4.3\"/></svg><span class=\"ds-search-label\">Search tools</span><input type=\"search\" placeholder=\"What do you need to do?\"><kbd>/</kbd></label>",
+      "css": ".ds-search { width: min(100%, 1050px); height: 58px; display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 12px; padding: 0 14px 0 17px; border: 1px solid var(--line-strong, #cfd5e0); border-radius: 13px; color: #7c8290; background: var(--surface, #fff); box-shadow: 0 8px 26px rgba(35,42,58,.08); transition: border-color 180ms ease, box-shadow 180ms ease, transform 180ms cubic-bezier(.16,1,.3,1); } .ds-search:focus-within { border-color: var(--coral, #e84b3c); box-shadow: 0 0 0 4px var(--coral-soft, #fff0ed), 0 12px 32px rgba(35,42,58,.1); transform: translateY(-1px); } .ds-search input { min-width: 0; width: 100%; border: 0; outline: 0; color: var(--ink, #252832); background: transparent; font: 400 1rem/1.65 var(--font-sans, Arial, sans-serif); } .ds-search kbd { padding: 4px 7px; border: 1px solid var(--line, #dfe3eb); border-radius: 6px; color: #747b88; background: var(--surface-soft, #fafbfe); box-shadow: inset 0 -1px 0 var(--line, #dfe3eb); font: 400 .72rem/1 var(--font-sans, Arial, sans-serif); } .ds-search-label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0,0,0,0); }"
     },
     {
-      "name": "Primary Navigation",
-      "kind": "nav",
-      "description": "The compact public destination line with vermilion state underlines.",
-      "html": "<nav class=\"ds-nav\" aria-label=\"Primary navigation\"><a href=\"#\">Tools</a><a href=\"#\">Projects</a><a href=\"#\">Articles</a><a href=\"#\">About</a></nav>",
-      "css": ".ds-nav { display: flex; align-items: center; gap: clamp(20px, 3vw, 46px); overflow-x: auto; font-family: var(--font-sans, sans-serif); } .ds-nav a { position: relative; padding: 14px 0; color: var(--ink, #1b2225); font-size: .92rem; font-weight: 640; text-decoration: none; white-space: nowrap; } .ds-nav a::after { content: ''; position: absolute; right: 0; bottom: 5px; left: 0; height: 2px; background: var(--route, #b83212); transform: scaleX(0); transition: transform 180ms cubic-bezier(.2,.8,.2,1); } .ds-nav a:hover::after, .ds-nav a:focus-visible::after { transform: scaleX(1); } .ds-nav a:focus-visible { outline: 3px solid color-mix(in srgb, var(--water, #55728b) 80%, white); outline-offset: 3px; }"
-    },
-    {
-      "name": "Atlas Tool Row",
-      "kind": "card",
-      "description": "A full-width indexed destination row that scales the catalogue without becoming a card grid.",
-      "html": "<a class=\"ds-atlas-row\" href=\"#\"><span class=\"ds-atlas-row__index\">01</span><span class=\"ds-atlas-row__waypoint\">{ }</span><span class=\"ds-atlas-row__body\"><strong>JSON Formatter</strong><small>Format, validate, and inspect JSON.</small></span><span aria-hidden=\"true\">→</span></a>",
-      "css": ".ds-atlas-row { min-height: 72px; display: grid; grid-template-columns: 40px 46px 1fr auto; align-items: center; gap: 10px; padding: 8px 14px; border: 1px solid color-mix(in srgb, var(--ink, #1b2225) 27%, transparent); border-radius: 0; color: var(--ink, #1b2225); background: color-mix(in srgb, var(--paper, #f5f2e8) 88%, transparent); font-family: var(--font-sans, sans-serif); text-decoration: none; transition: background 180ms cubic-bezier(.2,.8,.2,1); } .ds-atlas-row__index { color: var(--route, #b83212); font: 700 .72rem var(--font-mono, monospace); } .ds-atlas-row__waypoint { width: 38px; height: 38px; display: grid; place-items: center; border: 1px solid var(--route, #b83212); border-radius: 50%; color: var(--route, #b83212); font-family: var(--font-mono, monospace); } .ds-atlas-row__body { display: grid; gap: 4px; } .ds-atlas-row__body strong { font-size: .83rem; } .ds-atlas-row__body small { color: var(--ink-soft, #536064); font-size: .68rem; line-height: 1.4; } .ds-atlas-row:hover { background: color-mix(in srgb, var(--route, #b83212) 6%, transparent); } .ds-atlas-row:focus-visible { outline: 3px solid color-mix(in srgb, var(--water, #55728b) 80%, white); outline-offset: 3px; }"
-    },
-    {
-      "name": "Cartographic Badge",
+      "name": "Category Filter",
       "kind": "chip",
-      "description": "A square technical annotation for category, sample disclosure, or status metadata.",
-      "html": "<span class=\"ds-badge\">Sample content</span>",
-      "css": ".ds-badge { display: inline-block; padding: 4px 7px; border: 1px solid var(--water, #55728b); border-radius: 0; color: var(--water, #55728b); background: transparent; font: normal .57rem var(--font-mono, monospace); text-transform: uppercase; }"
+      "refersTo": "filter-chip",
+      "description": "A compact supporting control for narrowing catalogue results.",
+      "html": "<button class=\"ds-filter\" type=\"button\" aria-pressed=\"false\">Formatters</button>",
+      "css": ".ds-filter { border: 1px solid var(--line, #dfe3eb); padding: 8px 13px; border-radius: 9px; color: #565c69; background: var(--surface, #fff); font: 680 .78rem/1.45 var(--font-sans, Arial, sans-serif); cursor: pointer; transition: color 150ms ease, border-color 150ms ease, background 150ms ease; } .ds-filter:hover { border-color: var(--line-strong, #cfd5e0); color: var(--ink, #252832); } .ds-filter:focus-visible { outline: 3px solid color-mix(in srgb, var(--coral, #e84b3c) 72%, white); outline-offset: 3px; }"
     },
     {
-      "name": "Formatter Workbench",
+      "name": "Selected Category Filter",
+      "kind": "chip",
+      "refersTo": "filter-chip-selected",
+      "description": "The inverted active state for the current catalogue category.",
+      "html": "<button class=\"ds-filter-selected\" type=\"button\" aria-pressed=\"true\">All tools</button>",
+      "css": ".ds-filter-selected { border: 1px solid var(--ink, #252832); padding: 8px 13px; border-radius: 9px; color: white; background: var(--ink, #252832); font: 680 .78rem/1.45 var(--font-sans, Arial, sans-serif); cursor: pointer; } .ds-filter-selected:hover { background: #343844; } .ds-filter-selected:focus-visible { outline: 3px solid color-mix(in srgb, var(--coral, #e84b3c) 72%, white); outline-offset: 3px; }"
+    },
+    {
+      "name": "Utility Card",
+      "kind": "card",
+      "refersTo": "utility-card",
+      "description": "A featured tool destination with a functional glyph tile and concise summary.",
+      "html": "<a class=\"ds-utility-card\" href=\"#\"><span class=\"ds-tool-icon\"><svg aria-hidden=\"true\" viewBox=\"0 0 24 24\" width=\"24\" height=\"24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\"><path d=\"M8 3H7a4 4 0 0 0-4 4v2a2 2 0 0 1-2 2 2 2 0 0 1 2 2v2a4 4 0 0 0 4 4h1\"/><path d=\"M16 3h1a4 4 0 0 1 4 4v2a2 2 0 0 0 2 2 2 2 0 0 0-2 2v2a4 4 0 0 1-4 4h-1\"/></svg></span><span class=\"ds-card-copy\"><strong>JSON Formatter</strong><small>Format and validate JSON in your browser.</small></span><svg class=\"ds-card-arrow\" aria-hidden=\"true\" viewBox=\"0 0 24 24\" width=\"18\" height=\"18\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><path d=\"M5 12h14M13 6l6 6-6 6\"/></svg></a>",
+      "css": ".ds-utility-card { min-height: 136px; position: relative; display: flex; flex-direction: column; align-items: flex-start; gap: 14px; padding: 18px; border: 1px solid var(--line, #dfe3eb); border-radius: 14px; color: var(--ink, #252832); background: var(--surface, #fff); text-decoration: none; font-family: var(--font-sans, Arial, sans-serif); transition: border-color 180ms ease, box-shadow 180ms ease, transform 180ms cubic-bezier(.16,1,.3,1); } .ds-utility-card:hover { border-color: #cbd1dc; box-shadow: 0 8px 22px rgba(35,42,58,.08); transform: translateY(-2px); } .ds-utility-card:focus-visible { outline: 3px solid color-mix(in srgb, var(--coral, #e84b3c) 72%, white); outline-offset: 3px; } .ds-tool-icon { width: 40px; height: 40px; display: grid; place-items: center; border-radius: 10px; color: white; background: var(--coral, #e84b3c); } .ds-card-copy { display: grid; gap: 4px; } .ds-card-copy strong { font-size: .92rem; line-height: 1.3; letter-spacing: -.012em; } .ds-card-copy small { color: var(--ink-soft, #606673); font-size: .75rem; line-height: 1.45; } .ds-card-arrow { position: absolute; top: 18px; right: 15px; color: #9aa0ad; }"
+    },
+    {
+      "name": "Compact Tool Row",
+      "kind": "card",
+      "refersTo": "utility-card",
+      "description": "The denser all-tools presentation for large, scannable result sets.",
+      "html": "<a class=\"ds-tool-row\" href=\"#\"><span class=\"ds-row-icon\"><svg aria-hidden=\"true\" viewBox=\"0 0 24 24\" width=\"20\" height=\"20\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\"><path d=\"M10 13a5 5 0 0 0 7.5.5l2-2a5 5 0 0 0-7-7l-1.1 1\"/><path d=\"M14 11a5 5 0 0 0-7.5-.5l-2 2a5 5 0 0 0 7 7l1.1-1\"/></svg></span><span class=\"ds-row-copy\"><strong>URL Codec</strong><small>Encode and decode URL components.</small></span><svg class=\"ds-row-arrow\" aria-hidden=\"true\" viewBox=\"0 0 24 24\" width=\"18\" height=\"18\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><path d=\"M5 12h14M13 6l6 6-6 6\"/></svg></a>",
+      "css": ".ds-tool-row { min-height: 82px; display: grid; grid-template-columns: 36px minmax(0,1fr) auto; align-items: center; gap: 12px; padding: 13px; border: 1px solid var(--line, #dfe3eb); border-radius: 14px; color: var(--ink, #252832); background: var(--surface, #fff); text-decoration: none; font-family: var(--font-sans, Arial, sans-serif); transition: border-color 180ms ease, box-shadow 180ms ease, transform 180ms cubic-bezier(.16,1,.3,1); } .ds-tool-row:hover { border-color: #cbd1dc; box-shadow: 0 8px 22px rgba(35,42,58,.08); transform: translateY(-2px); } .ds-tool-row:focus-visible { outline: 3px solid color-mix(in srgb, var(--coral, #e84b3c) 72%, white); outline-offset: 3px; } .ds-row-icon { width: 36px; height: 36px; display: grid; place-items: center; border-radius: 9px; color: white; background: var(--blue, #3977be); } .ds-row-copy { min-width: 0; display: grid; gap: 4px; } .ds-row-copy strong { font-size: .92rem; line-height: 1.3; } .ds-row-copy small { overflow: hidden; color: var(--ink-soft, #606673); font-size: .75rem; line-height: 1.45; text-overflow: ellipsis; white-space: nowrap; } .ds-row-arrow { color: #9aa0ad; }"
+    },
+    {
+      "name": "Site Navigation",
+      "kind": "nav",
+      "description": "The slim sticky identity and primary-route strip.",
+      "html": "<nav class=\"ds-nav\" aria-label=\"Primary navigation\"><a class=\"ds-wordmark\" href=\"#\"><span class=\"ds-mark\"><svg aria-hidden=\"true\" viewBox=\"0 0 24 24\" width=\"18\" height=\"18\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.2\"><path d=\"m16 18 6-6-6-6M8 6l-6 6 6 6\"/></svg></span>fcullmann.com</a><span class=\"ds-nav-links\"><a href=\"#\">Tools</a><a href=\"#\">Projects</a><a href=\"#\">Writing</a></span></nav>",
+      "css": ".ds-nav { min-height: 64px; display: flex; align-items: center; justify-content: space-between; gap: 28px; padding: 0 20px; border-bottom: 1px solid var(--line, #dfe3eb); color: var(--ink, #252832); background: rgba(255,255,255,.96); font-family: var(--font-sans, Arial, sans-serif); } .ds-wordmark { display: inline-flex; align-items: center; gap: 10px; color: inherit; font-size: 1rem; font-weight: 820; letter-spacing: -.02em; text-decoration: none; } .ds-mark { width: 34px; height: 34px; display: grid; place-items: center; border-radius: 9px; color: white; background: var(--coral, #e84b3c); } .ds-nav-links { display: flex; gap: 28px; } .ds-nav-links a { position: relative; padding: 22px 0; color: #474c58; font-size: .88rem; font-weight: 650; text-decoration: none; } .ds-nav-links a::after { content: ''; position: absolute; right: 0; bottom: 13px; left: 0; height: 2px; background: var(--coral, #e84b3c); transform: scaleX(0); transition: transform 180ms cubic-bezier(.16,1,.3,1); } .ds-nav-links a:hover::after, .ds-nav-links a:focus-visible::after { transform: scaleX(1); } .ds-nav a:focus-visible { outline: 3px solid color-mix(in srgb, var(--coral, #e84b3c) 72%, white); outline-offset: 3px; }"
+    },
+    {
+      "name": "Tool Workspace",
       "kind": "custom",
-      "description": "The signature two-pane operating surface that turns the primary route into a completed task.",
-      "html": "<section class=\"ds-formatter\"><header><div><small>ROUTE T-001 · TOOL CLASS: UTILITY</small><h2>JSON Formatter</h2></div><strong>✓ Valid JSON</strong></header><div class=\"ds-formatter__panes\"><label><span>Input</span><textarea>{\"route\":\"T-001\"}</textarea></label><div><span>Formatted output</span><pre><code>{\n  \"route\": \"T-001\"\n}</code></pre></div></div><footer><button type=\"button\">Format JSON</button></footer></section>",
-      "css": ".ds-formatter { border: 1px solid var(--ink, #1b2225); border-radius: 0; color: var(--ink, #1b2225); background: color-mix(in srgb, var(--paper, #f5f2e8) 94%, white); box-shadow: 0 15px 28px -25px color-mix(in srgb, var(--ink, #1b2225) 45%, transparent); font-family: var(--font-sans, sans-serif); } .ds-formatter header { min-height: 72px; display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 14px 18px; border-bottom: 1px solid color-mix(in srgb, var(--ink, #1b2225) 27%, transparent); } .ds-formatter header small { color: var(--ink-soft, #536064); font: .61rem var(--font-mono, monospace); } .ds-formatter h2 { margin: 4px 0 0; font-size: 1.6rem; letter-spacing: -.03em; } .ds-formatter header strong { color: var(--success, #19713f); font-size: .72rem; } .ds-formatter__panes { display: grid; grid-template-columns: 1fr 1.08fr; min-height: 230px; } .ds-formatter__panes > * { min-width: 0; display: flex; flex-direction: column; margin: 0; } .ds-formatter__panes > * + * { border-left: 1px solid color-mix(in srgb, var(--ink, #1b2225) 27%, transparent); } .ds-formatter__panes span { padding: 9px 13px; border-bottom: 1px solid color-mix(in srgb, var(--ink, #1b2225) 13%, transparent); font-size: .73rem; font-weight: 760; } .ds-formatter textarea, .ds-formatter pre { flex: 1; min-height: 180px; margin: 0; border: 0; padding: 18px; color: var(--ink, #1b2225); background: transparent; font: .72rem/1.7 var(--font-mono, monospace); white-space: pre-wrap; } .ds-formatter pre { color: var(--water, #55728b); } .ds-formatter textarea:focus-visible, .ds-formatter button:focus-visible { outline: 3px solid color-mix(in srgb, var(--water, #55728b) 80%, white); outline-offset: -3px; } .ds-formatter footer { display: flex; justify-content: center; padding: 15px; border-top: 1px solid color-mix(in srgb, var(--ink, #1b2225) 27%, transparent); } .ds-formatter footer button { min-width: 210px; min-height: 44px; border: 1px solid var(--route, #b83212); border-radius: 0; padding: 10px 20px; color: white; background: var(--route, #b83212); font-weight: 760; cursor: pointer; } .ds-formatter footer button:hover { background: var(--route-dark, #a92c0d); } @media (max-width: 700px) { .ds-formatter__panes { grid-template-columns: 1fr; } .ds-formatter__panes > * + * { border-top: 1px solid color-mix(in srgb, var(--ink, #1b2225) 27%, transparent); border-left: 0; } }"
+      "refersTo": "code-field",
+      "description": "A two-pane local-processing workspace with inset technical fields and compact actions.",
+      "html": "<section class=\"ds-workspace\"><header><strong>Base64</strong><span>Processed locally</span></header><div class=\"ds-workspace-grid\"><label><span>Input</span><textarea>Useful software, carefully made.</textarea></label><label><span>Output</span><textarea readonly></textarea></label></div><footer><button type=\"button\">Encode</button></footer></section>",
+      "css": ".ds-workspace { overflow: hidden; border: 1px solid var(--line, #dfe3eb); border-radius: 14px; color: var(--ink, #252832); background: var(--surface, #fff); font-family: var(--font-sans, Arial, sans-serif); } .ds-workspace > header { min-height: 60px; display: flex; align-items: center; justify-content: space-between; padding: 13px 18px; border-bottom: 1px solid var(--line, #dfe3eb); } .ds-workspace > header span { color: var(--success, #18743d); font-size: .72rem; font-weight: 700; } .ds-workspace-grid { display: grid; grid-template-columns: 1fr 1fr; } .ds-workspace-grid label { min-width: 0; display: flex; flex-direction: column; } .ds-workspace-grid label + label { border-left: 1px solid var(--line, #dfe3eb); } .ds-workspace-grid label > span { padding: 9px 13px; border-bottom: 1px solid var(--line, #dfe3eb); color: var(--ink-soft, #606673); background: var(--surface-soft, #fafbfe); font-size: .73rem; font-weight: 700; } .ds-workspace textarea { min-height: 150px; border: 0; outline: 0; padding: 16px; color: var(--ink, #252832); background: #fbfcfe; font: 400 .8rem/1.7 var(--font-mono, monospace); resize: vertical; } .ds-workspace textarea:focus { background: white; box-shadow: inset 0 0 0 2px var(--coral-soft, #fff0ed); } .ds-workspace footer { padding: 14px 17px; border-top: 1px solid var(--line, #dfe3eb); } .ds-workspace footer button { min-height: 40px; border: 1px solid var(--coral, #e84b3c); border-radius: 9px; padding: 0 14px; color: white; background: var(--coral, #e84b3c); font-weight: 720; cursor: pointer; } .ds-workspace footer button:hover { border-color: var(--coral-dark, #cc392d); background: var(--coral-dark, #cc392d); } .ds-workspace footer button:focus-visible { outline: 3px solid color-mix(in srgb, var(--coral, #e84b3c) 72%, white); outline-offset: 3px; }"
     }
   ],
   "narrative": {
-    "northStar": "API Atlas",
-    "overview": "API Atlas treats Florian Ullmann's portfolio and tool catalogue as one navigable technical territory. Warm folded map stock, survey lines, route identifiers, and compact coordinates create a precise working document rather than a generic hero followed by a card grid. The public experience is editorial but operational: visitors meet Florian, complete a real task, then follow authored routes into tools, projects, and writing.\n\nThe world is restrained, tactile, and technically credible. Deep ink carries most information; vermilion marks the primary path and cartographic blue marks supporting paths. Texture supplies material character while square bordered fields keep tools usable. The homepage is the fullest expression of the atlas, with an identity legend beside a dominant two-pane formatter and featured routes crossing the fold. Interior pages reuse the route language at lower density so content remains primary.\n\nThe protected admin and login surfaces are deliberately related rather than decorative copies. They retain Public Sans, square geometry, fine borders, compact labels, and a small warm route marker, then shift to a cooler neutral canvas and dark sidebar for sustained desktop operation.",
+    "northStar": "Search First Utility Catalogue",
+    "overview": "Search First is a direct utility library with a personal author, not a portfolio hero with tools attached. A cool canvas, white work surfaces, compact sans typography, and dense repeated rows make the site feel immediately useful. Florian's authorship appears through the wordmark, restrained introduction, projects, and writing while search remains the clearest route into the product.\n\nThe system is bright, precise, and familiar without becoming generic. Coral identifies primary actions and active attention; small violet, green, blue, and amber tiles sort tools into functional families. Rounded rectangles, quiet cool borders, and measured gaps create a steady catalogue rhythm that can scale beyond fifty tools without turning into a decorative card collage.\n\nThe shipped implementation is the token authority. The approved composition is `.impeccable/mocks/search-led-catalogue.webp` (Straight Utility Catalogue, seed `9c978054`), and the finish review verdict is **ship** with no material fixes. No raster media ships in the interface; the visual system is semantic HTML, CSS, and inline Lucide geometry.",
     "keyCharacteristics": [
-      "Warm, quiet map stock beneath semantic HTML and CSS-drawn geometry.",
-      "One vermilion primary route, one cartographic-blue secondary route, and deep ink for almost everything else.",
-      "Editorial serif identity and headings; compact grotesk UI; monospace only for code, coordinates, route IDs, dates, and technical metadata.",
-      "Square bordered work fields contrasted with circular waypoints and tool glyph markers.",
-      "Functional wayfinding: labels, route numbers, status, and direction always communicate structure or state."
+      "A cool off-white canvas beneath crisp white utility surfaces.",
+      "Coral reserved for primary action, focus, and directional emphasis.",
+      "Compact Public Sans throughout the interface; JetBrains Mono only inside technical fields.",
+      "Dense, responsive catalogue grids with one clear search control above them.",
+      "Multicolor functional glyph tiles that make repeated tool rows faster to scan.",
+      "Gentle rounded rectangles, cool 1px borders, and soft state-driven elevation."
     ],
     "rules": [
-      { "name": "The Route Scarcity Rule", "body": "Vermilion identifies the primary route or action; do not wash large backgrounds with it or apply it to every link.", "section": "colors" },
-      { "name": "The Functional Color Rule", "body": "Blue means a secondary path or focus, green means success, and red means failure or danger; never exchange those meanings for variety.", "section": "colors" },
-      { "name": "The Three-Voice Rule", "body": "Serif authors the territory, sans-serif operates it, and monospace locates or encodes it. Do not use monospace as a general futuristic decoration.", "section": "typography" },
-      { "name": "The Cross-the-Fold Rule", "body": "On the home surface, the working formatter owns the first viewport while the route and featured destinations remain visibly connected below it.", "section": "layout" },
-      { "name": "The Survey-Flat Rule", "body": "Prefer rules, ink density, and paper layers over shadows. A shadow must explain active working depth, never merely decorate a container.", "section": "elevation" },
-      { "name": "The Field-and-Waypoint Rule", "body": "Work happens in square bordered fields; circles mark where the visitor is going.", "section": "shapes" }
+      {
+        "name": "The Coral Attention Rule",
+        "body": "Coral marks the next action or the current point of attention; keep it out of large backgrounds and do not assign it to every card.",
+        "section": "colors"
+      },
+      {
+        "name": "The Functional Tile Rule",
+        "body": "Violet, green, blue, and amber live in small glyph tiles, badges, or explicit states; they classify repeated content rather than compete as page-level accents.",
+        "section": "colors"
+      },
+      {
+        "name": "The State Is Semantic Rule",
+        "body": "Success and danger colors always accompany readable text or status structure and never carry meaning alone.",
+        "section": "colors"
+      },
+      {
+        "name": "The One-Sans Rule",
+        "body": "Use Public Sans for identity, headings, prose, navigation, and controls; hierarchy comes from scale and weight, not a decorative display family.",
+        "section": "typography"
+      },
+      {
+        "name": "The Monospace Boundary Rule",
+        "body": "JetBrains Mono belongs inside technical input, output, and code metadata only; do not use it as a general developer aesthetic.",
+        "section": "typography"
+      },
+      {
+        "name": "The Search Leads Rule",
+        "body": "On catalogue surfaces, the widest and most visually elevated control is search; filters and sorting remain compact supporting controls directly around the results.",
+        "section": "layout"
+      },
+      {
+        "name": "The Density Scales Rule",
+        "body": "Preserve the information order while reducing column count; do not remove search, categories, names, or result feedback to make mobile fit.",
+        "section": "layout"
+      },
+      {
+        "name": "The Quiet-at-Rest Rule",
+        "body": "Cards and workspaces rest on borders and tonal contrast; shadows appear only for the focal search or an interactive state.",
+        "section": "elevation"
+      },
+      {
+        "name": "The Nested Radius Rule",
+        "body": "Outer containers receive the largest corners, controls and tiles step down, and small badges step down again so nested shapes feel intentional.",
+        "section": "shapes"
+      },
+      {
+        "name": "The Rectangle Rule",
+        "body": "Filters, buttons, search, cards, and fields stay compact rounded rectangles; avoid oversized pills that imply a softer consumer-social product.",
+        "section": "shapes"
+      }
     ],
     "dos": [
-      "Do use Route Vermilion sparingly for the one primary action or route and Cartographic Blue for supporting navigation and focus.",
-      "Do preserve square field geometry, fine borders, circular waypoint semantics, and the visible paper base across new public tools.",
-      "Do keep code, status, validation, copy, and clear behavior genuinely functional; the atlas metaphor must improve wayfinding rather than mask a mock interface.",
-      "Do test English and German without truncation, keep touch targets usable, expose visible keyboard focus, and honor reduced-motion preferences.",
-      "Do extend a growing catalogue through shared rows, taxonomy, search, and stable route identifiers so more than 50 tools remain scannable.",
-      "Do keep the admin quieter and denser while carrying forward the same square geometry, typographic discipline, border logic, and clear state language."
+      "Do place direct search and filtering ahead of profile storytelling on utility catalogue surfaces.",
+      "Do use white cards, cool 1px borders, and compact `8–12px` grid gaps to make large result sets scan quickly.",
+      "Do reserve coral for the next action, focus, and a few directional cues.",
+      "Do use the multicolor glyph tiles consistently to classify tool families.",
+      "Do preserve explicit labels, visible focus, live result feedback, and reduced-motion behavior."
     ],
     "donts": [
-      "Don't rebuild the public site as a centered marketing hero followed by a grid of rounded cards.",
-      "Don't rasterize route lines, coordinates, icons, labels, or interface chrome into the paper texture; the texture remains material only.",
-      "Don't use vermilion, blue, green, or error red interchangeably, or rely on color without text and shape to communicate state.",
-      "Don't round fields into pills, add ambient shadows to ordinary containers, or fill empty space with decorative coordinates that imply no real route.",
-      "Don't introduce unverified biography, project claims, metrics, or social proof as visual content."
+      "Don't add an oversized profile hero, portrait-led composition, or atmospheric metaphor that delays the first useful action.",
+      "Don't turn every card into a floating panel; the system is border-led and only lifts on interaction.",
+      "Don't spread violet, green, blue, and amber across page backgrounds; keep them functional and contained.",
+      "Don't use monospace outside technical work or replace the compact sans hierarchy with a decorative display face.",
+      "Don't replace the rounded-rectangle vocabulary with pervasive pills, sharp boxes, or ornamental geometry."
     ]
   }
 }

@@ -30,9 +30,8 @@ export default async function ToolsPage({
   const tools = await getTools();
   const messages = getMessages(locale).tools;
   return (
-    <div className="content-page atlas-shell">
+    <div className="content-page site-shell">
       <header className="page-heading">
-        <p className="coordinate-label">ROUTE T · TOOL DIRECTORY</p>
         <h1>{messages.title}</h1>
         <p>{messages.intro}</p>
       </header>

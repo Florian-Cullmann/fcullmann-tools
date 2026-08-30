@@ -9,7 +9,11 @@
       "lineage": "API Atlas — working destination",
       "thesis": "The formatter is the destination visitors reach immediately from Florian's legend.",
       "palette": ["#F3F0E7", "#13252C", "#EA4E32", "#5C86A6"],
-      "materials": ["folded map stock", "route notation", "reference coordinates"],
+      "materials": [
+        "folded map stock",
+        "route notation",
+        "reference coordinates"
+      ],
       "viewport": "Identity and legend form a left rail; one route enters a dominant central formatter, with featured tools and writing as destinations below.",
       "risk": "The formatter's scale leaves less room for a richer personal introduction in the first viewport.",
       "comp": ".impeccable/mocks/decision/api-atlas.webp"
@@ -20,7 +24,11 @@
       "lineage": "API Atlas — intersecting routes",
       "thesis": "Florian's statement becomes the crossroads where tools, projects, and writing visibly diverge.",
       "palette": ["#F3F0E7", "#13252C", "#EA4E32", "#5C86A6"],
-      "materials": ["folded map stock", "route notation", "reference coordinates"],
+      "materials": [
+        "folded map stock",
+        "route notation",
+        "reference coordinates"
+      ],
       "viewport": "A broader introduction occupies the upper-left; three routes depart from it, while a working formatter fills the right and the ranked tool route crosses the fold.",
       "risk": "Multiple routes must remain subordinate to the working tool to avoid diagram noise.",
       "comp": ".impeccable/mocks/api-atlas-crossroads.webp"
@@ -31,11 +39,15 @@
       "lineage": "API Atlas — panoramic route table",
       "thesis": "One horizontal journey moves from professional identity through working utility to the broader catalogue.",
       "palette": ["#F3F0E7", "#13252C", "#EA4E32", "#5C86A6"],
-      "materials": ["folded map stock", "route notation", "reference coordinates"],
+      "materials": [
+        "folded map stock",
+        "route notation",
+        "reference coordinates"
+      ],
       "viewport": "A panoramic identity band and route index sit above a full-width input-to-output path; featured tools continue as numbered stops along the bottom edge.",
       "risk": "The long horizontal rhythm needs a decisive mobile transformation rather than simple stacking.",
       "comp": ".impeccable/mocks/api-atlas-foldout.webp"
     }
   ],
-  "buildPath": {"value": "comp", "toggle": false}
+  "buildPath": { "value": "comp", "toggle": false }
 }

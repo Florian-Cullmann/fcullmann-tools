@@ -5,7 +5,7 @@ describe("formatJson", () => {
   it("formats valid JSON with stable indentation", () => {
     expect(formatJson('{"name":"Florian","active":true}')).toEqual({
       ok: true,
-      value: '{\n  "name": "Florian",\n  "active": true\n}'
+      value: '{\n  "name": "Florian",\n  "active": true\n}',
     });
   });
 

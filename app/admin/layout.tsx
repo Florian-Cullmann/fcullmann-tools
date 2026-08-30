@@ -8,10 +8,19 @@ import "@/app/globals.css";
 
 const sans = Public_Sans({ subsets: ["latin"], variable: "--font-sans" });
 
-export const metadata: Metadata = { title: { default: "Admin", template: "%s · Admin" }, robots: { index: false, follow: false } };
+export const metadata: Metadata = {
+  title: { default: "Admin", template: "%s · Admin" },
+  robots: { index: false, follow: false },
+};
 
 export default async function AdminLayout({ children }: LayoutProps<"/admin">) {
   const session = await getServerSession(authOptions);
   if (!session) redirect("/login");
-  return <html lang="en" className={sans.variable}><body className="admin-body"><AdminShell>{children}</AdminShell></body></html>;
+  return (
+    <html lang="en" className={sans.variable}>
+      <body className="admin-body">
+        <AdminShell>{children}</AdminShell>
+      </body>
+    </html>
+  );
 }

@@ -1,37 +1,12 @@
-# API Atlas asset manifest
+# Search-led catalogue asset manifest
 
-Approved comp: `.impeccable/mocks/decision/api-atlas.webp`
+Approved comp: `.impeccable/mocks/search-led-catalogue.webp`
+
+Approval provenance: the adjacent `.webp.json` contains the full composition prompt and records `"approved": true`. The approved direction explicitly excludes paper texture, atlas motifs, gradients, photography, and other image-native material.
 
 ## Produce
 
-| Field | Value |
-| --- | --- |
-| `id` | `atlas-paper` |
-| `source_crop` | Full approved comp, used only as a material and palette reference |
-| `output_path` | `public/textures/atlas-paper.webp` |
-| `strategy` | Built-in image generation; 2048 px resize; half-tile offset; softly healed center seams; restrained channel correction to the sampled ground |
-| `dimensions` | 2048 × 2048 |
-| `format` | WebP, opaque, quality 90 |
-| `transparency` | None |
-| `deviations` | None. UI, map geometry, symbols, copy, marks, borders, stains, and directional lighting were excluded. |
-| `qa_status` | `accepted` — visually checked alone and as a 2 × 2 tile; mean RGB rounds to `#F5F2E8`; edge RMSE is 0.0051 horizontal and 0.0045 vertical on a normalized 0–1 scale. |
-| `provenance` | Exact prompt stored in `public/textures/atlas-paper.webp.json`; `embed-prompt.mjs --scan public/textures` reports 1 raster, 0 missing. |
-
-Prompt used:
-
-```text
-Use case: stylized-concept
-Asset type: seamless production background texture for a responsive web page
-Input image: the approved API Atlas comp is a visual reference only for the warm paper material, restrained texture character, and color; do not reproduce any interface content
-Primary request: create a seamless square texture of subtle warm uncoated folded-map paper, suitable for edge-to-edge tiling
-Scene/backdrop: a flat, evenly colored material scan with no scene and no directional illumination
-Style/medium: realistic high-resolution uncoated map paper surface, quiet natural fiber tooth, broad honest vertical and horizontal fold variation, extremely restrained and low contrast
-Composition/framing: orthographic flat material sample, uniform across the full square, no focal point; opposite edges must tile seamlessly
-Color palette: dominant ground exactly #F5F2E8; only tiny warm-neutral tonal variation around that value
-Materials/textures: fine matte paper fibers and very soft broad fold memory, subtle enough that text and diagram lines will remain crisp above it
-Constraints: opaque; square; seamless/tileable; no baked presentation chrome; no strong shadows or highlights
-Avoid: grid, text, letters, numbers, symbols, icons, compass marks, route lines, waypoints, borders, stains, tears, burns, speckles, foxing, dirt, handwriting, printed ink, watermarks, vignette, perspective, paper edges, strong lighting, dramatic creases, obvious repeated motifs
-```
+None. Visual inspection of the full 1504 × 1046 comp found no painted, photographic, textured, or otherwise image-native region that needs regeneration. `qa_status: accepted`.
 
 ## Direct
 
@@ -39,25 +14,29 @@ None.
 
 ## Semantic
 
-| `id` | `implementation` | `notes` | `qa_status` |
-| --- | --- | --- | --- |
-| `navigation-and-identity` | Semantic header/nav links, locale and theme buttons, headings, paragraphs, and destination list; inline SVG only for small utility marks. | Typography, spacing, focus, and responsive collapse stay in HTML/CSS. | `accepted` |
-| `route-system` | One responsive inline SVG with paths for vermilion and blue routes, CSS-owned stroke colors/widths/dashes, SVG markers, numbered waypoint groups, and accessible labels. | No route line, waypoint, compass, or registration symbol is rasterized. | `accepted` |
-| `formatter-workbench` | Accessible form with labeled input, formatted `<pre><code>` output, line-number gutters, validation/status region, and real buttons for format, copy, clear, and options. | Borders, panels, scrollbars, focus rings, and control states stay in CSS/HTML. | `accepted` |
-| `catalogue-and-writing` | Semantic link lists and article rows; authored feature glyphs as inline SVG with `currentColor`. | Dates and content remain text; directional affordances remain SVG/CSS. | `accepted` |
-| `coordinate-frame` | CSS borders plus inline SVG/CSS geometry for compass mark, edge ticks, scale ticks/bar, route IDs, and registration marks. | Keep density restrained and responsive; never bake labels into the paper texture. | `accepted` |
+| `id`                    | `implementation`                                                                                                                                   | `notes`                                                                           | `qa_status` |
+| ----------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- | ----------- |
+| `page-shell`            | Semantic header, navigation links, locale control, headings, explanatory copy, and footer/writing continuation; CSS layout and solid color fields. | Cool `#F3F4F8` page ground and white header/cards require no raster texture.      | `accepted`  |
+| `search-and-filters`    | Labeled search input with inline SVG search mark and keyboard-hint element; category filters as real buttons/chips with selected state.            | Focus, hover, selected, and responsive wrapping remain code-native.               | `accepted`  |
+| `featured-tool-grid`    | Responsive semantic link/card grid with headings, descriptions, planned badge, and arrow affordances.                                              | Borders, 14 px corners, spacing, and restrained elevation remain CSS.             | `accepted`  |
+| `tool-glyphs`           | Authored inline SVG symbols over CSS color tiles using the approved coral, blue, green, violet, amber, teal, pink, and gray accents.               | Exact, countable geometry must stay scalable and themeable; no raster icon sheet. | `accepted`  |
+| `all-tools-and-writing` | Dense semantic link grid, sorting control, and article continuation using HTML/CSS plus inline SVG affordances.                                    | Content remains selectable and accessible; no screenshot raster.                  | `accepted`  |
+
+## Public raster inventory
+
+No public raster is authorized by the approved search-led catalogue comp. The legacy Atlas paper texture and its sidecar were removed with their CSS reference. The final provenance scan reports `0 rasters, 0 missing`.
 
 ## Execution order
 
-1. Paint the CSS page base at `#F5F2E8`.
-2. Tile `atlas-paper.webp` above that base without a color wash that hides the tooth or folds.
-3. Compose all typography, controls, routes, waypoints, icons, compass details, and coordinate geometry semantically above the texture.
+1. Rebuild the approved composition entirely with semantic HTML, CSS, and inline SVG.
+2. Keep image-native media out of the public asset tree unless a future surface brief explicitly authorizes it.
+3. Re-run the public raster provenance scan whenever a shipping raster is introduced.
 
 ## Blockers
 
-None.
+None for asset production. Removal is intentionally deferred because this pass may edit only the manifest.
 
 ## Assumptions
 
-- The texture is used at its native 2048 px tile size or larger display scale; CSS owns responsive positioning and any clipping.
-- The approved comp remains the visual authority for the texture's final on-screen contrast.
+- The approved comp and its `approved: true` sidecar supersede the earlier API Atlas asset contract.
+- Brand and tool glyphs are authored SVG/CSS primitives rather than supplied production artwork.

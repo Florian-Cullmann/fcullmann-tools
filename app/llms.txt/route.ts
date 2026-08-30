@@ -11,16 +11,24 @@ export async function GET() {
     "> Personal website of senior software engineer Florian Ullmann, featuring browser-based developer tools, selected projects, and technical field notes.",
     "",
     "## Developer tools",
-    ...tools.map((tool) => `- [${tool.name.en}](${siteUrl}/en/tools/${tool.slug}): ${tool.summary.en}`),
+    ...tools.map(
+      (tool) =>
+        `- [${tool.name.en}](${siteUrl}/en/tools/${tool.slug}): ${tool.summary.en}`,
+    ),
     "",
     "## Writing",
-    ...articles.map((article) => `- [${article.title.en}](${siteUrl}/en/articles/${article.slug}): ${article.excerpt.en}`),
+    ...articles.map(
+      (article) =>
+        `- [${article.title.en}](${siteUrl}/en/articles/${article.slug}): ${article.excerpt.en}`,
+    ),
     "",
     "## Localized routes",
     `- [English](${siteUrl}/en)`,
     `- [Deutsch](${siteUrl}/de)`,
-    ""
+    "",
   ];
 
-  return new Response(lines.join("\n"), { headers: { "Content-Type": "text/plain; charset=utf-8" } });
+  return new Response(lines.join("\n"), {
+    headers: { "Content-Type": "text/plain; charset=utf-8" },
+  });
 }

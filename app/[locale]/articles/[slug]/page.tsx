@@ -69,16 +69,14 @@ export default async function ArticlePage({
         type="application/ld+json"
         dangerouslySetInnerHTML={jsonLd(structuredData)}
       />
-      <div className="reading-page atlas-shell">
+      <div className="reading-page site-shell">
         <Link className="back-link" href={`/${locale}/articles`}>
           <ArrowLeft size={16} />
           {messages.title}
         </Link>
         <article>
           <header>
-            <p className="coordinate-label">
-              FIELD NOTE · {date.format(article.publishedAt)}
-            </p>
+            <p className="article-date">{date.format(article.publishedAt)}</p>
             <h1>{article.title[locale]}</h1>
             <p>{article.excerpt[locale]}</p>
             {article.isDemo && (

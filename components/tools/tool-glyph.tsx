@@ -1,13 +1,37 @@
-import { Binary, Braces, Fingerprint, Link as LinkIcon, Wrench } from "lucide-react";
+import {
+  Binary,
+  Braces,
+  CaseSensitive,
+  Clock3,
+  Fingerprint,
+  Hash,
+  Link as LinkIcon,
+  ListOrdered,
+  Palette,
+  WandSparkles,
+  Wrench,
+} from "lucide-react";
 
 const glyphs = {
   braces: Braces,
   binary: Binary,
   fingerprint: Fingerprint,
-  link: LinkIcon
+  link: LinkIcon,
+  hash: Hash,
+  clock: Clock3,
+  case: CaseSensitive,
+  palette: Palette,
+  list: ListOrdered,
+  wand: WandSparkles,
 };
 
-export function ToolGlyph({ name, size = 24 }: { name: string; size?: number }) {
+export function ToolGlyph({
+  name,
+  size = 24,
+}: {
+  name: string;
+  size?: number;
+}) {
   const Icon = glyphs[name as keyof typeof glyphs] ?? Wrench;
   return <Icon aria-hidden="true" size={size} strokeWidth={1.7} />;
 }

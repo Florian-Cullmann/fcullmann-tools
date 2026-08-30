@@ -8,9 +8,9 @@ export default function Icon() {
     <div
       style={{
         alignItems: "center",
-        background: "#f3efe6",
-        border: "4px solid #101c2c",
-        color: "#101c2c",
+        background: "#252832",
+        border: "4px solid #252832",
+        color: "white",
         display: "flex",
         fontFamily: "sans-serif",
         fontSize: 34,
@@ -18,12 +18,12 @@ export default function Icon() {
         height: "100%",
         justifyContent: "center",
         letterSpacing: "-0.08em",
-        width: "100%"
+        width: "100%",
       }}
     >
-      <span style={{ color: "#df4a32", display: "flex" }}>F</span>
+      <span style={{ color: "#ff6a5d", display: "flex" }}>F</span>
       <span style={{ display: "flex" }}>U</span>
     </div>,
-    size
+    size,
   );
 }

@@ -79,7 +79,6 @@ export function JsonFormatter({
     >
       <div className="formatter__head">
         <div>
-          <p className="coordinate-label">ROUTE T-001 · TOOL CLASS: UTILITY</p>
           <h2 id="formatter-title">JSON Formatter</h2>
         </div>
         <span

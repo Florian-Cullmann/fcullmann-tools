@@ -278,7 +278,7 @@ Each card starts with a contained functional glyph tile, followed by a concise n
 
 ### Tool Workspace
 
-The workspace is a bordered white `14px` container with a compact header, pale field labels, two equal technical panes, and a bottom action row. Pane borders, not floating subcards, separate input from output. On mobile the panes stack and the actions may share the available width.
+The workspace is a bordered white `14px` container with a compact header and contiguous work regions separated by 1px rules. Text transforms use equal technical panes; ordered multi-item workflows use a bordered intake or dropzone followed by full-width ordered rows. Keep per-item reorder and removal controls compact and secondary, then isolate one filled primary completion action in a distinct status or action band. On mobile, panes and rows stack, supporting controls may widen or wrap, and the task order remains intact.
 
 ## Do's and Don'ts
 

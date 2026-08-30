@@ -71,7 +71,6 @@ export default async function ToolPage({
         </Link>
         <header className="tool-page__heading">
           <div>
-            <p className="tool-category">{tool.category}</p>
             <h1>{tool.name[locale]}</h1>
             <p>{tool.description[locale]}</p>
           </div>

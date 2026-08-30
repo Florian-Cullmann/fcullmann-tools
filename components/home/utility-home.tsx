@@ -8,6 +8,7 @@ import type { ArticleRecord, Locale, ToolRecord } from "@/lib/content/types";
 import { getMessages } from "@/lib/i18n/messages";
 
 const categoryColors: Record<string, string> = {
+  documents: "coral",
   formatters: "coral",
   encoders: "violet",
   generators: "green",
@@ -17,6 +18,7 @@ const categoryColors: Record<string, string> = {
 
 function categoryLabel(category: string, locale: Locale) {
   const labels: Record<string, Record<Locale, string>> = {
+    documents: { en: "Documents", de: "Dokumente" },
     formatters: { en: "Formatters", de: "Formatierer" },
     encoders: { en: "Encoders", de: "Kodierer" },
     generators: { en: "Generators", de: "Generatoren" },
@@ -195,11 +197,13 @@ export function UtilityHome({
                   <FileText aria-hidden="true" size={24} />
                 </span>
                 <span className="utility-card__copy">
-                  <strong>PDF Converter</strong>
+                  <strong>
+                    {locale === "de" ? "Weitere PDF-Tools" : "More PDF tools"}
+                  </strong>
                   <small>
                     {locale === "de"
-                      ? "Sichere, fokussierte PDF-Workflows."
-                      : "Focused, privacy-conscious PDF workflows."}
+                      ? "Teilen, komprimieren und konvertieren."
+                      : "Split, compress, and convert documents."}
                   </small>
                 </span>
                 <span className="planned-label">

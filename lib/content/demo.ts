@@ -6,6 +6,24 @@ import type {
 
 export const demoTools: ToolRecord[] = [
   {
+    id: "demo-pdf-merge",
+    slug: "pdf-merge",
+    name: { en: "PDF Merge", de: "PDFs zusammenführen" },
+    summary: {
+      en: "Combine multiple PDF files in your chosen order.",
+      de: "Mehrere PDF-Dateien in der gewünschten Reihenfolge verbinden.",
+    },
+    description: {
+      en: "Arrange and merge multiple PDF documents into one downloadable file entirely in your browser.",
+      de: "Mehrere PDF-Dokumente sortieren und vollständig im Browser zu einer herunterladbaren Datei zusammenführen.",
+    },
+    category: "documents",
+    icon: "files",
+    featured: true,
+    sortOrder: 0,
+    usageCount: 0,
+  },
+  {
     id: "demo-json-formatter",
     slug: "json-formatter",
     name: { en: "JSON Formatter", de: "JSON-Formatierer" },

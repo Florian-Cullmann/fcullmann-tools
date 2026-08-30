@@ -61,7 +61,7 @@ assert.equal(new URL(priorityPage.url()).pathname, "/en");
 await priorityPage.goto(`${origin}/en/tools`, { waitUntil: "networkidle" });
 assert.equal(
   await priorityPage.locator("#roadmap-title").textContent(),
-  "PDF Converter",
+  "More PDF tools",
 );
 await priorityPage.goto(`${origin}/en/tools/json-formatter`, {
   waitUntil: "networkidle",

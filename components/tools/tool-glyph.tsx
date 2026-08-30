@@ -3,6 +3,7 @@ import {
   Braces,
   CaseSensitive,
   Clock3,
+  Files,
   Fingerprint,
   Hash,
   Link as LinkIcon,
@@ -13,6 +14,7 @@ import {
 } from "lucide-react";
 
 const glyphs = {
+  files: Files,
   braces: Braces,
   binary: Binary,
   fingerprint: Fingerprint,

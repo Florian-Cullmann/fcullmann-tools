@@ -10,6 +10,7 @@ The application combines a bilingual public site with browser-first utilities an
 - PostgreSQL with Prisma ORM
 - Auth.js / NextAuth credentials sessions for the single-user admin area
 - CSS-first responsive design with generated map-paper texture
+- PDF-Lib for local PDF document processing
 - Vitest for unit tests
 
 ## Local setup
@@ -45,7 +46,7 @@ Public utility logic lives in `components/tools`. Database-backed editorial data
 
 ## Tool roadmap
 
-The initial release includes JSON formatting, Base64 conversion, UUID generation, and URL encoding. A PDF Converter is seeded as a draft and shown as a planned route until its file-processing and privacy model has been verified.
+The initial release includes PDF merging, JSON formatting, Base64 conversion, UUID generation, and URL encoding. PDF merging runs locally in the browser; splitting, compression, and conversion remain planned as separate workflows.
 
 Every public tool route provides localized metadata and structured data. Articles consume their editor-managed SEO title and description, and `llms.txt` exposes a concise index for machine readers.
 

@@ -38,12 +38,14 @@ export default async function ToolsPage({
       <ToolCatalog locale={locale} tools={tools} />
       <section className="tool-roadmap" aria-labelledby="roadmap-title">
         <div>
-          <h2 id="roadmap-title">PDF Converter</h2>
+          <h2 id="roadmap-title">
+            {locale === "de" ? "Weitere PDF-Tools" : "More PDF tools"}
+          </h2>
         </div>
         <p>
           {locale === "de"
-            ? "Sichere PDF-Workflows folgen als eigene, klar abgegrenzte Werkzeuge. Dateiverarbeitung und Datenschutz werden vor der Veröffentlichung technisch verifiziert."
-            : "Focused PDF workflows will follow as dedicated tools. File processing and privacy guarantees will be verified before release."}
+            ? "Werkzeuge zum Teilen, Komprimieren und Konvertieren folgen als eigene, klar abgegrenzte Workflows."
+            : "Dedicated workflows for splitting, compressing, and converting PDFs will follow."}
         </p>
         <strong>{locale === "de" ? "In Planung" : "Planned"}</strong>
       </section>

@@ -101,6 +101,7 @@ export function ToolEditor({ tool }: { tool?: ToolEditorValue }) {
             Icon key
             <select name="icon" defaultValue={tool?.icon ?? "braces"}>
               <option value="braces">Braces</option>
+              <option value="files">Files</option>
               <option value="binary">Binary</option>
               <option value="fingerprint">Fingerprint</option>
               <option value="link">Link</option>

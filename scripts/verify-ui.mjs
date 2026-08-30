@@ -26,10 +26,10 @@ for (const viewport of [
       .allTextContents(),
     ["PDF Merge", "PDF Split"],
   );
-  assert.equal(await page.locator(".office-tools-grid .utility-card").count(), 1);
-  assert.equal(
-    await page.locator(".office-tools-grid .utility-card strong").textContent(),
-    "Excel to CSV",
+  assert.equal(await page.locator(".office-tools-grid .utility-card").count(), 2);
+  assert.deepEqual(
+    await page.locator(".office-tools-grid .utility-card strong").allTextContents(),
+    ["Excel to CSV", "Word to PDF"],
   );
   await page.locator(".utility-search input").fill("Base64");
   await page.waitForFunction(

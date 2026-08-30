@@ -10,6 +10,7 @@
     "lint": "eslint .",
     "test": "vitest run",
     "test:excel-to-csv": "node scripts/verify-excel-to-csv.mjs",
+    "test:pdf-compress": "node scripts/verify-pdf-compress.mjs",
     "test:pdf-split": "node scripts/verify-pdf-split.mjs",
     "test:word-to-pdf": "node scripts/verify-word-to-pdf.mjs",
     "test:ui": "node scripts/verify-ui.mjs",

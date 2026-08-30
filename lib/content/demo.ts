@@ -42,6 +42,24 @@ export const demoTools: ToolRecord[] = [
     usageCount: 0,
   },
   {
+    id: "demo-pdf-compress",
+    slug: "pdf-compress",
+    name: { en: "Compress PDF", de: "PDF verkleinern" },
+    summary: {
+      en: "Reduce PDF file size while keeping the best possible quality.",
+      de: "PDF-Dateigröße verringern und bestmögliche Qualität behalten.",
+    },
+    description: {
+      en: "Reduce PDF file size with selectable quality levels and download the optimized document without uploading it.",
+      de: "Die Dateigröße einer PDF mit wählbaren Qualitätsstufen verringern und das optimierte Dokument ohne Upload herunterladen.",
+    },
+    category: "documents",
+    icon: "shrink",
+    featured: true,
+    sortOrder: 2,
+    usageCount: 0,
+  },
+  {
     id: "demo-excel-to-csv",
     slug: "excel-to-csv",
     name: { en: "Excel to CSV", de: "Excel zu CSV" },

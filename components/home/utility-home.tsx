@@ -14,6 +14,7 @@ const categoryColors: Record<string, string> = {
   generators: "green",
   converters: "blue",
   text: "amber",
+  office: "green",
 };
 
 function categoryLabel(category: string, locale: Locale) {
@@ -24,6 +25,7 @@ function categoryLabel(category: string, locale: Locale) {
     generators: { en: "Generators", de: "Generatoren" },
     converters: { en: "Converters", de: "Konverter" },
     text: { en: "Text", de: "Text" },
+    office: { en: "Office", de: "Office" },
   };
   return labels[category]?.[locale] ?? category;
 }
@@ -100,7 +102,15 @@ export function UtilityHome({
         : filtered,
     [filtered, locale, sort],
   );
-  const featured = tools.slice(0, 10);
+  const featured = tools
+    .filter(
+      (tool) => tool.category !== "documents" && tool.category !== "office",
+    )
+    .slice(0, 6);
+  const pdfTools = tools
+    .filter((tool) => tool.category === "documents")
+    .slice(0, 2);
+  const officeTools = tools.filter((tool) => tool.category === "office");
   const formatter = new Intl.DateTimeFormat(locale, {
     day: "2-digit",
     month: "short",
@@ -192,24 +202,52 @@ export function UtilityHome({
               {featured.map((tool) => (
                 <ToolCard key={tool.id} locale={locale} tool={tool} />
               ))}
-              <article className="utility-card utility-card--planned">
-                <span className="tool-icon tool-icon--blue">
-                  <FileText aria-hidden="true" size={24} />
-                </span>
-                <span className="utility-card__copy">
-                  <strong>
-                    {locale === "de" ? "Weitere PDF-Tools" : "More PDF tools"}
-                  </strong>
-                  <small>
-                    {locale === "de"
-                      ? "Komprimieren und konvertieren."
-                      : "Compress and convert documents."}
-                  </small>
-                </span>
-                <span className="planned-label">
-                  {locale === "de" ? "Geplant" : "Planned"}
-                </span>
-              </article>
+            </div>
+          </section>
+        )}
+
+        {!query && category === "all" && pdfTools.length > 0 && (
+          <section
+            className="utility-section utility-section--pdf"
+            aria-labelledby="pdf-tools-title"
+          >
+            <div className="section-heading">
+              <div>
+                <h2 id="pdf-tools-title">PDF Tools</h2>
+                <p>
+                  {locale === "de"
+                    ? "PDF-Dateien direkt im Browser bearbeiten, ohne Upload."
+                    : "Work with PDF files directly in your browser, without uploads."}
+                </p>
+              </div>
+            </div>
+            <div className="pdf-tools-grid">
+              {pdfTools.map((tool) => (
+                <ToolCard key={tool.id} locale={locale} tool={tool} />
+              ))}
+            </div>
+          </section>
+        )}
+
+        {!query && category === "all" && officeTools.length > 0 && (
+          <section
+            className="utility-section utility-section--office"
+            aria-labelledby="office-tools-title"
+          >
+            <div className="section-heading">
+              <div>
+                <h2 id="office-tools-title">Office Tools</h2>
+                <p>
+                  {locale === "de"
+                    ? "Excel-Dateien direkt im Browser konvertieren, ohne Upload."
+                    : "Convert Excel files directly in your browser, without uploads."}
+                </p>
+              </div>
+            </div>
+            <div className="office-tools-grid">
+              {officeTools.map((tool) => (
+                <ToolCard key={tool.id} locale={locale} tool={tool} />
+              ))}
             </div>
           </section>
         )}

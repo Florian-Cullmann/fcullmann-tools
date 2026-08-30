@@ -18,6 +18,19 @@ for (const viewport of [
     (await page.locator(".locale-switch").textContent())?.trim(),
     "EN",
   );
+  assert.equal(await page.locator(".featured-grid .utility-card").count(), 6);
+  assert.equal(await page.locator(".pdf-tools-grid .utility-card").count(), 2);
+  assert.deepEqual(
+    await page
+      .locator(".pdf-tools-grid .utility-card strong")
+      .allTextContents(),
+    ["PDF Merge", "PDF Split"],
+  );
+  assert.equal(await page.locator(".office-tools-grid .utility-card").count(), 1);
+  assert.equal(
+    await page.locator(".office-tools-grid .utility-card strong").textContent(),
+    "Excel to CSV",
+  );
   await page.locator(".utility-search input").fill("Base64");
   await page.waitForFunction(
     () =>

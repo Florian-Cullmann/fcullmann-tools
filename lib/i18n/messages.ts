@@ -6,7 +6,7 @@ const messages = {
       home: "Home",
       tools: "Tools",
       projects: "Projects",
-      articles: "Articles",
+      articles: "Blog",
       about: "About",
     },
     home: {

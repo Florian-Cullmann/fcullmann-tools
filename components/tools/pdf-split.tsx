@@ -11,6 +11,7 @@ import {
   X,
 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
+import { PdfPageSelector } from "@/components/tools/pdf-page-selector";
 import {
   formatFileSize,
   isPdfFile,
@@ -21,10 +22,7 @@ import type { Locale } from "@/lib/content/types";
 import {
   getPdfPageCount,
   getPdfPageRanges,
-  parsePdfSplitPoints,
-  PdfSplitPointError,
   splitPdfDocument,
-  type PdfPageRange,
 } from "@/lib/tools/pdf";
 
 const MAX_PARTS = 100;
@@ -67,31 +65,9 @@ export function PdfSplit({ locale }: { locale: Locale }) {
           readError:
             "Die PDF konnte nicht gelesen werden. Sie ist möglicherweise beschädigt oder passwortgeschützt.",
           pages: (count: number) => `${count} ${count === 1 ? "Seite" : "Seiten"}`,
-          settingsTitle: "Trennstellen",
-          settingsIntro:
-            "Gib die Seiten an, nach denen eine neue PDF beginnen soll.",
-          fieldLabel: "Nach diesen Seiten teilen",
-          placeholder: "z. B. 3, 7",
-          fieldHint: (lastPage: number) =>
-            `Kommagetrennte Seitenzahlen zwischen 1 und ${lastPage}. Die Reihenfolge ist beliebig.`,
-          everyPage: "Jede Seite einzeln",
-          everyPageUnavailable: `Für diese Funktion sind höchstens ${MAX_PARTS} Seiten möglich.`,
-          errors: {
-            "document-too-short": "Die PDF benötigt mindestens zwei Seiten.",
-            required: "Gib mindestens eine Trennstelle an.",
-            invalid: "Verwende nur ganze Seitenzahlen, getrennt durch Kommas.",
-            "out-of-range": (lastPage: number) =>
-              `Trennstellen müssen zwischen Seite 1 und ${lastPage} liegen.`,
-            duplicate: "Jede Trennstelle darf nur einmal vorkommen.",
-            "too-many": `Es können höchstens ${MAX_PARTS} Dateien erzeugt werden.`,
-          },
           preview: (count: number) =>
             `${count} ${count === 1 ? "Ausgabedatei" : "Ausgabedateien"}`,
-          part: (index: number) => `Teil ${String(index).padStart(2, "0")}`,
-          range: (range: PdfPageRange) =>
-            range.start === range.end
-              ? `Seite ${range.start}`
-              : `Seiten ${range.start}–${range.end}`,
+          chooseSplit: "Wähle mindestens eine Trennstelle zwischen den Seiten.",
           split: "PDF teilen",
           splitting: "PDF wird geteilt …",
           splitError:
@@ -117,30 +93,9 @@ export function PdfSplit({ locale }: { locale: Locale }) {
           readError:
             "The PDF could not be read. It may be damaged or password-protected.",
           pages: (count: number) => `${count} ${count === 1 ? "page" : "pages"}`,
-          settingsTitle: "Split points",
-          settingsIntro: "Enter the pages after which a new PDF should begin.",
-          fieldLabel: "Split after these pages",
-          placeholder: "e.g. 3, 7",
-          fieldHint: (lastPage: number) =>
-            `Comma-separated page numbers from 1 to ${lastPage}. Any order is accepted.`,
-          everyPage: "Split every page",
-          everyPageUnavailable: `This option supports documents with up to ${MAX_PARTS} pages.`,
-          errors: {
-            "document-too-short": "The PDF needs at least two pages.",
-            required: "Enter at least one split point.",
-            invalid: "Use whole page numbers separated by commas.",
-            "out-of-range": (lastPage: number) =>
-              `Split points must be between page 1 and ${lastPage}.`,
-            duplicate: "Enter each split point only once.",
-            "too-many": `You can create up to ${MAX_PARTS} files at once.`,
-          },
           preview: (count: number) =>
             `${count} output ${count === 1 ? "file" : "files"}`,
-          part: (index: number) => `Part ${String(index).padStart(2, "0")}`,
-          range: (range: PdfPageRange) =>
-            range.start === range.end
-              ? `Page ${range.start}`
-              : `Pages ${range.start}–${range.end}`,
+          chooseSplit: "Choose at least one split point between the pages.",
           split: "Split PDF",
           splitting: "Splitting PDF …",
           splitError:
@@ -151,7 +106,7 @@ export function PdfSplit({ locale }: { locale: Locale }) {
           clear: "Remove file",
         };
   const [source, setSource] = useState<SourcePdf | null>(null);
-  const [splitPoints, setSplitPoints] = useState("");
+  const [splitPoints, setSplitPoints] = useState<number[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [isChecking, setIsChecking] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
@@ -159,31 +114,10 @@ export function PdfSplit({ locale }: { locale: Locale }) {
   const [result, setResult] = useState<SplitResult | null>(null);
   const resultUrl = useRef<string | null>(null);
 
-  const splitPlan = (() => {
-    if (!source) return { ranges: [] as PdfPageRange[], error: null };
-
-    try {
-      const points = parsePdfSplitPoints(
-        splitPoints,
-        source.pageCount,
-        MAX_PARTS,
-      );
-      return {
-        ranges: getPdfPageRanges(source.pageCount, points),
-        error: null,
-      };
-    } catch (caught) {
-      if (!(caught instanceof PdfSplitPointError)) throw caught;
-      const message = copy.errors[caught.code];
-      return {
-        ranges: [] as PdfPageRange[],
-        error:
-          typeof message === "function"
-            ? message(source.pageCount - 1)
-            : message,
-      };
-    }
-  })();
+  const splitPlan =
+    source && splitPoints.length
+      ? getPdfPageRanges(source.pageCount, splitPoints)
+      : [];
 
   useEffect(
     () => () => {
@@ -201,7 +135,7 @@ export function PdfSplit({ locale }: { locale: Locale }) {
   function clearSource() {
     discardResult();
     setSource(null);
-    setSplitPoints("");
+    setSplitPoints([]);
     setError(null);
   }
 
@@ -235,7 +169,7 @@ export function PdfSplit({ locale }: { locale: Locale }) {
         return;
       }
       setSource({ file, pageCount });
-      setSplitPoints(String(Math.ceil(pageCount / 2)));
+      setSplitPoints([]);
     } catch {
       setError(copy.readError);
     } finally {
@@ -243,14 +177,14 @@ export function PdfSplit({ locale }: { locale: Locale }) {
     }
   }
 
-  function updateSplitPoints(value: string) {
+  function updateSplitPoints(value: number[]) {
     discardResult();
     setError(null);
     setSplitPoints(value);
   }
 
   async function splitFile() {
-    if (!source || splitPlan.error || splitPlan.ranges.length < 2) return;
+    if (!source || splitPlan.length < 2) return;
 
     discardResult();
     setError(null);
@@ -258,14 +192,14 @@ export function PdfSplit({ locale }: { locale: Locale }) {
 
     try {
       const [parts, { default: JSZip }] = await Promise.all([
-        splitPdfDocument(await source.file.arrayBuffer(), splitPlan.ranges),
+        splitPdfDocument(await source.file.arrayBuffer(), splitPlan),
         import("jszip"),
       ]);
       const baseName = safeBaseName(source.file.name);
       const archive = new JSZip();
 
       parts.forEach((part, index) => {
-        const range = splitPlan.ranges[index];
+        const range = splitPlan[index];
         const partNumber = String(index + 1).padStart(2, "0");
         archive.file(
           `${baseName}-part-${partNumber}-pages-${range.start}-${range.end}.pdf`,
@@ -297,7 +231,6 @@ export function PdfSplit({ locale }: { locale: Locale }) {
   }
 
   const busy = isChecking || isSplitting;
-  const validationMessage = splitPoints.trim() ? splitPlan.error : null;
 
   return (
     <section className="pdf-workspace pdf-split" aria-labelledby="pdf-split-title">
@@ -396,69 +329,15 @@ export function PdfSplit({ locale }: { locale: Locale }) {
             </span>
           </div>
 
-          <section className="pdf-split__settings" aria-labelledby="split-settings-title">
-            <header>
-              <div>
-                <h3 id="split-settings-title">{copy.settingsTitle}</h3>
-                <p>{copy.settingsIntro}</p>
-              </div>
-              <button
-                className="action-secondary"
-                type="button"
-                disabled={busy || source.pageCount > MAX_PARTS}
-                title={
-                  source.pageCount > MAX_PARTS
-                    ? copy.everyPageUnavailable
-                    : undefined
-                }
-                onClick={() =>
-                  updateSplitPoints(
-                    Array.from(
-                      { length: source.pageCount - 1 },
-                      (_, index) => index + 1,
-                    ).join(", "),
-                  )
-                }
-              >
-                {copy.everyPage}
-              </button>
-            </header>
-            <label className="pdf-split__field">
-              <span>{copy.fieldLabel}</span>
-              <input
-                type="text"
-                inputMode="numeric"
-                value={splitPoints}
-                placeholder={copy.placeholder}
-                aria-describedby="split-points-hint split-points-error"
-                aria-invalid={Boolean(validationMessage)}
-                disabled={busy}
-                onChange={(event) => updateSplitPoints(event.target.value)}
-              />
-              <small id="split-points-hint">
-                {copy.fieldHint(source.pageCount - 1)}
-              </small>
-              {validationMessage && (
-                <small id="split-points-error" className="pdf-split__field-error">
-                  {validationMessage}
-                </small>
-              )}
-            </label>
-
-            {splitPlan.ranges.length >= 2 && (
-              <div className="pdf-split__preview" aria-live="polite">
-                <strong>{copy.preview(splitPlan.ranges.length)}</strong>
-                <ol>
-                  {splitPlan.ranges.map((range, index) => (
-                    <li key={`${range.start}-${range.end}`}>
-                      <span>{copy.part(index + 1)}</span>
-                      <strong>{copy.range(range)}</strong>
-                    </li>
-                  ))}
-                </ol>
-              </div>
-            )}
-          </section>
+          <PdfPageSelector
+            file={source.file}
+            pageCount={source.pageCount}
+            splitPoints={splitPoints}
+            disabled={busy}
+            maxParts={MAX_PARTS}
+            locale={locale}
+            onChange={updateSplitPoints}
+          />
         </>
       )}
 
@@ -479,9 +358,9 @@ export function PdfSplit({ locale }: { locale: Locale }) {
       <footer className="pdf-workspace__footer">
         <p aria-live="polite">
           {source
-            ? splitPlan.ranges.length >= 2
-              ? copy.preview(splitPlan.ranges.length)
-              : copy.errors.required
+            ? splitPlan.length >= 2
+              ? copy.preview(splitPlan.length)
+              : copy.chooseSplit
             : copy.limit}
         </p>
         <div>
@@ -499,7 +378,7 @@ export function PdfSplit({ locale }: { locale: Locale }) {
             <button
               className="action-primary"
               type="button"
-              disabled={busy || Boolean(splitPlan.error) || splitPlan.ranges.length < 2}
+              disabled={busy || splitPlan.length < 2}
               onClick={splitFile}
             >
               {isSplitting ? (

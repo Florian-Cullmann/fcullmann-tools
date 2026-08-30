@@ -5,21 +5,6 @@ export type PdfPageRange = {
   end: number;
 };
 
-export type PdfSplitPointErrorCode =
-  | "document-too-short"
-  | "required"
-  | "invalid"
-  | "out-of-range"
-  | "duplicate"
-  | "too-many";
-
-export class PdfSplitPointError extends Error {
-  constructor(public readonly code: PdfSplitPointErrorCode) {
-    super(code);
-    this.name = "PdfSplitPointError";
-  }
-}
-
 export async function getPdfPageCount(data: ArrayBuffer | Uint8Array) {
   const document = await PDFDocument.load(data, { updateMetadata: false });
   return document.getPageCount();
@@ -43,42 +28,27 @@ export async function mergePdfDocuments(
   return merged.save({ useObjectStreams: true });
 }
 
-export function parsePdfSplitPoints(
-  input: string,
-  pageCount: number,
-  maxParts = 100,
-) {
-  if (pageCount < 2) throw new PdfSplitPointError("document-too-short");
-
-  const tokens = input
-    .split(",")
-    .map((token) => token.trim())
-    .filter(Boolean);
-
-  if (!tokens.length) throw new PdfSplitPointError("required");
-  if (tokens.some((token) => !/^\d+$/.test(token))) {
-    throw new PdfSplitPointError("invalid");
-  }
-
-  const points = tokens.map(Number);
-  if (points.some((point) => point < 1 || point >= pageCount)) {
-    throw new PdfSplitPointError("out-of-range");
-  }
-  if (new Set(points).size !== points.length) {
-    throw new PdfSplitPointError("duplicate");
-  }
-  if (points.length + 1 > maxParts) {
-    throw new PdfSplitPointError("too-many");
-  }
-
-  return points.sort((left, right) => left - right);
-}
-
 export function getPdfPageRanges(
   pageCount: number,
   splitPoints: ReadonlyArray<number>,
 ): PdfPageRange[] {
-  const boundaries = [...splitPoints, pageCount];
+  if (!Number.isInteger(pageCount) || pageCount < 1) {
+    throw new RangeError("PDF page count must be a positive integer.");
+  }
+
+  const boundaries = [...new Set(splitPoints)].sort(
+    (left, right) => left - right,
+  );
+  if (
+    boundaries.some(
+      (point) =>
+        !Number.isInteger(point) || point < 1 || point >= pageCount,
+    )
+  ) {
+    throw new RangeError("PDF split point is outside the document.");
+  }
+
+  boundaries.push(pageCount);
   let start = 1;
 
   return boundaries.map((end) => {

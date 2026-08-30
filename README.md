@@ -1,55 +1,115 @@
 # fcullmann.com
 
-Personal website, developer-tool collection, and technical publishing platform for Florian Cullmann.
+[![CI](https://github.com/Florian-Cullmann/fcullmann-tools/actions/workflows/ci.yml/badge.svg)](https://github.com/Florian-Cullmann/fcullmann-tools/actions/workflows/ci.yml)
 
-The application combines a bilingual public site with browser-first utilities and a protected editorial dashboard. Tool popularity is derived from recorded usage and controls the order of the featured section.
+Source code for [fcullmann.com](https://fcullmann.com), a bilingual personal site with a growing collection of small browser-based tools.
+
+![fcullmann.com tool catalogue](docs/home.png)
+
+## Features
+
+- Searchable tool catalogue with English and German content
+- Local PDF merging and visual PDF splitting
+- Excel-to-CSV conversion with worksheet selection and preview
+- JSON, Base64, UUID, hashing, timestamp, text, color, and URL utilities
+- Project and article pages with localized metadata
+- Single-user admin area for tools and articles
+- Demo content fallback when no database is configured
+- Sitemap, structured data, `robots.txt`, and `llms.txt`
+
+Files selected in the PDF and Office tools are processed in the browser. Their contents are not uploaded to the application server.
 
 ## Stack
 
 - Next.js 16, React 19, and TypeScript
-- PostgreSQL with Prisma ORM
-- Auth.js / NextAuth credentials sessions for the single-user admin area
-- CSS-first responsive design with generated map-paper texture
-- PDF-Lib and JSZip for local PDF document processing
-- Vitest for unit tests
+- PostgreSQL and Prisma
+- Auth.js / NextAuth
+- PDF-Lib, PDF.js, JSZip, and ExcelJS
+- Vitest and Playwright
 
-## Local setup
+## Getting started
 
-1. Copy `.env.example` to `.env` and replace every placeholder.
-2. Start PostgreSQL with `docker compose up -d postgres`.
-3. Run `npm run db:generate`, `npm run db:migrate`, and `npm run db:seed`.
-4. Start the application with `npm run dev`.
+Node.js 22.13 or newer and npm are recommended. The public site can run without a database using the bundled demo content:
 
-Generate the admin password hash without storing the plain-text password:
+```bash
+npm ci
+npm run dev
+```
+
+Open [http://localhost:3000](http://localhost:3000).
+
+### Database and admin area
+
+For the full setup, copy the example environment file and start PostgreSQL:
+
+```bash
+cp .env.example .env
+docker compose up -d postgres
+npm run db:generate
+npm run db:deploy
+npm run db:seed
+npm run dev
+```
+
+Create the admin password hash before editing `.env`:
 
 ```bash
 node -e "require('bcryptjs').hash(process.argv[1], 12).then(console.log)" 'your-password'
 ```
 
-Without `DATABASE_URL`, public routes use a curated demonstration dataset and the admin area remains read-only. Demo articles are marked visibly and should be replaced or approved before launch.
+Generate `AUTH_SECRET` with a cryptographically secure random value, for example:
+
+```bash
+openssl rand -base64 32
+```
+
+| Variable | Purpose |
+| --- | --- |
+| `DATABASE_URL` | PostgreSQL connection string |
+| `AUTH_SECRET` | Session signing secret |
+| `ADMIN_EMAIL` | Login address for the admin account |
+| `ADMIN_PASSWORD_HASH` | Bcrypt hash of the admin password |
+| `NEXTAUTH_URL` | Canonical URL used by Auth.js |
+| `NEXT_PUBLIC_SITE_URL` | Public base URL used for metadata and indexes |
 
 ## Commands
 
-```bash
-npm run dev
-npm run build
-npm run typecheck
-npm run lint
-npm test
+| Command | Description |
+| --- | --- |
+| `npm run dev` | Start the development server |
+| `npm run build` | Build the standalone production bundle |
+| `npm run start` | Start the standalone production server |
+| `npm run lint` | Run ESLint |
+| `npm run typecheck` | Check TypeScript without emitting files |
+| `npm test` | Run the unit tests |
+| `npm run test:ui` | Run the catalogue and navigation browser checks |
+| `npm run test:pdf-split` | Verify PDF splitting and ZIP output in a browser |
+| `npm run test:excel-to-csv` | Verify XLSX import and CSV download in a browser |
+
+The Playwright checks expect the application at `http://127.0.0.1:3000`. Set `CAPTURE_ORIGIN` to use another address.
+
+## Project structure
+
+```text
+app/                 Next.js routes, metadata, and API handlers
+components/home/     Homepage catalogue
+components/tools/    Interactive tool workspaces
+lib/content/         Database repository and demo content
+lib/tools/           Browser-side document processing
+prisma/              Schema, migrations, and seed data
+scripts/             Browser verification scripts
 ```
 
-## Content model
+## Production
 
-Tools, articles, and projects store English and German content together. English is the default locale. On the first visit, the root route chooses German only when the browser preference indicates German; the explicit language switch is persisted afterward.
+`next.config.ts` enables Next.js standalone output. `npm run build` prepares the runtime bundle and its static assets in `.next/standalone`; `npm run start` launches the generated server.
 
-Public utility logic lives in `components/tools`. Database-backed editorial data is accessed through `lib/content/repository.ts`, which keeps public pages independent of the administration implementation.
+Apply database migrations before starting a new release:
 
-## Tool roadmap
+```bash
+npm run db:deploy
+npm run build
+npm run start
+```
 
-The initial release includes local PDF merging and splitting, JSON formatting, Base64 conversion, UUID generation, and URL encoding. PDF files never leave the browser; compression and conversion remain planned as separate workflows.
-
-Every public tool route provides localized metadata and structured data. Articles consume their editor-managed SEO title and description, and `llms.txt` exposes a concise index for machine readers.
-
-## Deployment
-
-`next.config.ts` produces a standalone server bundle suitable for a container or systemd-managed Node.js process on a KVM host. Production deployment should provide PostgreSQL, TLS termination, backups, runtime secrets, and a migration step before starting the new application version.
+Production deployments should provide TLS termination, PostgreSQL backups, and all runtime secrets through the host environment.

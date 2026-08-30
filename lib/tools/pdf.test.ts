@@ -4,8 +4,6 @@ import {
   getPdfPageCount,
   getPdfPageRanges,
   mergePdfDocuments,
-  parsePdfSplitPoints,
-  PdfSplitPointError,
   splitPdfDocument,
 } from "@/lib/tools/pdf";
 
@@ -42,31 +40,21 @@ describe("PDF tools", () => {
     );
   });
 
-  it("creates ordered page ranges from unsorted split points", () => {
-    const points = parsePdfSplitPoints("7, 3", 10);
-
-    expect(points).toEqual([3, 7]);
-    expect(getPdfPageRanges(10, points)).toEqual([
+  it("creates ordered page ranges from split points", () => {
+    expect(getPdfPageRanges(10, [7, 3, 7])).toEqual([
       { start: 1, end: 3 },
       { start: 4, end: 7 },
       { start: 8, end: 10 },
     ]);
   });
 
-  it.each([
-    ["", "required"],
-    ["two", "invalid"],
-    ["0", "out-of-range"],
-    ["10", "out-of-range"],
-    ["3, 3", "duplicate"],
-  ] as const)("rejects invalid split points: %s", (input, code) => {
-    try {
-      parsePdfSplitPoints(input, 10);
-      expect.fail("Expected split point validation to fail.");
-    } catch (error) {
-      expect(error).toBeInstanceOf(PdfSplitPointError);
-      expect((error as PdfSplitPointError).code).toBe(code);
-    }
+  it("rejects split points outside the document", () => {
+    expect(() => getPdfPageRanges(10, [0])).toThrow(
+      "PDF split point is outside the document.",
+    );
+    expect(() => getPdfPageRanges(10, [10])).toThrow(
+      "PDF split point is outside the document.",
+    );
   });
 
   it("splits a document into the requested page ranges", async () => {

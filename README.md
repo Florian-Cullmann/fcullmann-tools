@@ -9,7 +9,7 @@ Source code for [fcullmann.com](https://fcullmann.com), a bilingual personal sit
 ## Features
 
 - Searchable tool catalogue with English and German content
-- Local PDF merging and visual PDF splitting
+- Local PDF merging, visual splitting, and PDF/JPG conversion
 - Excel-to-CSV conversion with worksheet selection and preview
 - JSON, Base64, UUID, hashing, timestamp, text, color, and URL utilities
 - Project and article pages with localized metadata
@@ -84,6 +84,7 @@ openssl rand -base64 32
 | `npm test` | Run the unit tests |
 | `npm run test:ui` | Run the catalogue and navigation browser checks |
 | `npm run test:pdf-split` | Verify PDF splitting and ZIP output in a browser |
+| `npm run test:pdf-images` | Verify PDF/JPG conversion and downloads in a browser |
 | `npm run test:excel-to-csv` | Verify XLSX import and CSV download in a browser |
 
 The Playwright checks expect the application at `http://127.0.0.1:3000`. Set `CAPTURE_ORIGIN` to use another address.

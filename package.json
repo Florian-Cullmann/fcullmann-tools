@@ -11,6 +11,7 @@
     "test": "vitest run",
     "test:excel-to-csv": "node scripts/verify-excel-to-csv.mjs",
     "test:pdf-split": "node scripts/verify-pdf-split.mjs",
+    "test:pdf-images": "node scripts/verify-pdf-images.mjs",
     "test:ui": "node scripts/verify-ui.mjs",
     "test:watch": "vitest",
     "typecheck": "prisma generate && next typegen && tsc --noEmit",

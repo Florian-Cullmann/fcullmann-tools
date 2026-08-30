@@ -19,12 +19,12 @@ for (const viewport of [
     "EN",
   );
   assert.equal(await page.locator(".featured-grid .utility-card").count(), 6);
-  assert.equal(await page.locator(".pdf-tools-grid .utility-card").count(), 2);
+  assert.equal(await page.locator(".pdf-tools-grid .utility-card").count(), 4);
   assert.deepEqual(
     await page
       .locator(".pdf-tools-grid .utility-card strong")
       .allTextContents(),
-    ["PDF Merge", "PDF Split"],
+    ["PDF Merge", "PDF Split", "PDF to JPG", "JPG to PDF"],
   );
   assert.equal(await page.locator(".office-tools-grid .utility-card").count(), 1);
   assert.equal(

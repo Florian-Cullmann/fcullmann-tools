@@ -109,7 +109,7 @@ export function UtilityHome({
     .slice(0, 6);
   const pdfTools = tools
     .filter((tool) => tool.category === "documents")
-    .slice(0, 2);
+    .slice(0, 3);
   const officeTools = tools.filter((tool) => tool.category === "office");
   const formatter = new Intl.DateTimeFormat(locale, {
     day: "2-digit",

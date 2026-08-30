@@ -355,7 +355,11 @@ button {
   grid-template-columns: repeat(6, minmax(0, 1fr));
   gap: 12px;
 }
-.pdf-tools-grid,
+.pdf-tools-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
 .office-tools-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -1280,6 +1284,120 @@ button {
 .pdf-split__source {
   border-bottom: 1px solid var(--line);
 }
+.pdf-compress__source {
+  border-bottom: 1px solid var(--line);
+}
+.pdf-compress__settings {
+  padding: 18px;
+  background: var(--surface-soft);
+}
+.pdf-compress__settings h3,
+.pdf-compress__settings p {
+  margin: 0;
+}
+.pdf-compress__settings h3 {
+  font-size: 0.94rem;
+}
+.pdf-compress__settings header p {
+  margin-top: 4px;
+  color: var(--ink-soft);
+  font-size: 0.76rem;
+  line-height: 1.5;
+}
+.pdf-compress__levels {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin-top: 15px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  border-radius: 10px;
+}
+.pdf-compress__levels label {
+  min-width: 0;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: start;
+  gap: 10px;
+  padding: 14px;
+  cursor: pointer;
+  transition: background-color 150ms ease;
+}
+.pdf-compress__levels label + label {
+  border-left: 1px solid var(--line);
+}
+.pdf-compress__levels label:hover {
+  background: var(--surface-soft);
+}
+.pdf-compress__levels label:has(input:checked) {
+  color: var(--coral-dark);
+  background: var(--coral-soft);
+}
+.pdf-compress__levels label:has(input:disabled) {
+  cursor: wait;
+}
+.pdf-compress__levels input {
+  width: 16px;
+  height: 16px;
+  margin: 1px 0 0;
+  accent-color: var(--coral);
+}
+.pdf-compress__levels strong,
+.pdf-compress__levels small {
+  display: block;
+}
+.pdf-compress__levels strong {
+  color: var(--ink);
+  font-size: 0.78rem;
+}
+.pdf-compress__levels small {
+  margin-top: 4px;
+  color: var(--ink-soft);
+  font-size: 0.7rem;
+  line-height: 1.45;
+}
+.pdf-compress__note {
+  max-width: 75ch;
+  margin-top: 12px !important;
+  color: var(--ink-soft);
+  font-size: 0.7rem;
+  line-height: 1.5;
+}
+.pdf-compress__progress {
+  display: grid;
+  gap: 9px;
+  padding: 13px 18px;
+  border-top: 1px solid var(--line);
+  color: var(--ink-soft);
+  background: var(--surface);
+  font-size: 0.76rem;
+  font-weight: 650;
+}
+.pdf-compress__progress span {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.pdf-compress__progress progress {
+  width: 100%;
+  height: 7px;
+  overflow: hidden;
+  border: 0;
+  background: var(--line);
+  border-radius: 4px;
+  accent-color: var(--coral);
+}
+.pdf-compress__progress progress::-webkit-progress-bar {
+  background: var(--line);
+}
+.pdf-compress__progress progress::-webkit-progress-value {
+  background: var(--coral);
+  border-radius: 4px;
+}
+.pdf-compress__progress progress::-moz-progress-bar {
+  background: var(--coral);
+  border-radius: 4px;
+}
 .pdf-page-selector {
   padding: 18px;
   background: var(--surface-soft);
@@ -1506,6 +1624,18 @@ button {
 }
 .pdf-workspace__result a:hover {
   background: color-mix(in srgb, var(--success) 88%, black);
+}
+.pdf-workspace__result--neutral {
+  border-top-color: color-mix(in srgb, var(--amber) 20%, white);
+  color: var(--amber);
+  background: var(--amber-soft);
+}
+.pdf-workspace__result--neutral a {
+  border-color: var(--amber);
+  background: var(--amber);
+}
+.pdf-workspace__result--neutral a:hover {
+  background: color-mix(in srgb, var(--amber) 88%, black);
 }
 .pdf-workspace__footer {
   min-height: 68px;
@@ -2190,6 +2320,9 @@ button {
   .catalog-list {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
+  .pdf-tools-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 }
 
 @media (max-width: 760px) {
@@ -2419,6 +2552,22 @@ button {
   }
   .pdf-split__source .pdf-file__actions {
     grid-column: auto;
+  }
+  .pdf-compress__source {
+    grid-template-columns: 42px minmax(0, 1fr) auto;
+  }
+  .pdf-compress__source .pdf-file__actions {
+    grid-column: auto;
+  }
+  .pdf-compress__settings {
+    padding: 16px 14px;
+  }
+  .pdf-compress__levels {
+    grid-template-columns: 1fr;
+  }
+  .pdf-compress__levels label + label {
+    border-top: 1px solid var(--line);
+    border-left: 0;
   }
   .pdf-page-selector {
     padding: 16px 14px;

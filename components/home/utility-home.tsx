@@ -39,7 +39,10 @@ function ToolCard({
   tool: ToolRecord;
   compact?: boolean;
 }) {
-  const tone = categoryColors[tool.category] ?? "blue";
+  const tone =
+    tool.icon === "word-pdf"
+      ? "blue"
+      : (categoryColors[tool.category] ?? "blue");
   return (
     <Link
       className={`utility-card ${compact ? "utility-card--compact" : ""}`}
@@ -109,7 +112,7 @@ export function UtilityHome({
     .slice(0, 6);
   const pdfTools = tools
     .filter((tool) => tool.category === "documents")
-    .slice(0, 4);
+    .slice(0, 5);
   const officeTools = tools.filter((tool) => tool.category === "office");
   const formatter = new Intl.DateTimeFormat(locale, {
     day: "2-digit",
@@ -239,8 +242,8 @@ export function UtilityHome({
                 <h2 id="office-tools-title">Office Tools</h2>
                 <p>
                   {locale === "de"
-                    ? "Excel-Dateien direkt im Browser konvertieren, ohne Upload."
-                    : "Convert Excel files directly in your browser, without uploads."}
+                    ? "Office-Dateien direkt im Browser konvertieren, ohne Upload."
+                    : "Convert Office files directly in your browser, without uploads."}
                 </p>
               </div>
             </div>

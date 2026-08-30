@@ -9,8 +9,9 @@ Source code for [fcullmann.com](https://fcullmann.com), a bilingual personal sit
 ## Features
 
 - Searchable tool catalogue with English and German content
-- Local PDF merging, visual splitting, and PDF/JPG conversion
+- Local PDF merging, visual splitting, image-based compression, and PDF/JPG conversion
 - Excel-to-CSV conversion with worksheet selection and preview
+- Local DOC/DOCX-to-PDF conversion with an in-browser preview
 - JSON, Base64, UUID, hashing, timestamp, text, color, and URL utilities
 - Project and article pages with localized metadata
 - Single-user admin area for tools and articles
@@ -24,7 +25,7 @@ Files selected in the PDF and Office tools are processed in the browser. Their c
 - Next.js 16, React 19, and TypeScript
 - PostgreSQL and Prisma
 - Auth.js / NextAuth
-- PDF-Lib, PDF.js, JSZip, and ExcelJS
+- PDF-Lib, PDF.js, jsPDF, DOCX Preview, JSZip, and ExcelJS
 - Vitest and Playwright
 
 ## Getting started
@@ -83,9 +84,11 @@ openssl rand -base64 32
 | `npm run typecheck` | Check TypeScript without emitting files |
 | `npm test` | Run the unit tests |
 | `npm run test:ui` | Run the catalogue and navigation browser checks |
+| `npm run test:pdf-compress` | Verify local PDF compression and download output in a browser |
 | `npm run test:pdf-split` | Verify PDF splitting and ZIP output in a browser |
 | `npm run test:pdf-images` | Verify PDF/JPG conversion and downloads in a browser |
 | `npm run test:excel-to-csv` | Verify XLSX import and CSV download in a browser |
+| `npm run test:word-to-pdf` | Verify DOCX preview and PDF conversion in a browser |
 
 The Playwright checks expect the application at `http://127.0.0.1:3000`. Set `CAPTURE_ORIGIN` to use another address.
 

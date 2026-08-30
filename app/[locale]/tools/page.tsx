@@ -44,8 +44,8 @@ export default async function ToolsPage({
         </div>
         <p>
           {locale === "de"
-            ? "Ein eigener Workflow zum Komprimieren von PDF-Dateien folgt."
-            : "A dedicated workflow for compressing PDF files will follow."}
+            ? "Weitere Werkzeuge zum Konvertieren und Signieren von PDFs folgen als eigene, klar abgegrenzte Workflows."
+            : "More dedicated workflows for converting and signing PDFs will follow."}
         </p>
         <strong>{locale === "de" ? "In Planung" : "Planned"}</strong>
       </section>

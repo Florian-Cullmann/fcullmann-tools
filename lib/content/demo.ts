@@ -42,6 +42,24 @@ export const demoTools: ToolRecord[] = [
     usageCount: 0,
   },
   {
+    id: "demo-pdf-compress",
+    slug: "pdf-compress",
+    name: { en: "Compress PDF", de: "PDF verkleinern" },
+    summary: {
+      en: "Reduce PDF file size while keeping the best possible quality.",
+      de: "PDF-Dateigröße verringern und bestmögliche Qualität behalten.",
+    },
+    description: {
+      en: "Reduce PDF file size with selectable quality levels and download the optimized document without uploading it.",
+      de: "Die Dateigröße einer PDF mit wählbaren Qualitätsstufen verringern und das optimierte Dokument ohne Upload herunterladen.",
+    },
+    category: "documents",
+    icon: "shrink",
+    featured: true,
+    sortOrder: 2,
+    usageCount: 0,
+  },
+  {
     id: "demo-pdf-to-jpg",
     slug: "pdf-to-jpg",
     name: { en: "PDF to JPG", de: "PDF in JPG" },
@@ -56,7 +74,7 @@ export const demoTools: ToolRecord[] = [
     category: "documents",
     icon: "pdf-image",
     featured: true,
-    sortOrder: 2,
+    sortOrder: 3,
     usageCount: 0,
   },
   {
@@ -74,7 +92,7 @@ export const demoTools: ToolRecord[] = [
     category: "documents",
     icon: "image-pdf",
     featured: true,
-    sortOrder: 3,
+    sortOrder: 4,
     usageCount: 0,
   },
   {
@@ -93,6 +111,24 @@ export const demoTools: ToolRecord[] = [
     icon: "spreadsheet",
     featured: false,
     sortOrder: 2,
+    usageCount: 0,
+  },
+  {
+    id: "demo-word-to-pdf",
+    slug: "word-to-pdf",
+    name: { en: "Word to PDF", de: "Word in PDF" },
+    summary: {
+      en: "Convert DOC and DOCX files into easy-to-share PDFs.",
+      de: "Machen Sie DOC- und DOCX-Dateien einfacher lesbar, indem Sie sie in PDFs umwandeln.",
+    },
+    description: {
+      en: "Convert DOC and DOCX documents into PDF files directly in your browser. DOCX layouts are retained where possible, while older DOC files become clean text documents.",
+      de: "DOC- und DOCX-Dokumente direkt im Browser in PDF-Dateien umwandeln. DOCX-Layouts werden bestmöglich erhalten; ältere DOC-Dateien werden als übersichtliches Textdokument ausgegeben.",
+    },
+    category: "office",
+    icon: "word-pdf",
+    featured: false,
+    sortOrder: 3,
     usageCount: 0,
   },
   {

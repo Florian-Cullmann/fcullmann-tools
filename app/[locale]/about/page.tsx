@@ -9,11 +9,11 @@ export async function generateMetadata({
 }: PageProps<"/[locale]/about">): Promise<Metadata> {
   const { locale } = await params;
   return {
-    title: locale === "de" ? "Über Florian Ullmann" : "About Florian Ullmann",
+    title: locale === "de" ? "Über Florian Cullmann" : "About Florian Cullmann",
     description:
       locale === "de"
-        ? "Über Florian Ullmann und seine Arbeit an Softwareprojekten und Developer-Tools."
-        : "About Florian Ullmann and his work on software projects and developer tools.",
+        ? "Über Florian Cullmann und seine Arbeit an Softwareprojekten und Developer-Tools."
+        : "About Florian Cullmann and his work on software projects and developer tools.",
     alternates: isLocale(locale)
       ? localizedAlternates(locale, "about")
       : undefined,

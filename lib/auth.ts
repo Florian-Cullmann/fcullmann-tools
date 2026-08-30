@@ -32,7 +32,7 @@ export const authOptions: NextAuthOptions = {
           return null;
         const valid = await compare(parsed.data.password, passwordHash);
         return valid
-          ? { id: "site-admin", name: "Florian Ullmann", email: adminEmail }
+          ? { id: "site-admin", name: "Florian Cullmann", email: adminEmail }
           : null;
       },
     }),

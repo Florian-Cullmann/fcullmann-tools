@@ -1,6 +1,6 @@
 ---
 name: "fcullmann.com Search First"
-description: "A direct, compact utility catalogue for useful software by Florian Ullmann."
+description: "A direct, compact utility catalogue for useful software by Florian Cullmann."
 colors:
   cool-canvas: "#f5f7fb"
   utility-surface: "#ffffff"

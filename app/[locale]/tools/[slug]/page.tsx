@@ -83,7 +83,7 @@ export default async function ToolPage({
     operatingSystem: "Any",
     inLanguage: locale,
     isAccessibleForFree: true,
-    author: { "@type": "Person", name: "Florian Ullmann" },
+    author: { "@type": "Person", name: "Florian Cullmann" },
   };
   return (
     <>

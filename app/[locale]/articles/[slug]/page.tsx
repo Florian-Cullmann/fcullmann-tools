@@ -61,7 +61,7 @@ export default async function ArticlePage({
     datePublished: article.publishedAt.toISOString(),
     inLanguage: locale,
     mainEntityOfPage: `${siteUrl}/${locale}/articles/${slug}`,
-    author: { "@type": "Person", name: "Florian Ullmann", url: siteUrl },
+    author: { "@type": "Person", name: "Florian Cullmann", url: siteUrl },
   };
   return (
     <>

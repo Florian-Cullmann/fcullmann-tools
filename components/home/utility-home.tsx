@@ -115,8 +115,8 @@ export function UtilityHome({
         </h1>
         <p>
           {locale === "de"
-            ? "Schnelle, datenschutzfreundliche Browser-Tools von Florian Ullmann — entwickelt für eine Aufgabe, ohne unnötige Umwege."
-            : "Fast, privacy-conscious browser tools by Florian Ullmann — each built to finish one job without getting in the way."}
+            ? "Schnelle, datenschutzfreundliche Browser-Tools von Florian Cullmann — entwickelt für eine Aufgabe, ohne unnötige Umwege."
+            : "Fast, privacy-conscious browser tools by Florian Cullmann — each built to finish one job without getting in the way."}
         </p>
         <label className="utility-search">
           <Search aria-hidden="true" size={21} />

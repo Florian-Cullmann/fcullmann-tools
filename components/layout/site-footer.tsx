@@ -5,7 +5,7 @@ export function SiteFooter({ locale }: { locale: Locale }) {
   return (
     <footer className="site-footer">
       <div className="site-shell site-footer__inner">
-        <p>© {new Date().getFullYear()} Florian Ullmann</p>
+        <p>© {new Date().getFullYear()} Florian Cullmann</p>
         <p>
           {locale === "de"
             ? "Nützliche Software, sorgfältig entwickelt."

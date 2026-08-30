@@ -10,7 +10,7 @@ const messages = {
       about: "About",
     },
     home: {
-      title: "Florian Ullmann",
+      title: "Florian Cullmann",
       role: "Senior Software Engineer",
       statement: "Useful software, carefully made.",
       intro:
@@ -49,7 +49,7 @@ const messages = {
     },
     about: {
       title: "Software should earn its complexity.",
-      body: "I am Florian Ullmann. I build reliable systems, clear interfaces, and developer tools that solve concrete problems.",
+      body: "I am Florian Cullmann. I build reliable systems, clear interfaces, and developer tools that solve concrete problems.",
       note: "A full biography, availability, and verified project history will be added before launch.",
     },
     common: {
@@ -76,7 +76,7 @@ const messages = {
       about: "Über mich",
     },
     home: {
-      title: "Florian Ullmann",
+      title: "Florian Cullmann",
       role: "Senior Software Engineer",
       statement: "Nützliche Software, sorgfältig entwickelt.",
       intro:
@@ -115,7 +115,7 @@ const messages = {
     },
     about: {
       title: "Software sollte ihre Komplexität verdienen.",
-      body: "Ich bin Florian Ullmann. Ich entwickle verlässliche Systeme, klare Oberflächen und Developer-Tools für konkrete Probleme.",
+      body: "Ich bin Florian Cullmann. Ich entwickle verlässliche Systeme, klare Oberflächen und Developer-Tools für konkrete Probleme.",
       note: "Eine vollständige Biografie, Verfügbarkeit und verifizierte Projekthistorie werden vor dem Launch ergänzt.",
     },
     common: {

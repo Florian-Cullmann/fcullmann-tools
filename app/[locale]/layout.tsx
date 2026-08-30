@@ -14,25 +14,25 @@ const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://fcullmann.com";
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: "Florian Ullmann — Developer Tools & Software Projects",
-    template: "%s — Florian Ullmann",
+    default: "Florian Cullmann — Developer Tools & Software Projects",
+    template: "%s — Florian Cullmann",
   },
   description:
-    "Focused browser tools, selected software projects, and practical engineering notes by Florian Ullmann.",
+    "Focused browser tools, selected software projects, and practical engineering notes by Florian Cullmann.",
   applicationName: "fcullmann.com",
-  authors: [{ name: "Florian Ullmann", url: siteUrl }],
-  creator: "Florian Ullmann",
+  authors: [{ name: "Florian Cullmann", url: siteUrl }],
+  creator: "Florian Cullmann",
   alternates: { languages: { en: "/en", de: "/de" } },
   openGraph: {
     type: "website",
     siteName: "fcullmann.com",
-    title: "Florian Ullmann — Developer Tools & Software Projects",
+    title: "Florian Cullmann — Developer Tools & Software Projects",
     description: "Useful software, carefully made.",
     url: siteUrl,
   },
   twitter: {
     card: "summary_large_image",
-    title: "Florian Ullmann",
+    title: "Florian Cullmann",
     description: "Useful software, carefully made.",
   },
   robots: { index: true, follow: true },

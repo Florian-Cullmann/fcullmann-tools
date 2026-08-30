@@ -12,12 +12,12 @@ export async function generateMetadata({
   return {
     title:
       locale === "de"
-        ? "Florian Ullmann — Softwareprojekte & Developer-Tools"
-        : "Florian Ullmann — Developer Tools & Software Projects",
+        ? "Florian Cullmann — Softwareprojekte & Developer-Tools"
+        : "Florian Cullmann — Developer Tools & Software Projects",
     description:
       locale === "de"
-        ? "Fokussierte Browser-Tools, ausgewählte Softwareprojekte und technische Artikel von Florian Ullmann."
-        : "Focused browser tools, selected software projects, and practical engineering notes by Florian Ullmann.",
+        ? "Fokussierte Browser-Tools, ausgewählte Softwareprojekte und technische Artikel von Florian Cullmann."
+        : "Focused browser tools, selected software projects, and practical engineering notes by Florian Cullmann.",
     alternates: isLocale(locale) ? localizedAlternates(locale) : undefined,
   };
 }
@@ -30,7 +30,7 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "Person",
-    name: "Florian Ullmann",
+    name: "Florian Cullmann",
     url: siteUrl,
     knowsAbout: ["Software Engineering", "Developer Tools", "Web Development"],
   };

@@ -1,6 +1,6 @@
 # fcullmann.com
 
-Personal website, developer-tool collection, and technical publishing platform for Florian Ullmann.
+Personal website, developer-tool collection, and technical publishing platform for Florian Cullmann.
 
 The application combines a bilingual public site with browser-first utilities and a protected editorial dashboard. Tool popularity is derived from recorded usage and controls the order of the featured section.
 

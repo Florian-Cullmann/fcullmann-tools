@@ -6,9 +6,9 @@ export async function GET() {
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://fcullmann.com";
   const [tools, articles] = await Promise.all([getTools(), getArticles()]);
   const lines = [
-    "# Florian Ullmann",
+    "# Florian Cullmann",
     "",
-    "> Personal website of senior software engineer Florian Ullmann, featuring browser-based developer tools, selected projects, and technical field notes.",
+    "> Personal website of senior software engineer Florian Cullmann, featuring browser-based developer tools, selected projects, and technical field notes.",
     "",
     "## Developer tools",
     ...tools.map(

@@ -14,8 +14,8 @@ export async function generateMetadata({
     title: locale === "de" ? "Projekte" : "Selected Work",
     description:
       locale === "de"
-        ? "Ausgewählte Softwareprojekte von Florian Ullmann."
-        : "Selected software projects by Florian Ullmann.",
+        ? "Ausgewählte Softwareprojekte von Florian Cullmann."
+        : "Selected software projects by Florian Cullmann.",
     alternates: isLocale(locale)
       ? localizedAlternates(locale, "projects")
       : undefined,

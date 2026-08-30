@@ -13,8 +13,8 @@ Delegated: Next.js with TypeScript, PostgreSQL through Prisma, and Auth.js. The 
 ## Users
 
 - Developers and technical users looking for focused browser-based utilities such as JSON formatting and PDF conversion.
-- Potential clients, collaborators, and peers evaluating Florian Ullmann's professional profile, projects, and writing.
-- Florian Ullmann as the single administrator maintaining tools, articles, and localized editorial content.
+- Potential clients, collaborators, and peers evaluating Florian Cullmann's professional profile, projects, and writing.
+- Florian Cullmann as the single administrator maintaining tools, articles, and localized editorial content.
 
 ## Product Purpose
 
@@ -44,7 +44,7 @@ Visitors arrive through search, direct links, shared tool URLs, articles, or Flo
 
 ## Brand Commitments
 
-- Public name and domain: Florian Ullmann / fcullmann.com.
+- Public name and domain: Florian Cullmann / fcullmann.com.
 - The supplied mockup is a structural reference only: professional introduction first, popular tools immediately below, followed by broader catalogue and editorial material.
 - The final visual system should feel more contemporary and bespoke than a Bootstrap-style card interface.
 - Voice should be direct, useful, technically credible, and free of inflated marketing language.

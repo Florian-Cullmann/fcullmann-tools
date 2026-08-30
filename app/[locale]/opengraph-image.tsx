@@ -1,6 +1,6 @@
 import { ImageResponse } from "next/og";
 
-export const alt = "Florian Ullmann — developer tools and software projects";
+export const alt = "Florian Cullmann — developer tools and software projects";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -61,7 +61,7 @@ export default function OpenGraphImage() {
             marginTop: 22,
           }}
         >
-          Fast, privacy-conscious browser utilities by Florian Ullmann
+          Fast, privacy-conscious browser utilities by Florian Cullmann
         </div>
       </div>
       <div

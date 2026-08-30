@@ -6,7 +6,7 @@ import type { Locale } from "@/lib/content/types";
 import { getMessages } from "@/lib/i18n/messages";
 import { formatJson as parseAndFormatJson } from "@/lib/tools/json";
 
-const initialJson = `{"name":"Florian Ullmann","website":"fcullmann.com","focus":["tools","systems","developer experience"],"available":true}`;
+const initialJson = `{"name":"Florian Cullmann","website":"fcullmann.com","focus":["tools","systems","developer experience"],"available":true}`;
 
 export function JsonFormatter({
   locale,

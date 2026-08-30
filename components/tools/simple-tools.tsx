@@ -149,7 +149,7 @@ export function UuidTool({ locale }: { locale: Locale }) {
 }
 
 export function UrlCodecTool({ locale }: { locale: Locale }) {
-  const [input, setInput] = useState("florian ullmann/tools?format=json");
+  const [input, setInput] = useState("florian cullmann/tools?format=json");
   const [output, setOutput] = useState("");
   const encode = () => setOutput(encodeURIComponent(input));
   const decode = () => {

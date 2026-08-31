@@ -114,6 +114,24 @@ export const demoTools: ToolRecord[] = [
     usageCount: 0,
   },
   {
+    id: "demo-csv-to-excel",
+    slug: "csv-to-excel",
+    name: { en: "CSV to Excel", de: "CSV zu Excel" },
+    summary: {
+      en: "Turn CSV and TSV tables into polished Excel workbooks.",
+      de: "CSV- und TSV-Tabellen in übersichtliche Excel-Dateien umwandeln.",
+    },
+    description: {
+      en: "Open a CSV or TSV file, check its delimiter and columns, and create a formatted XLSX workbook without uploading the data.",
+      de: "Eine CSV- oder TSV-Datei öffnen, Trennzeichen und Spalten prüfen und ohne Upload eine formatierte XLSX-Arbeitsmappe erstellen.",
+    },
+    category: "office",
+    icon: "spreadsheet",
+    featured: false,
+    sortOrder: 3,
+    usageCount: 0,
+  },
+  {
     id: "demo-word-to-pdf",
     slug: "word-to-pdf",
     name: { en: "Word to PDF", de: "Word in PDF" },
@@ -128,7 +146,7 @@ export const demoTools: ToolRecord[] = [
     category: "office",
     icon: "word-pdf",
     featured: false,
-    sortOrder: 3,
+    sortOrder: 4,
     usageCount: 0,
   },
   {

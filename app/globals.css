@@ -362,7 +362,7 @@ button {
 }
 .office-tools-grid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 12px;
 }
 .pdf-tools-grid .utility-card,
@@ -1065,6 +1065,11 @@ button {
   position: sticky;
   z-index: 1;
   left: 0;
+}
+.office-preview--header-row tbody tr:first-child td {
+  color: #173b2b;
+  background: var(--green-soft);
+  font-weight: 720;
 }
 .office-preview tr:last-child > * {
   border-bottom: 0;

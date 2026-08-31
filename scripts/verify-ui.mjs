@@ -50,6 +50,18 @@ for (const viewport of [
     dimensions.viewport,
     `Horizontal overflow at ${viewport.width}px`,
   );
+  assert.equal(await page.locator(".site-footer nav a").count(), 2);
+  await page.goto(`${origin}/de/datenschutz`, { waitUntil: "networkidle" });
+  assert.equal(
+    await page.locator("h1").textContent(),
+    "Datenschutzerklärung",
+  );
+  assert.match(
+    await page.locator("#cookies").textContent(),
+    /keine Cookies oder vergleichbaren Speichertechnologien/,
+  );
+  await page.goto(`${origin}/de/impressum`, { waitUntil: "networkidle" });
+  assert.match(await page.locator("#anbieter").textContent(), /Stücks 32/);
   await page.close();
 }
 
@@ -57,10 +69,14 @@ const context = await browser.newContext({ locale: "de-DE" });
 const page = await context.newPage();
 await page.goto(origin, { waitUntil: "networkidle" });
 assert.equal(new URL(page.url()).pathname, "/de");
+assert.equal((await context.cookies()).length, 0);
 assert.equal(
   (await page.locator(".locale-switch").textContent())?.trim(),
   "DE",
 );
+await page.locator(".locale-switch").click();
+await page.waitForURL(`${origin}/en`);
+assert.equal((await context.cookies()).length, 0);
 await page.goto(`${origin}/admin`, { waitUntil: "networkidle" });
 assert.equal(new URL(page.url()).pathname, "/login");
 await context.close();

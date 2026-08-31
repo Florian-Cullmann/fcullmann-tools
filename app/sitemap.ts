@@ -5,7 +5,15 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://fcullmann.com";
   const [tools, articles] = await Promise.all([getTools(), getArticles()]);
   const locales = ["en", "de"];
-  const fixed = ["", "/tools", "/projects", "/articles", "/about"];
+  const fixed = [
+    "",
+    "/tools",
+    "/projects",
+    "/articles",
+    "/about",
+    "/impressum",
+    "/datenschutz",
+  ];
   return [
     ...locales.flatMap((locale) =>
       fixed.map((path) => ({

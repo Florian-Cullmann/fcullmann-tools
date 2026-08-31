@@ -10,12 +10,7 @@ export function LocaleSwitch({ locale }: { locale: Locale }) {
   const router = useRouter();
   const nextLocale = alternateLocale(locale);
 
-  async function switchLocale() {
-    await fetch("/api/locale", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ locale: nextLocale }),
-    });
+  function switchLocale() {
     const segments = pathname.split("/");
     segments[1] = nextLocale;
     router.push(segments.join("/") || `/${nextLocale}`);

@@ -27,10 +27,31 @@ export async function generateMetadata({
   if (!isLocale(locale)) return {};
   const tool = await getTool(slug);
   if (!tool) return {};
+  const path = `/${locale}/tools/${slug}`;
+  const socialImage = {
+    url: `/${locale}/opengraph-image`,
+    width: 1200,
+    height: 630,
+    alt: "Florian Cullmann — developer tools and software projects",
+  };
   return {
     title: tool.name[locale],
     description: tool.description[locale],
     alternates: localizedAlternates(locale, `tools/${slug}`),
+    openGraph: {
+      type: "website",
+      title: tool.name[locale],
+      description: tool.description[locale],
+      url: path,
+      locale: locale === "de" ? "de_DE" : "en_US",
+      images: [socialImage],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: tool.name[locale],
+      description: tool.description[locale],
+      images: [socialImage],
+    },
   };
 }
 

@@ -16,14 +16,15 @@ import {
   isPdfFile,
   MAX_PDF_BYTES,
   pdfBaseName,
-} from "@/components/tools/pdf-utils";
-import type { Locale } from "@/lib/content/types";
+} from "@/lib/tools/files";
+import type { Locale } from "@/lib/i18n/types";
 import {
   compressPdfDocument,
   type PdfCompressionLevel,
   type PdfCompressionProgress,
 } from "@/lib/tools/pdf-compress";
 import { getPdfPageCount } from "@/lib/tools/pdf";
+import { reportToolUsage } from "@/lib/tools/usage-client";
 
 type SourcePdf = {
   file: File;
@@ -245,10 +246,7 @@ export function PdfCompress({ locale }: { locale: Locale }) {
         savingsPercent: Math.round((savedBytes / source.file.size) * 100),
         usedOriginal: useOriginal,
       });
-      void fetch("/api/tools/pdf-compress/use", {
-        method: "POST",
-        keepalive: true,
-      });
+      reportToolUsage("pdf-compress");
     } catch {
       setProgress(null);
       setError(copy.compressionError);

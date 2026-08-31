@@ -4,7 +4,8 @@ import Link from "next/link";
 import { ArrowRight, FileText, Search, X } from "lucide-react";
 import { useMemo, useState } from "react";
 import { ToolGlyph } from "@/components/tools/tool-glyph";
-import type { ArticleRecord, Locale, ToolRecord } from "@/lib/content/types";
+import type { ArticleRecord, ToolRecord } from "@/lib/content/types";
+import type { Locale } from "@/lib/i18n/types";
 import { getMessages } from "@/lib/i18n/messages";
 
 const categoryColors: Record<string, string> = {

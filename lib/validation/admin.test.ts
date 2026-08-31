@@ -26,4 +26,17 @@ describe("toolSchema", () => {
       toolSchema.safeParse({ ...validTool, slug: "JSON Formatter" }).success,
     ).toBe(false);
   });
+
+  it("only publishes tools with an implemented workspace", () => {
+    expect(
+      toolSchema.safeParse({ ...validTool, slug: "future-tool" }).success,
+    ).toBe(false);
+    expect(
+      toolSchema.safeParse({
+        ...validTool,
+        slug: "future-tool",
+        status: "DRAFT",
+      }).success,
+    ).toBe(true);
+  });
 });

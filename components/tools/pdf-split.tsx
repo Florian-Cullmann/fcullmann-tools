@@ -17,13 +17,14 @@ import {
   isPdfFile,
   MAX_PDF_BYTES,
   pdfBaseName,
-} from "@/components/tools/pdf-utils";
-import type { Locale } from "@/lib/content/types";
+} from "@/lib/tools/files";
+import type { Locale } from "@/lib/i18n/types";
 import {
   getPdfPageCount,
   getPdfPageRanges,
   splitPdfDocument,
 } from "@/lib/tools/pdf";
+import { reportToolUsage } from "@/lib/tools/usage-client";
 
 const MAX_PARTS = 100;
 
@@ -219,10 +220,7 @@ export function PdfSplit({ locale }: { locale: Locale }) {
         partCount: parts.length,
         fileName: `${baseName}-split.zip`,
       });
-      void fetch("/api/tools/pdf-split/use", {
-        method: "POST",
-        keepalive: true,
-      });
+      reportToolUsage("pdf-split");
     } catch {
       setError(copy.splitError);
     } finally {

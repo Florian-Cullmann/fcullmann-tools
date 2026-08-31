@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import type { Locale } from "@/lib/content/types";
+import type { Locale } from "@/lib/i18n/types";
 
 export function localizedAlternates(
   locale: Locale,

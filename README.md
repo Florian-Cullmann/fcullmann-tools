@@ -99,10 +99,15 @@ app/                 Next.js routes, metadata, and API handlers
 components/home/     Homepage catalogue
 components/tools/    Interactive tool workspaces
 lib/content/         Database repository and demo content
-lib/tools/           Browser-side document processing
+lib/i18n/            Locale types, routing, and translations
+lib/tools/           Tool manifest, use cases, and browser-side processing
 prisma/              Schema, migrations, and seed data
 scripts/             Browser verification scripts
 ```
+
+`lib/tools/manifest.ts` is the canonical list of implemented workspaces. Public
+queries and admin validation use it so content cannot publish a route without a
+matching implementation.
 
 ## Production
 

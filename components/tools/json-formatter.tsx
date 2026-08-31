@@ -2,9 +2,10 @@
 
 import { useMemo, useRef, useState } from "react";
 import { Check, Clipboard, Play, Trash2 } from "lucide-react";
-import type { Locale } from "@/lib/content/types";
+import type { Locale } from "@/lib/i18n/types";
 import { getMessages } from "@/lib/i18n/messages";
 import { formatJson as parseAndFormatJson } from "@/lib/tools/json";
+import { reportToolUsage } from "@/lib/tools/usage-client";
 
 const initialJson = `{"name":"Florian Cullmann","website":"fcullmann.com","focus":["tools","systems","developer experience"],"available":true}`;
 
@@ -36,10 +37,7 @@ export function JsonFormatter({
       setStatus("valid");
       if (!tracked.current) {
         tracked.current = true;
-        void fetch("/api/tools/json-formatter/use", {
-          method: "POST",
-          keepalive: true,
-        });
+        reportToolUsage("json-formatter");
       }
     } else setStatus("invalid");
   }

@@ -4,7 +4,8 @@ import Link from "next/link";
 import { ArrowRight, Search } from "lucide-react";
 import { useMemo, useState } from "react";
 import { ToolGlyph } from "@/components/tools/tool-glyph";
-import type { Locale, ToolRecord } from "@/lib/content/types";
+import type { ToolRecord } from "@/lib/content/types";
+import type { Locale } from "@/lib/i18n/types";
 import { getMessages } from "@/lib/i18n/messages";
 
 export function ToolCatalog({

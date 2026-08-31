@@ -13,14 +13,15 @@ import {
   X,
 } from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { formatFileSize } from "@/components/tools/pdf-utils";
-import type { Locale } from "@/lib/content/types";
+import type { Locale } from "@/lib/i18n/types";
+import { formatFileSize } from "@/lib/tools/files";
 import {
   createPdfFromJpgs,
   type PdfImageMargin,
   type PdfImageOrientation,
   type PdfImagePageSize,
 } from "@/lib/tools/pdf-images";
+import { reportToolUsage } from "@/lib/tools/usage-client";
 
 const MAX_FILES = 50;
 const MAX_TOTAL_BYTES = 100 * 1024 * 1024;
@@ -296,10 +297,7 @@ export function JpgToPdf({ locale }: { locale: Locale }) {
         pageCount: files.length,
         fileName: `${baseName}-images.pdf`,
       });
-      void fetch("/api/tools/jpg-to-pdf/use", {
-        method: "POST",
-        keepalive: true,
-      });
+      reportToolUsage("jpg-to-pdf");
     } catch {
       setError(copy.convertError);
     } finally {

@@ -10,8 +10,8 @@ import {
   Table2,
 } from "lucide-react";
 import { useMemo, useRef, useState } from "react";
-import { formatFileSize } from "@/components/tools/pdf-utils";
-import type { Locale } from "@/lib/content/types";
+import type { Locale } from "@/lib/i18n/types";
+import { formatFileSize } from "@/lib/tools/files";
 import {
   EXCEL_PREVIEW_COLUMNS,
   EXCEL_PREVIEW_ROWS,
@@ -23,6 +23,7 @@ import {
   type CsvDelimiter,
   type ParsedExcelWorkbook,
 } from "@/lib/tools/excel";
+import { reportToolUsage } from "@/lib/tools/usage-client";
 
 export function ExcelToCsv({ locale }: { locale: Locale }) {
   const copy =
@@ -148,10 +149,7 @@ export function ExcelToCsv({ locale }: { locale: Locale }) {
     anchor.download = `${safeFilePart(excelBaseName(file.name))}${sheetSuffix}.csv`;
     anchor.click();
     URL.revokeObjectURL(url);
-    void fetch("/api/tools/excel-to-csv/use", {
-      method: "POST",
-      keepalive: true,
-    });
+    reportToolUsage("excel-to-csv");
   }
 
   const busy = isReading;

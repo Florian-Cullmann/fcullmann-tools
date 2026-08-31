@@ -1,4 +1,4 @@
-export type Locale = "en" | "de";
+import type { Locale } from "@/lib/i18n/types";
 
 export type ToolRecord = {
   id: string;

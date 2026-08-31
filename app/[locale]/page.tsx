@@ -5,6 +5,8 @@ import { getArticles, getTools } from "@/lib/content/repository";
 import { isLocale } from "@/lib/i18n/config";
 import { jsonLd, localizedAlternates } from "@/lib/seo";
 
+export const revalidate = 60;
+
 export async function generateMetadata({
   params,
 }: PageProps<"/[locale]">): Promise<Metadata> {
@@ -29,10 +31,28 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://fcullmann.com";
   const structuredData = {
     "@context": "https://schema.org",
-    "@type": "Person",
-    name: "Florian Cullmann",
-    url: siteUrl,
-    knowsAbout: ["Software Engineering", "Developer Tools", "Web Development"],
+    "@graph": [
+      {
+        "@type": "WebSite",
+        "@id": `${siteUrl}/#website`,
+        url: siteUrl,
+        name: "fcullmann.com",
+        alternateName: "Florian Cullmann",
+        inLanguage: ["en", "de"],
+        publisher: { "@id": `${siteUrl}/#person` },
+      },
+      {
+        "@type": "Person",
+        "@id": `${siteUrl}/#person`,
+        name: "Florian Cullmann",
+        url: siteUrl,
+        knowsAbout: [
+          "Software Engineering",
+          "Developer Tools",
+          "Web Development",
+        ],
+      },
+    ],
   };
 
   return (

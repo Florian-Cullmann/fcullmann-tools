@@ -1,4 +1,5 @@
 import { createElement, type ComponentType, type ReactElement } from "react";
+import { CsvToExcel } from "@/components/tools/csv-to-excel";
 import { ExcelToCsv } from "@/components/tools/excel-to-csv";
 import { JpgToPdf } from "@/components/tools/jpg-to-pdf";
 import { JsonFormatter } from "@/components/tools/json-formatter";
@@ -18,13 +19,19 @@ import {
   UuidTool,
   WordCounterTool,
 } from "@/components/tools/simple-tools";
-import type { Locale } from "@/lib/content/types";
+import type { Locale } from "@/lib/i18n/types";
+import {
+  implementedToolSlugs,
+  isImplementedToolSlug,
+  type ToolSlug,
+} from "@/lib/tools/manifest";
 
 export type ToolWorkspaceProps = Readonly<{
   locale: Locale;
 }>;
 
 const toolWorkspaceRegistry = {
+  "csv-to-excel": CsvToExcel,
   "excel-to-csv": ExcelToCsv,
   "word-to-pdf": WordToPdf,
   "pdf-compress": PdfCompress,
@@ -42,24 +49,22 @@ const toolWorkspaceRegistry = {
   "color-converter": ColorConverterTool,
   "word-counter": WordCounterTool,
   "slug-generator": SlugGeneratorTool,
-} satisfies Record<string, ComponentType<ToolWorkspaceProps>>;
+} satisfies Record<ToolSlug, ComponentType<ToolWorkspaceProps>>;
 
-export type RegisteredToolSlug = keyof typeof toolWorkspaceRegistry;
+export type RegisteredToolSlug = ToolSlug;
 
-export const registeredToolSlugs = Object.freeze(
-  Object.keys(toolWorkspaceRegistry) as RegisteredToolSlug[],
-);
+export const registeredToolSlugs = implementedToolSlugs;
 
 export function getToolWorkspace(
   slug: string,
 ): ComponentType<ToolWorkspaceProps> | null {
-  if (!Object.hasOwn(toolWorkspaceRegistry, slug)) return null;
+  if (!isImplementedToolSlug(slug)) return null;
 
-  return toolWorkspaceRegistry[slug as RegisteredToolSlug];
+  return toolWorkspaceRegistry[slug];
 }
 
 export function hasToolWorkspace(slug: string): slug is RegisteredToolSlug {
-  return Object.hasOwn(toolWorkspaceRegistry, slug);
+  return isImplementedToolSlug(slug);
 }
 
 export function renderToolWorkspace(

@@ -1,4 +1,4 @@
-import type { Locale } from "@/lib/content/types";
+import type { Locale } from "@/lib/i18n/types";
 
 export const MAX_PDF_BYTES = 100 * 1024 * 1024;
 

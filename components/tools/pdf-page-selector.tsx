@@ -3,7 +3,7 @@
 import { FileText, LoaderCircle, Plus, Scissors } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import type { PDFDocumentProxy, RenderTask } from "pdfjs-dist";
-import type { Locale } from "@/lib/content/types";
+import type { Locale } from "@/lib/i18n/types";
 
 type PdfPageSelectorProps = {
   file: File;

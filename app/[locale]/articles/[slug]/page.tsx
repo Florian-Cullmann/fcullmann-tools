@@ -26,6 +26,13 @@ export async function generateMetadata({
   const title = article.seoTitle?.[locale] ?? article.title[locale];
   const description =
     article.seoDescription?.[locale] ?? article.excerpt[locale];
+  const path = `/${locale}/articles/${slug}`;
+  const socialImage = {
+    url: `/${locale}/opengraph-image`,
+    width: 1200,
+    height: 630,
+    alt: "Florian Cullmann — developer tools and software projects",
+  };
   return {
     title,
     description,
@@ -34,7 +41,16 @@ export async function generateMetadata({
       type: "article",
       title,
       description,
+      url: path,
+      locale: locale === "de" ? "de_DE" : "en_US",
       publishedTime: article.publishedAt.toISOString(),
+      images: [socialImage],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: [socialImage],
     },
   };
 }

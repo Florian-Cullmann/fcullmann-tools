@@ -6,10 +6,18 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const [tools, articles] = await Promise.all([getTools(), getArticles()]);
   const locales = ["en", "de"];
   const fixed = ["", "/tools", "/projects", "/articles", "/about"];
+  const alternates = (path: string) => ({
+    languages: {
+      en: `${baseUrl}/en${path}`,
+      de: `${baseUrl}/de${path}`,
+      "x-default": `${baseUrl}/en${path}`,
+    },
+  });
   return [
     ...locales.flatMap((locale) =>
       fixed.map((path) => ({
         url: `${baseUrl}/${locale}${path}`,
+        alternates: alternates(path),
         changeFrequency:
           path === "" ? ("weekly" as const) : ("monthly" as const),
         priority: path === "" ? 1 : 0.7,
@@ -18,6 +26,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ...locales.flatMap((locale) =>
       tools.map((tool) => ({
         url: `${baseUrl}/${locale}/tools/${tool.slug}`,
+        alternates: alternates(`/tools/${tool.slug}`),
         changeFrequency: "monthly" as const,
         priority: 0.8,
       })),
@@ -25,6 +34,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ...locales.flatMap((locale) =>
       articles.map((article) => ({
         url: `${baseUrl}/${locale}/articles/${article.slug}`,
+        alternates: alternates(`/articles/${article.slug}`),
         lastModified: article.publishedAt,
         changeFrequency: "yearly" as const,
         priority: 0.6,

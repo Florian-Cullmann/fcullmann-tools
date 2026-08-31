@@ -9,6 +9,8 @@ import { isLocale } from "@/lib/i18n/config";
 import { getMessages } from "@/lib/i18n/messages";
 import { jsonLd, localizedAlternates } from "@/lib/seo";
 
+export const revalidate = 60;
+
 export async function generateStaticParams() {
   const articles = await getArticles();
   return ["en", "de"].flatMap((locale) =>

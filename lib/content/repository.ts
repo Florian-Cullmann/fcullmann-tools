@@ -66,8 +66,14 @@ export const getTool = cache(
 export const getArticles = cache(async (): Promise<ArticleRecord[]> => {
   if (!canQueryDatabase()) return demoArticles;
 
+  const now = new Date();
   const articles = await getDb().article.findMany({
-    where: { status: "PUBLISHED", publishedAt: { lte: new Date() } },
+    where: {
+      OR: [
+        { status: "PUBLISHED", publishedAt: { lte: now } },
+        { status: "SCHEDULED", publishedAt: { lte: now } },
+      ],
+    },
     orderBy: { publishedAt: "desc" },
   });
 

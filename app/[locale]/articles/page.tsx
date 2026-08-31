@@ -7,6 +7,8 @@ import { isLocale } from "@/lib/i18n/config";
 import { getMessages } from "@/lib/i18n/messages";
 import { localizedAlternates } from "@/lib/seo";
 
+export const revalidate = 60;
+
 export async function generateMetadata({
   params,
 }: PageProps<"/[locale]/articles">): Promise<Metadata> {

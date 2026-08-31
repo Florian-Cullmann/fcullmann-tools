@@ -1,4 +1,5 @@
 import { createElement, type ComponentType, type ReactElement } from "react";
+import { CsvToExcel } from "@/components/tools/csv-to-excel";
 import { ExcelToCsv } from "@/components/tools/excel-to-csv";
 import { JpgToPdf } from "@/components/tools/jpg-to-pdf";
 import { JsonFormatter } from "@/components/tools/json-formatter";
@@ -30,6 +31,7 @@ export type ToolWorkspaceProps = Readonly<{
 }>;
 
 const toolWorkspaceRegistry = {
+  "csv-to-excel": CsvToExcel,
   "excel-to-csv": ExcelToCsv,
   "word-to-pdf": WordToPdf,
   "pdf-compress": PdfCompress,

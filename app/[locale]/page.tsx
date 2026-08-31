@@ -5,6 +5,8 @@ import { getArticles, getTools } from "@/lib/content/repository";
 import { isLocale } from "@/lib/i18n/config";
 import { jsonLd, localizedAlternates } from "@/lib/seo";
 
+export const revalidate = 60;
+
 export async function generateMetadata({
   params,
 }: PageProps<"/[locale]">): Promise<Metadata> {

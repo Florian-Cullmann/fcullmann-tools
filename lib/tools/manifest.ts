@@ -1,4 +1,5 @@
 export const implementedToolSlugs = [
+  "csv-to-excel",
   "excel-to-csv",
   "word-to-pdf",
   "pdf-compress",

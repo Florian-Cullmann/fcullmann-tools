@@ -9,8 +9,7 @@ import {
   RefreshCw,
 } from "lucide-react";
 import { useRef, useState } from "react";
-import { formatFileSize } from "@/components/tools/pdf-utils";
-import type { Locale } from "@/lib/content/types";
+import type { Locale } from "@/lib/i18n/types";
 import {
   createExcelWorkbook,
   CSV_PREVIEW_COLUMNS,
@@ -22,6 +21,7 @@ import {
   type ParsedCsv,
 } from "@/lib/tools/csv";
 import type { CsvDelimiter } from "@/lib/tools/excel";
+import { formatFileSize } from "@/lib/tools/files";
 
 export function CsvToExcel({ locale }: { locale: Locale }) {
   const copy =

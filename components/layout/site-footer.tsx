@@ -12,10 +12,11 @@ export function SiteFooter({ locale }: { locale: Locale }) {
             : "Useful software, carefully made."}
         </p>
         <nav aria-label="Legal">
-          <Link href={`/${locale}/about`}>
-            {locale === "de"
-              ? "Impressum & Datenschutz folgen"
-              : "Legal details forthcoming"}
+          <Link href={`/${locale}/impressum`}>
+            {locale === "de" ? "Impressum" : "Legal notice"}
+          </Link>
+          <Link href={`/${locale}/datenschutz`}>
+            {locale === "de" ? "Datenschutz" : "Privacy"}
           </Link>
         </nav>
       </div>

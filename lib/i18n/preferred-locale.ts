@@ -1,5 +1,5 @@
 import { defaultLocale, isLocale } from "@/lib/i18n/config";
-import type { Locale } from "@/lib/content/types";
+import type { Locale } from "@/lib/i18n/types";
 
 export function localeFromAcceptLanguage(header: string | null): Locale {
   if (!header) return defaultLocale;

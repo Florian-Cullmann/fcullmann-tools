@@ -16,15 +16,16 @@ import {
   PdfImageLimitError,
   renderPdfPagesAsJpegs,
   type JpegOutput,
-} from "@/components/tools/pdf-to-jpg-utils";
+} from "@/lib/tools/pdf-to-jpg";
 import {
   formatFileSize,
   isPdfFile,
   MAX_PDF_BYTES,
   pdfBaseName,
-} from "@/components/tools/pdf-utils";
-import type { Locale } from "@/lib/content/types";
+} from "@/lib/tools/files";
+import type { Locale } from "@/lib/i18n/types";
 import { getPdfPageCount } from "@/lib/tools/pdf";
+import { reportToolUsage } from "@/lib/tools/usage-client";
 
 const MAX_PAGES = 200;
 const MAX_EXTRACTED_IMAGES = 500;
@@ -293,10 +294,7 @@ export function PdfToJpg({ locale }: { locale: Locale }) {
         count: outputs.length,
         fileName: packaged.fileName,
       });
-      void fetch("/api/tools/pdf-to-jpg/use", {
-        method: "POST",
-        keepalive: true,
-      });
+      reportToolUsage("pdf-to-jpg");
     } catch (conversionError) {
       setError(
         conversionError instanceof PdfImageLimitError

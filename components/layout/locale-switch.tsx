@@ -2,7 +2,7 @@
 
 import { Languages } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
-import type { Locale } from "@/lib/content/types";
+import type { Locale } from "@/lib/i18n/types";
 import { alternateLocale } from "@/lib/i18n/config";
 
 export function LocaleSwitch({ locale }: { locale: Locale }) {

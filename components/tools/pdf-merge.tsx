@@ -16,9 +16,10 @@ import {
   formatFileSize,
   isPdfFile,
   MAX_PDF_BYTES,
-} from "@/components/tools/pdf-utils";
-import type { Locale } from "@/lib/content/types";
+} from "@/lib/tools/files";
+import type { Locale } from "@/lib/i18n/types";
 import { getPdfPageCount, mergePdfDocuments } from "@/lib/tools/pdf";
+import { reportToolUsage } from "@/lib/tools/usage-client";
 
 const MAX_FILES = 20;
 const MAX_TOTAL_BYTES = MAX_PDF_BYTES * 2;
@@ -200,10 +201,7 @@ export function PdfMerge({ locale }: { locale: Locale }) {
       const url = URL.createObjectURL(blob);
       resultUrl.current = url;
       setResult({ url, size: blob.size, pageCount: totalPages });
-      void fetch("/api/tools/pdf-merge/use", {
-        method: "POST",
-        keepalive: true,
-      });
+      reportToolUsage("pdf-merge");
     } catch {
       setError(copy.mergeError);
     } finally {

@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { isImplementedToolSlug } from "@/lib/tools/manifest";
 
 const slug = z
   .string()
@@ -10,21 +11,31 @@ const slug = z
     "Use lowercase letters, numbers, and hyphens.",
   );
 
-export const toolSchema = z.object({
-  id: z.string().optional(),
-  slug,
-  nameEn: z.string().trim().min(2).max(80),
-  nameDe: z.string().trim().min(2).max(80),
-  summaryEn: z.string().trim().min(10).max(180),
-  summaryDe: z.string().trim().min(10).max(180),
-  descriptionEn: z.string().trim().min(20).max(800),
-  descriptionDe: z.string().trim().min(20).max(800),
-  category: z.string().trim().min(2).max(50),
-  icon: z.string().trim().min(2).max(30),
-  status: z.enum(["DRAFT", "PUBLISHED", "ARCHIVED"]),
-  featured: z.boolean(),
-  sortOrder: z.number().int().min(0).max(999),
-});
+export const toolSchema = z
+  .object({
+    id: z.string().optional(),
+    slug,
+    nameEn: z.string().trim().min(2).max(80),
+    nameDe: z.string().trim().min(2).max(80),
+    summaryEn: z.string().trim().min(10).max(180),
+    summaryDe: z.string().trim().min(10).max(180),
+    descriptionEn: z.string().trim().min(20).max(800),
+    descriptionDe: z.string().trim().min(20).max(800),
+    category: z.string().trim().min(2).max(50),
+    icon: z.string().trim().min(2).max(30),
+    status: z.enum(["DRAFT", "PUBLISHED", "ARCHIVED"]),
+    featured: z.boolean(),
+    sortOrder: z.number().int().min(0).max(999),
+  })
+  .superRefine((tool, context) => {
+    if (tool.status === "PUBLISHED" && !isImplementedToolSlug(tool.slug)) {
+      context.addIssue({
+        code: "custom",
+        path: ["slug"],
+        message: "Only tools with an implemented workspace can be published.",
+      });
+    }
+  });
 
 export const articleSchema = z.object({
   id: z.string().optional(),

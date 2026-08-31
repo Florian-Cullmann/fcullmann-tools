@@ -1,5 +1,5 @@
 import type { PDFDocumentProxy, PDFPageProxy } from "pdfjs-dist";
-import { getPdfPageRenderScale } from "@/lib/tools/pdf-images";
+import { getPdfPageRenderScale } from "./pdf-images";
 
 type PdfJsModule = typeof import("pdfjs-dist");
 

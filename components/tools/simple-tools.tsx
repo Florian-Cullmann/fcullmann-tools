@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { Clipboard, RefreshCw } from "lucide-react";
-import type { Locale } from "@/lib/content/types";
+import type { Locale } from "@/lib/i18n/types";
 import {
   getTextStats,
   hexToRgb,
@@ -10,6 +10,8 @@ import {
   toSlug,
   toTitleCase,
 } from "@/lib/tools/converters";
+import type { ToolSlug } from "@/lib/tools/manifest";
+import { reportToolUsage } from "@/lib/tools/usage-client";
 
 function ToolFrame({
   slug,
@@ -23,7 +25,7 @@ function ToolFrame({
   actionLabel,
   secondaryLabel,
 }: {
-  slug: string;
+  slug: ToolSlug;
   title: string;
   locale: Locale;
   input: string;
@@ -35,7 +37,7 @@ function ToolFrame({
   secondaryLabel?: string;
 }) {
   function trackUse() {
-    void fetch(`/api/tools/${slug}/use`, { method: "POST", keepalive: true });
+    reportToolUsage(slug);
   }
 
   async function run(actionToRun: () => void) {

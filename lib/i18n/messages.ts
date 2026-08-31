@@ -1,4 +1,4 @@
-import type { Locale } from "@/lib/content/types";
+import type { Locale } from "@/lib/i18n/types";
 
 const messages = {
   en: {

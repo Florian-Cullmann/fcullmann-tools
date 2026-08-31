@@ -9,8 +9,9 @@ import {
   RefreshCw,
 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
-import { formatFileSize } from "@/components/tools/pdf-utils";
-import type { Locale } from "@/lib/content/types";
+import type { Locale } from "@/lib/i18n/types";
+import { formatFileSize } from "@/lib/tools/files";
+import { reportToolUsage } from "@/lib/tools/usage-client";
 import {
   createPdfFromWordPages,
   extractLegacyWordPages,
@@ -237,10 +238,7 @@ export function WordToPdf({ locale }: { locale: Locale }) {
         size: converted.blob.size,
         pageCount: converted.pageCount,
       });
-      void fetch("/api/tools/word-to-pdf/use", {
-        method: "POST",
-        keepalive: true,
-      });
+      reportToolUsage("word-to-pdf");
     } catch (reason) {
       setError(
         reason instanceof Error && reason.message === "TOO_MANY_WORD_PAGES"

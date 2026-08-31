@@ -1,5 +1,5 @@
 import Link from "next/link";
-import type { Locale } from "@/lib/content/types";
+import type { Locale } from "@/lib/i18n/types";
 
 export function SiteFooter({ locale }: { locale: Locale }) {
   return (

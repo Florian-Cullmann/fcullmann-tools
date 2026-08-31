@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { Code2 } from "lucide-react";
 import { LocaleSwitch } from "@/components/layout/locale-switch";
-import type { Locale } from "@/lib/content/types";
+import type { Locale } from "@/lib/i18n/types";
 import { getMessages } from "@/lib/i18n/messages";
 
 export function SiteHeader({ locale }: { locale: Locale }) {

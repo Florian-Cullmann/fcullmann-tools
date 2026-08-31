@@ -1,4 +1,4 @@
-import type { Locale } from "@/lib/content/types";
+import type { Locale } from "@/lib/i18n/types";
 
 export const locales = ["en", "de"] as const;
 export const defaultLocale: Locale = "en";

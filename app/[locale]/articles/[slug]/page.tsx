@@ -33,7 +33,7 @@ export async function generateMetadata({
     url: `/${locale}/opengraph-image`,
     width: 1200,
     height: 630,
-    alt: "Florian Cullmann — developer tools and software projects",
+    alt: "Florian Cullmann - developer tools and software projects",
   };
   return {
     title,

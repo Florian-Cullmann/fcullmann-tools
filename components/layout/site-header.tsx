@@ -7,10 +7,10 @@ import { getMessages } from "@/lib/i18n/messages";
 export function SiteHeader({ locale }: { locale: Locale }) {
   const { nav } = getMessages(locale);
   const links = [
-    [nav.tools, `/${locale}/tools`],
-    [nav.projects, `/${locale}/projects`],
-    [nav.articles, `/${locale}/articles`],
-    [nav.about, `/${locale}/about`],
+    [nav.tools, `/${locale}/tools`, false],
+    [nav.projects, `/${locale}/projects`, false],
+    [nav.articles, `/${locale}/articles`, true],
+    [nav.about, `/${locale}/about`, false],
   ] as const;
 
   return (
@@ -19,7 +19,7 @@ export function SiteHeader({ locale }: { locale: Locale }) {
         <Link
           className="wordmark"
           href={`/${locale}`}
-          aria-label={`${nav.home} — fcullmann.com`}
+          aria-label={`${nav.home} - fcullmann.com`}
         >
           <span className="wordmark__mark">
             <Code2 aria-hidden="true" size={18} strokeWidth={2.2} />
@@ -27,11 +27,26 @@ export function SiteHeader({ locale }: { locale: Locale }) {
           <span>fcullmann.com</span>
         </Link>
         <nav aria-label="Primary navigation">
-          {links.map(([label, href]) => (
-            <Link key={href} href={href}>
-              {label}
-            </Link>
-          ))}
+          {links.map(([label, href, disabled]) =>
+            disabled ? (
+              <span
+                className="is-disabled"
+                aria-disabled="true"
+                title={
+                  locale === "de"
+                    ? "Artikel folgen demnächst"
+                    : "Articles are coming soon"
+                }
+                key={href}
+              >
+                {label}
+              </span>
+            ) : (
+              <Link key={href} href={href}>
+                {label}
+              </Link>
+            ),
+          )}
         </nav>
         <LocaleSwitch locale={locale} />
       </div>

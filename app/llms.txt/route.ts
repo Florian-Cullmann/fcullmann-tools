@@ -20,25 +20,25 @@ export async function GET() {
     `- [Projects](${siteUrl}/en/projects): Selected software projects.`,
     `- [About Florian Cullmann](${siteUrl}/en/about): Author and site context.`,
     "",
-    "## Developer tools — English",
+    "## Developer tools - English",
     ...tools.map(
       (tool) =>
         `- [${tool.name.en}](${siteUrl}/en/tools/${tool.slug}): ${tool.summary.en}`,
     ),
     "",
-    "## Developer-Tools — Deutsch",
+    "## Developer-Tools - Deutsch",
     ...tools.map(
       (tool) =>
         `- [${tool.name.de}](${siteUrl}/de/tools/${tool.slug}): ${tool.summary.de}`,
     ),
     "",
-    "## Writing — English",
+    "## Writing - English",
     ...articles.map(
       (article) =>
         `- [${article.title.en}](${siteUrl}/en/articles/${article.slug}): ${article.excerpt.en}`,
     ),
     "",
-    "## Artikel — Deutsch",
+    "## Artikel - Deutsch",
     ...articles.map(
       (article) =>
         `- [${article.title.de}](${siteUrl}/de/articles/${article.slug}): ${article.excerpt.de}`,

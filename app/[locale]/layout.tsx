@@ -14,8 +14,8 @@ const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://fcullmann.com";
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: "Florian Cullmann — Developer Tools & Software Projects",
-    template: "%s — Florian Cullmann",
+    default: "Florian Cullmann - Developer Tools & Software Projects",
+    template: "%s - Florian Cullmann",
   },
   description:
     "Focused browser tools, selected software projects, and practical engineering notes by Florian Cullmann.",
@@ -26,7 +26,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     siteName: "fcullmann.com",
-    title: "Florian Cullmann — Developer Tools & Software Projects",
+    title: "Florian Cullmann - Developer Tools & Software Projects",
     description: "Useful software, carefully made.",
     url: siteUrl,
   },
@@ -56,7 +56,7 @@ export default async function LocaleLayout({
           className="contents"
           aria-hidden="true"
           dangerouslySetInnerHTML={{
-            __html: `<!-- THESIS: Search First turns the personal site into a direct utility catalogue and refuses an oversized profile hero or atmospheric metaphor. OWN-WORLD: cool #F5F7FB canvas, white rounded utility cards, coral primary actions, multicolor functional glyph tiles, and compact sans typography. STORY: visitors understand that Florian builds and maintains useful tools, search or filter the catalogue, and open one; projects and writing support authorship. FIRST VIEWPORT: slim header, centered introduction, wide search, category filters, featured tools, and dense all-tools rows crossing the fold; search is the primary action. FORM: Straight Utility Catalogue, chosen explicitly, seed 9c978054. FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, DESIGN.md, and every shipping raster carrying its provenance -->`,
+            __html: `<!-- THESIS: Florian's digital workshop connects a focused utility catalogue with a quieter personal layer. OWN-WORLD: cool #F5F7FB canvas, white editorial surfaces, coral primary actions, multicolor functional glyph tiles, and compact sans typography. STORY: visitors understand what Florian makes, search or filter his toolbox, then meet the person behind it on the about page. FIRST VIEWPORT: slim header, concise personal introduction, direct links, search, category filters, and the first tool rows. FORM: Personal Workshop Catalogue. -->`,
           }}
         />
         <a className="skip-link" href="#main-content">

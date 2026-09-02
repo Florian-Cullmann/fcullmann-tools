@@ -14,8 +14,8 @@ export async function generateMetadata({
   return {
     title:
       locale === "de"
-        ? "Florian Cullmann — Softwareprojekte & Developer-Tools"
-        : "Florian Cullmann — Developer Tools & Software Projects",
+        ? "Florian Cullmann - Softwareprojekte & Developer-Tools"
+        : "Florian Cullmann - Developer Tools & Software Projects",
     description:
       locale === "de"
         ? "Fokussierte Browser-Tools, ausgewählte Softwareprojekte und technische Artikel von Florian Cullmann."

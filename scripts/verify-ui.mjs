@@ -1,7 +1,7 @@
 import { chromium } from "playwright";
 import assert from "node:assert/strict";
 
-const origin = process.env.CAPTURE_ORIGIN ?? "http://127.0.0.1:3000";
+const origin = process.env.CAPTURE_ORIGIN ?? "http://localhost:3000";
 const browser = await chromium.launch({ headless: true });
 
 for (const viewport of [
@@ -30,6 +30,11 @@ for (const viewport of [
   assert.deepEqual(
     await page.locator(".office-tools-grid .utility-card strong").allTextContents(),
     ["Excel to CSV", "CSV to Excel", "Word to PDF"],
+  );
+  assert.equal(await page.locator(".image-tools-grid .utility-card").count(), 3);
+  assert.deepEqual(
+    await page.locator(".image-tools-grid .utility-card strong").allTextContents(),
+    ["Image to JPG", "Image to PNG", "Image to WebP"],
   );
   await page.locator(".utility-search input").fill("Base64");
   await page.waitForFunction(
@@ -110,5 +115,5 @@ await priorityContext.close();
 await browser.close();
 
 console.log(
-  "UI verification passed for responsive catalogue search, formatter state, locale priority, roadmap, machine index, and admin protection.",
+  "UI verification passed for responsive catalogue sections and search, formatter state, locale priority, roadmap, machine index, and admin protection.",
 );

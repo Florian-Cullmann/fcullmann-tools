@@ -1898,6 +1898,7 @@ button {
 }
 .pdf-page-card__preview {
   height: 176px;
+  position: relative;
   display: grid;
   place-items: center;
   overflow: hidden;
@@ -1905,17 +1906,64 @@ button {
   background: #eef1f6;
   border-radius: 6px;
 }
-.pdf-page-card__preview canvas {
+.pdf-page-card__paper {
   display: none;
+  position: relative;
   max-width: calc(100% - 18px);
   max-height: calc(100% - 18px);
   background: white;
 }
-.pdf-page-card__preview canvas.is-ready {
+.pdf-page-card__paper.is-ready {
+  display: block;
+}
+.pdf-page-card__paper canvas {
+  width: 100%;
+  height: 100%;
   display: block;
 }
 .pdf-page-card__placeholder {
   color: var(--ink-soft);
+}
+.pdf-page-card__number {
+  position: absolute;
+  z-index: 1;
+  max-width: calc(100% - 10px);
+  overflow: hidden;
+  padding: 1px 3px;
+  color: #202126;
+  background: color-mix(in srgb, white 88%, transparent);
+  border-radius: 4px;
+  font-size: 0.46rem;
+  font-weight: 650;
+  line-height: 1.2;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.pdf-page-card__number--top-left {
+  top: 5px;
+  left: 5px;
+}
+.pdf-page-card__number--top-center {
+  top: 5px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.pdf-page-card__number--top-right {
+  top: 5px;
+  right: 5px;
+}
+.pdf-page-card__number--bottom-left {
+  bottom: 5px;
+  left: 5px;
+}
+.pdf-page-card__number--bottom-center {
+  bottom: 5px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.pdf-page-card__number--bottom-right {
+  right: 5px;
+  bottom: 5px;
 }
 .pdf-page-card > strong {
   display: block;
@@ -2010,6 +2058,157 @@ button {
 .pdf-split-marker:disabled {
   cursor: not-allowed;
   opacity: 0.45;
+}
+.pdf-page-editor__source {
+  border-bottom: 1px solid var(--line);
+}
+.pdf-editor-pages {
+  padding: 18px;
+  background: var(--surface-soft);
+}
+.pdf-number-settings + .pdf-editor-pages {
+  border-top: 1px solid var(--line);
+}
+.pdf-editor-pages > header,
+.pdf-number-settings > header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 20px;
+  margin-bottom: 16px;
+}
+.pdf-editor-pages h3,
+.pdf-editor-pages p,
+.pdf-number-settings h3,
+.pdf-number-settings p {
+  margin: 0;
+}
+.pdf-editor-pages h3,
+.pdf-number-settings h3 {
+  font-size: 0.94rem;
+}
+.pdf-editor-pages header p,
+.pdf-number-settings header p {
+  margin-top: 4px;
+  color: var(--ink-soft);
+  font-size: 0.76rem;
+  line-height: 1.5;
+}
+.pdf-editor-pages__bulk-actions {
+  display: flex;
+  flex: 0 0 auto;
+  gap: 8px;
+}
+.pdf-editor-pages__bulk-actions button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+}
+.pdf-editor-strip {
+  width: max-content;
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.pdf-editor-card {
+  width: 136px;
+  flex: 0 0 136px;
+  scroll-snap-align: start;
+}
+.pdf-page-editor--organize .pdf-editor-card {
+  width: 184px;
+  flex-basis: 184px;
+}
+.pdf-page-editor--organize .pdf-page-card {
+  width: 184px;
+  flex-basis: 184px;
+}
+.pdf-editor-card__actions {
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+  margin-top: 9px;
+}
+.pdf-editor-card__actions button {
+  width: 34px;
+  height: 34px;
+  display: grid;
+  flex: 0 0 34px;
+  place-items: center;
+  padding: 0;
+  border: 1px solid var(--line);
+  color: var(--ink-soft);
+  background: var(--surface);
+  border-radius: 8px;
+  cursor: pointer;
+}
+.pdf-editor-card__actions button:hover:not(:disabled) {
+  border-color: var(--coral);
+  color: var(--coral-dark);
+  background: var(--coral-soft);
+}
+.pdf-editor-card__actions .pdf-editor-card__delete:hover:not(:disabled) {
+  border-color: color-mix(in srgb, var(--danger) 30%, white);
+  color: var(--danger);
+  background: color-mix(in srgb, var(--danger) 5%, white);
+}
+.pdf-editor-card__actions button:focus-visible {
+  outline: 3px solid color-mix(in srgb, var(--coral) 72%, white);
+  outline-offset: 2px;
+}
+.pdf-editor-card__actions button:disabled {
+  cursor: not-allowed;
+  opacity: 0.35;
+}
+.pdf-number-settings {
+  padding: 18px;
+  background: var(--surface-soft);
+}
+.pdf-number-settings__fields {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+.pdf-number-settings__fields label {
+  min-width: 0;
+  display: grid;
+  gap: 7px;
+  color: var(--ink);
+  font-size: 0.75rem;
+  font-weight: 720;
+}
+.pdf-number-settings__fields select,
+.pdf-number-settings__fields input {
+  width: 100%;
+  min-height: 42px;
+  padding: 0 11px;
+  border: 1px solid var(--line);
+  color: var(--ink);
+  background: var(--surface);
+  border-radius: 9px;
+  outline: none;
+  font-variant-numeric: tabular-nums;
+}
+.pdf-number-settings__fields select {
+  padding-right: 36px;
+}
+.pdf-number-settings__fields select:hover:not(:disabled),
+.pdf-number-settings__fields input:hover:not(:disabled) {
+  border-color: var(--line-strong);
+}
+.pdf-number-settings__fields select:focus-visible,
+.pdf-number-settings__fields input:focus-visible {
+  border-color: var(--coral);
+  box-shadow: 0 0 0 3px var(--coral-soft);
+}
+.pdf-number-settings__fields select:disabled,
+.pdf-number-settings__fields input:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
 }
 .pdf-workspace__result {
   min-height: 68px;
@@ -3065,6 +3264,29 @@ button {
   .pdf-page-selector__actions > button:only-child {
     grid-column: 1 / -1;
   }
+  .pdf-editor-pages,
+  .pdf-number-settings {
+    padding: 16px 14px;
+  }
+  .pdf-editor-pages > header,
+  .pdf-number-settings > header {
+    align-items: stretch;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .pdf-editor-pages__bulk-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+  .pdf-number-settings__fields {
+    grid-template-columns: 1fr 1fr;
+  }
+  .pdf-page-editor__source {
+    grid-template-columns: 42px minmax(0, 1fr) auto;
+  }
+  .pdf-page-editor__source .pdf-file__actions {
+    grid-column: auto;
+  }
   .pdf-page-card {
     width: 112px;
     flex-basis: 112px;
@@ -3120,6 +3342,9 @@ button {
 }
 
 @media (max-width: 360px) {
+  .pdf-number-settings__fields {
+    grid-template-columns: 1fr;
+  }
   .word-docx-preview .docx-wrapper,
   .word-legacy-preview {
     zoom: 0.31;

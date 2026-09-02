@@ -5,6 +5,8 @@ import { JpgToPdf } from "@/components/tools/jpg-to-pdf";
 import { JsonFormatter } from "@/components/tools/json-formatter";
 import { PdfCompress } from "@/components/tools/pdf-compress";
 import { PdfMerge } from "@/components/tools/pdf-merge";
+import { PdfOrganize, PdfRotate } from "@/components/tools/pdf-page-editor";
+import { PdfPageNumbers } from "@/components/tools/pdf-page-numbers";
 import { PdfSplit } from "@/components/tools/pdf-split";
 import { PdfToJpg } from "@/components/tools/pdf-to-jpg";
 import { WordToPdf } from "@/components/tools/word-to-pdf";
@@ -39,6 +41,9 @@ const toolWorkspaceRegistry = {
   "pdf-split": PdfSplit,
   "pdf-to-jpg": PdfToJpg,
   "jpg-to-pdf": JpgToPdf,
+  "pdf-rotate": PdfRotate,
+  "pdf-organize": PdfOrganize,
+  "pdf-page-numbers": PdfPageNumbers,
   "json-formatter": JsonFormatter,
   base64: Base64Tool,
   "uuid-generator": UuidTool,

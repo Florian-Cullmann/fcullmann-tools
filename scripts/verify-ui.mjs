@@ -19,12 +19,21 @@ for (const viewport of [
     "EN",
   );
   assert.equal(await page.locator(".featured-grid .utility-card").count(), 6);
-  assert.equal(await page.locator(".pdf-tools-grid .utility-card").count(), 5);
+  assert.equal(await page.locator(".pdf-tools-grid .utility-card").count(), 8);
   assert.deepEqual(
     await page
       .locator(".pdf-tools-grid .utility-card strong")
       .allTextContents(),
-    ["PDF Merge", "PDF Split", "Compress PDF", "PDF to JPG", "JPG to PDF"],
+    [
+      "PDF Merge",
+      "PDF Split",
+      "Compress PDF",
+      "PDF to JPG",
+      "JPG to PDF",
+      "Rotate PDF",
+      "Organize PDF",
+      "Add PDF Page Numbers",
+    ],
   );
   assert.equal(await page.locator(".office-tools-grid .utility-card").count(), 3);
   assert.deepEqual(

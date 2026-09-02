@@ -9,7 +9,7 @@ Source code for [fcullmann.com](https://fcullmann.com), a bilingual personal sit
 ## Features
 
 - Searchable tool catalogue with English and German content
-- Local PDF merging, visual splitting, image-based compression, and PDF/JPG conversion
+- Local PDF merging, visual splitting, page organization, rotation, numbering, image-based compression, and PDF/JPG conversion
 - Excel-to-CSV conversion with worksheet selection and preview
 - Local DOC/DOCX-to-PDF conversion with an in-browser preview
 - JSON, Base64, UUID, hashing, timestamp, text, color, and URL utilities
@@ -87,6 +87,7 @@ openssl rand -base64 32
 | `npm run test:pdf-compress` | Verify local PDF compression and download output in a browser |
 | `npm run test:pdf-split` | Verify PDF splitting and ZIP output in a browser |
 | `npm run test:pdf-images` | Verify PDF/JPG conversion and downloads in a browser |
+| `npm run test:pdf-editing` | Verify PDF rotation, page organization, numbering, and downloads in a browser |
 | `npm run test:excel-to-csv` | Verify XLSX import and CSV download in a browser |
 | `npm run test:word-to-pdf` | Verify DOCX preview and PDF conversion in a browser |
 

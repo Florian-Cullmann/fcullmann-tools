@@ -1,8 +1,7 @@
 "use client";
 
 import { FileText, LoaderCircle, Plus, Scissors } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
-import type { PDFDocumentProxy, RenderTask } from "pdfjs-dist";
+import { PdfPageThumbnail, usePdfPreviewDocument } from "@/components/tools/pdf-preview";
 import type { Locale } from "@/lib/i18n/types";
 
 type PdfPageSelectorProps = {
@@ -14,105 +13,6 @@ type PdfPageSelectorProps = {
   locale: Locale;
   onChange: (splitPoints: number[]) => void;
 };
-
-type ThumbnailStatus = "waiting" | "rendering" | "ready" | "error";
-
-function PdfPageThumbnail({
-  document,
-  pageNumber,
-  unavailable,
-}: {
-  document: PDFDocumentProxy | null;
-  pageNumber: number;
-  unavailable: boolean;
-}) {
-  const frameRef = useRef<HTMLDivElement>(null);
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-  const [status, setStatus] = useState<ThumbnailStatus>("waiting");
-
-  useEffect(() => {
-    const frame = frameRef.current;
-    const canvas = canvasRef.current;
-    if (!document || !frame || !canvas) return;
-
-    let active = true;
-    let renderTask: RenderTask | null = null;
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (!entry.isIntersecting) return;
-        observer.disconnect();
-        setStatus("rendering");
-
-        void document
-          .getPage(pageNumber)
-          .then((page) => {
-            if (!active) return null;
-            const baseViewport = page.getViewport({ scale: 1 });
-            const pixelRatio = Math.min(window.devicePixelRatio || 1, 2);
-            const availableWidth = Math.max(frame.clientWidth - 18, 80);
-            const availableHeight = Math.max(frame.clientHeight - 18, 110);
-            const scale =
-              Math.min(
-                availableWidth / baseViewport.width,
-                availableHeight / baseViewport.height,
-              ) * pixelRatio;
-            const viewport = page.getViewport({ scale });
-
-            canvas.width = Math.floor(viewport.width);
-            canvas.height = Math.floor(viewport.height);
-            canvas.style.width = `${Math.floor(viewport.width / pixelRatio)}px`;
-            canvas.style.height = `${Math.floor(viewport.height / pixelRatio)}px`;
-            renderTask = page.render({ canvas, viewport });
-
-            return renderTask.promise.finally(() => page.cleanup());
-          })
-          .then(() => {
-            if (active) setStatus("ready");
-          })
-          .catch((error: unknown) => {
-            if (
-              active &&
-              (!(error instanceof Error) ||
-                error.name !== "RenderingCancelledException")
-            ) {
-              setStatus("error");
-            }
-          });
-      },
-      {
-        root: frame.closest(".pdf-page-strip__viewport"),
-        rootMargin: "120px",
-      },
-    );
-
-    observer.observe(frame);
-
-    return () => {
-      active = false;
-      observer.disconnect();
-      renderTask?.cancel();
-    };
-  }, [document, pageNumber]);
-
-  return (
-    <div className="pdf-page-card__preview" ref={frameRef}>
-      <canvas
-        ref={canvasRef}
-        className={status === "ready" ? "is-ready" : undefined}
-        aria-hidden="true"
-      />
-      {status !== "ready" && (
-        <span className="pdf-page-card__placeholder" aria-hidden="true">
-          {status === "error" || unavailable ? (
-            <FileText size={24} />
-          ) : (
-            <LoaderCircle className="pdf-workspace__spinner" size={20} />
-          )}
-        </span>
-      )}
-    </div>
-  );
-}
 
 export function PdfPageSelector({
   file,
@@ -163,44 +63,9 @@ export function PdfPageSelector({
           add: "Split",
           limit: `Up to ${maxParts} output files`,
         };
-  const [previewState, setPreviewState] = useState<{
-    file: File;
-    document: PDFDocumentProxy | null;
-    error: boolean;
-  } | null>(null);
-  const document = previewState?.file === file ? previewState.document : null;
-  const previewError = previewState?.file === file && previewState.error;
+  const { document, error: previewError } = usePdfPreviewDocument(file);
   const allPagesSelected =
     pageCount <= maxParts && splitPoints.length === pageCount - 1;
-
-  useEffect(() => {
-    let active = true;
-    let loadingTask: ReturnType<
-      (typeof import("pdfjs-dist"))["getDocument"]
-    > | null = null;
-
-    void Promise.all([
-      import("pdfjs-dist/webpack.mjs"),
-      file.arrayBuffer(),
-    ])
-      .then(([pdfjs, data]) => {
-        if (!active) return null;
-        loadingTask = pdfjs.getDocument({ data: new Uint8Array(data) });
-        return loadingTask.promise;
-      })
-      .then((pdf) => {
-        if (!active || !pdf) return;
-        setPreviewState({ file, document: pdf, error: false });
-      })
-      .catch(() => {
-        if (active) setPreviewState({ file, document: null, error: true });
-      });
-
-    return () => {
-      active = false;
-      void loadingTask?.destroy();
-    };
-  }, [file]);
 
   function toggleSplit(pageNumber: number) {
     if (disabled) return;

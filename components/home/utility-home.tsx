@@ -105,7 +105,7 @@ export function UtilityHome({
     .slice(0, 6);
   const pdfTools = tools
     .filter((tool) => tool.category === "documents")
-    .slice(0, 5);
+    .slice(0, 8);
   const officeTools = tools.filter((tool) => tool.category === "office");
   const imageTools = tools.filter((tool) => tool.category === "images");
   const formatter = new Intl.DateTimeFormat(locale, {

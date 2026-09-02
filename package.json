@@ -14,6 +14,7 @@
     "test:pdf-compress": "node scripts/verify-pdf-compress.mjs",
     "test:pdf-split": "node scripts/verify-pdf-split.mjs",
     "test:pdf-images": "node scripts/verify-pdf-images.mjs",
+    "test:pdf-editing": "node scripts/verify-pdf-editing.mjs",
     "test:word-to-pdf": "node scripts/verify-word-to-pdf.mjs",
     "test:ui": "node scripts/verify-ui.mjs",
     "test:watch": "vitest",

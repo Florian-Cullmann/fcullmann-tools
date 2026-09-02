@@ -146,7 +146,16 @@ await home.emulateMedia({ reducedMotion: "reduce" });
 await home.goto(`${origin}/de`, { waitUntil: "networkidle" });
 assert.deepEqual(
   await home.locator(".pdf-tools-grid .utility-card strong").allTextContents(),
-  ["PDFs zusammenführen", "PDF teilen", "PDF in JPG", "JPG in PDF"],
+  [
+    "PDFs zusammenführen",
+    "PDF teilen",
+    "PDF verkleinern",
+    "PDF in JPG",
+    "JPG in PDF",
+    "PDF drehen",
+    "PDF organisieren",
+    "PDF-Seitenzahlen",
+  ],
 );
 await home.screenshot({
   path: `${reviewDirectory}/home-pdf-tools.png`,

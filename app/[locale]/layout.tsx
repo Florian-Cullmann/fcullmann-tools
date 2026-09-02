@@ -56,7 +56,7 @@ export default async function LocaleLayout({
           className="contents"
           aria-hidden="true"
           dangerouslySetInnerHTML={{
-            __html: `<!-- THESIS: Search First turns the personal site into a direct utility catalogue and refuses an oversized profile hero or atmospheric metaphor. OWN-WORLD: cool #F5F7FB canvas, white rounded utility cards, coral primary actions, multicolor functional glyph tiles, and compact sans typography. STORY: visitors understand that Florian builds and maintains useful tools, search or filter the catalogue, and open one; projects and writing support authorship. FIRST VIEWPORT: slim header, centered introduction, wide search, category filters, featured tools, and dense all-tools rows crossing the fold; search is the primary action. FORM: Straight Utility Catalogue, chosen explicitly, seed 9c978054. FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, DESIGN.md, and every shipping raster carrying its provenance -->`,
+            __html: `<!-- THESIS: Florian's digital workshop makes the person behind the utilities visible without slowing down access to the tools. OWN-WORLD: cool #F5F7FB canvas, a warm editorial hero, coral primary actions, multicolor functional glyph tiles, and compact sans typography. STORY: visitors meet Florian, understand what he makes, search or filter his toolbox, and then explore projects and writing. FIRST VIEWPORT: slim header, personal introduction with portrait, direct links, search, category filters, and the first tool rows. FORM: Personal Workshop Catalogue. -->`,
           }}
         />
         <a className="skip-link" href="#main-content">

@@ -12,7 +12,7 @@ for (const viewport of [
   await page.goto(`${origin}/en`, { waitUntil: "networkidle" });
   assert.equal(
     await page.locator("h1").first().textContent(),
-    "Developer tools for focused work",
+    "Hi, I'm Florian. I build useful software for everyday work.",
   );
   assert.equal(
     (await page.locator(".locale-switch").textContent())?.trim(),

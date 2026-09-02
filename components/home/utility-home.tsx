@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, FileText, Search, X } from "lucide-react";
 import { useMemo, useState } from "react";
@@ -124,61 +125,123 @@ export function UtilityHome({
   return (
     <div className="utility-home">
       <section className="utility-hero site-shell" aria-labelledby="home-title">
-        <h1 id="home-title">
-          {locale === "de"
-            ? "Developer-Tools für fokussiertes Arbeiten"
-            : "Developer tools for focused work"}
-        </h1>
-        <p>
-          {locale === "de"
-            ? "Schnelle, datenschutzfreundliche Browser-Tools von Florian Cullmann — entwickelt für eine Aufgabe, ohne unnötige Umwege."
-            : "Fast, privacy-conscious browser tools by Florian Cullmann — each built to finish one job without getting in the way."}
-        </p>
-        <label className="utility-search">
-          <Search aria-hidden="true" size={21} />
-          <span className="sr-only">{toolMessages.search}</span>
-          <input
-            type="search"
-            value={query}
-            onChange={(event) => setQuery(event.target.value)}
-            placeholder={
-              locale === "de"
-                ? "Welches Tool suchst du?"
-                : "What do you need to do?"
-            }
-          />
-          {!query && <kbd aria-hidden="true">/</kbd>}
-          {query && (
-            <button
-              type="button"
-              onClick={() => setQuery("")}
-              aria-label={locale === "de" ? "Suche leeren" : "Clear search"}
+        <div className="utility-hero__panel">
+          <div className="utility-hero__intro">
+            <div className="utility-hero__copy">
+              <h1 id="home-title">
+                <span>
+                  {locale === "de"
+                    ? "Hi, ich bin Florian."
+                    : "Hi, I'm Florian."}
+                </span>{" "}
+                {locale === "de"
+                  ? "Ich entwickle nützliche Software für den Alltag."
+                  : "I build useful software for everyday work."}
+              </h1>
+              <p>
+                {locale === "de"
+                  ? "Hier findest du meine Browser-Tools, Softwareprojekte und Notizen aus der Praxis — sorgfältig gebaut und ohne unnötigen Ballast."
+                  : "This is where I share my browser tools, software projects, and practical notes — carefully made and without unnecessary clutter."}
+              </p>
+              <div className="utility-hero__actions">
+                <Link href={`/${locale}/tools`}>
+                  {locale === "de" ? "Meine Tools" : "Explore my tools"}
+                  <ArrowRight aria-hidden="true" size={17} />
+                </Link>
+                <Link href={`/${locale}/about`}>
+                  {locale === "de" ? "Mehr über mich" : "More about me"}
+                </Link>
+              </div>
+            </div>
+
+            <figure className="utility-portrait">
+              <div className="utility-portrait__image">
+                <Image
+                  src="/images/florian-cullmann.webp"
+                  alt={
+                    locale === "de"
+                      ? "Porträt von Florian Cullmann"
+                      : "Portrait of Florian Cullmann"
+                  }
+                  width={720}
+                  height={720}
+                  priority
+                  sizes="(max-width: 760px) 240px, 300px"
+                />
+              </div>
+              <figcaption>
+                <strong>Florian Cullmann</strong>
+                <span>
+                  {locale === "de"
+                    ? "Softwareentwickler & Tool-Macher"
+                    : "Software engineer & toolmaker"}
+                </span>
+              </figcaption>
+            </figure>
+          </div>
+
+          <div className="utility-toolbox">
+            <div className="utility-toolbox__heading">
+              <strong>
+                {locale === "de" ? "Meine Werkzeugkiste" : "My toolbox"}
+              </strong>
+              <span>
+                {locale === "de"
+                  ? `${tools.length} kleine Helfer, direkt im Browser.`
+                  : `${tools.length} small utilities, ready in your browser.`}
+              </span>
+            </div>
+            <label className="utility-search">
+              <Search aria-hidden="true" size={21} />
+              <span className="sr-only">{toolMessages.search}</span>
+              <input
+                type="search"
+                value={query}
+                onChange={(event) => setQuery(event.target.value)}
+                placeholder={
+                  locale === "de"
+                    ? "Welches Tool suchst du?"
+                    : "What do you need to do?"
+                }
+              />
+              {!query && <kbd aria-hidden="true">/</kbd>}
+              {query && (
+                <button
+                  type="button"
+                  onClick={() => setQuery("")}
+                  aria-label={
+                    locale === "de" ? "Suche leeren" : "Clear search"
+                  }
+                >
+                  <X size={17} />
+                </button>
+              )}
+            </label>
+            <div
+              className="category-filters"
+              aria-label={
+                locale === "de" ? "Tool-Kategorien" : "Tool categories"
+              }
             >
-              <X size={17} />
-            </button>
-          )}
-        </label>
-        <div
-          className="category-filters"
-          aria-label={locale === "de" ? "Tool-Kategorien" : "Tool categories"}
-        >
-          <button
-            type="button"
-            aria-pressed={category === "all"}
-            onClick={() => setCategory("all")}
-          >
-            {locale === "de" ? "Alle Tools" : "All tools"}
-          </button>
-          {categories.map((item) => (
-            <button
-              type="button"
-              aria-pressed={category === item}
-              onClick={() => setCategory(item)}
-              key={item}
-            >
-              {categoryLabel(item, locale)}
-            </button>
-          ))}
+              <button
+                type="button"
+                aria-pressed={category === "all"}
+                onClick={() => setCategory("all")}
+              >
+                {locale === "de" ? "Alle Tools" : "All tools"}
+              </button>
+              {categories.map((item) => (
+                <button
+                  type="button"
+                  aria-pressed={category === item}
+                  onClick={() => setCategory(item)}
+                  key={item}
+                >
+                  {categoryLabel(item, locale)}
+                </button>
+              ))}
+            </div>
+          </div>
         </div>
       </section>
 

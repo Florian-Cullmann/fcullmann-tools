@@ -86,12 +86,21 @@ const organizer = await browser.newPage({ viewport: { width: 1504, height: 1046 
 await organizer.emulateMedia({ reducedMotion: "reduce" });
 await organizer.goto(`${origin}/en/tools/pdf-organize`, { waitUntil: "networkidle" });
 await uploadPdf(organizer, source);
-await organizer.getByRole("button", { name: "Move page 3 left" }).click();
+await organizer
+  .getByRole("button", { name: /Move page 3\./ })
+  .dragTo(organizer.locator(".pdf-editor-card").nth(1), {
+    targetPosition: { x: 12, y: 80 },
+  });
 assert.equal(
   await organizer.locator(".pdf-editor-pages > .sr-only").textContent(),
   "Page 3 is now at output position 2.",
 );
-await organizer.getByRole("button", { name: "Move page 3 left" }).click();
+await organizer
+  .getByRole("button", { name: /Move page 3\./ })
+  .dragTo(organizer.locator(".pdf-editor-card").first(), {
+    targetPosition: { x: 12, y: 80 },
+  });
+assert.equal(await organizer.getByRole("button", { name: /Move page .* left/ }).count(), 0);
 await organizer.getByRole("button", { name: "Rotate page 1 right" }).click();
 await organizer.getByRole("button", { name: "Remove page 2" }).click();
 assert.equal(
@@ -104,6 +113,16 @@ await organizer.evaluate(() => {
 });
 await organizer.screenshot({
   path: `${reviewDirectory}/desktop.png`,
+  fullPage: true,
+});
+await organizer.setViewportSize({ width: 390, height: 844 });
+const organizerDimensions = await organizer.evaluate(() => ({
+  width: document.documentElement.scrollWidth,
+  viewport: window.innerWidth,
+}));
+assert.equal(organizerDimensions.width, organizerDimensions.viewport);
+await organizer.screenshot({
+  path: `${reviewDirectory}/organize-mobile.png`,
   fullPage: true,
 });
 await organizer.getByRole("button", { name: "Create new PDF" }).click();

@@ -1,12 +1,11 @@
 "use client";
 
 import {
-  ArrowLeft,
-  ArrowRight,
   CheckCircle2,
   Download,
   FilePlus2,
   FileText,
+  GripVertical,
   LoaderCircle,
   RotateCcw,
   RotateCw,
@@ -49,12 +48,37 @@ type EditorResult = {
   fileName: string;
 };
 
+type PageDropTarget = {
+  id: string;
+  edge: "before" | "after";
+};
+
 function createPages(pageCount: number): EditorPage[] {
   return Array.from({ length: pageCount }, (_, sourceIndex) => ({
     id: String(sourceIndex),
     sourceIndex,
     rotation: 0,
   }));
+}
+
+function reorderPages(
+  current: EditorPage[],
+  pageId: string,
+  target: PageDropTarget,
+) {
+  const sourceIndex = current.findIndex((page) => page.id === pageId);
+  const targetIndex = current.findIndex((page) => page.id === target.id);
+  if (sourceIndex < 0 || targetIndex < 0 || pageId === target.id) return current;
+
+  const next = [...current];
+  const [movedPage] = next.splice(sourceIndex, 1);
+  const remainingTargetIndex = next.findIndex((page) => page.id === target.id);
+  const insertionIndex = remainingTargetIndex + (target.edge === "after" ? 1 : 0);
+  next.splice(insertionIndex, 0, movedPage);
+
+  return next.every((page, index) => page.id === current[index]?.id)
+    ? current
+    : next;
 }
 
 function getCopy(locale: Locale, mode: EditorMode) {
@@ -78,7 +102,7 @@ function getCopy(locale: Locale, mode: EditorMode) {
           "Die PDF konnte nicht gelesen werden. Sie ist möglicherweise beschädigt oder passwortgeschützt.",
         pagesTitle: isOrganize ? "Seiten organisieren" : "Seiten drehen",
         pagesIntro: isOrganize
-          ? "Die Nummer oben links zeigt die neue Reihenfolge."
+          ? "Ziehe die Seiten am Griff in die gewünschte Reihenfolge."
           : "Die Vorschau zeigt die spätere Ausrichtung.",
         previewLoading: "Seitenvorschau wird geladen …",
         previewError:
@@ -90,8 +114,8 @@ function getCopy(locale: Locale, mode: EditorMode) {
         outputPosition: (position: number) => `Ausgabeposition ${position}`,
         rotateLeft: (page: number) => `Seite ${page} nach links drehen`,
         rotateRight: (page: number) => `Seite ${page} nach rechts drehen`,
-        moveLeft: (page: number) => `Seite ${page} nach links verschieben`,
-        moveRight: (page: number) => `Seite ${page} nach rechts verschieben`,
+        dragPage: (page: number) =>
+          `Seite ${page} verschieben. Ziehen oder auswählen und mit den Pfeiltasten bewegen.`,
         deletePage: (page: number) => `Seite ${page} entfernen`,
         rotateAllLeft: "Alle nach links",
         rotateAllRight: "Alle nach rechts",
@@ -134,7 +158,7 @@ function getCopy(locale: Locale, mode: EditorMode) {
           "The PDF could not be read. It may be damaged or password-protected.",
         pagesTitle: isOrganize ? "Organize pages" : "Rotate pages",
         pagesIntro: isOrganize
-          ? "The number in the top-left shows the new order."
+          ? "Drag pages by the handle into the order you want."
           : "The preview shows the final orientation.",
         previewLoading: "Loading page previews …",
         previewError:
@@ -146,8 +170,8 @@ function getCopy(locale: Locale, mode: EditorMode) {
         outputPosition: (position: number) => `Output position ${position}`,
         rotateLeft: (page: number) => `Rotate page ${page} left`,
         rotateRight: (page: number) => `Rotate page ${page} right`,
-        moveLeft: (page: number) => `Move page ${page} left`,
-        moveRight: (page: number) => `Move page ${page} right`,
+        dragPage: (page: number) =>
+          `Move page ${page}. Drag it or select it and use the arrow keys.`,
         deletePage: (page: number) => `Remove page ${page}`,
         rotateAllLeft: "Rotate all left",
         rotateAllRight: "Rotate all right",
@@ -184,7 +208,12 @@ function PdfPageEditor({ locale, mode }: { locale: Locale; mode: EditorMode }) {
   const [isProcessing, setIsProcessing] = useState(false);
   const [result, setResult] = useState<EditorResult | null>(null);
   const [announcement, setAnnouncement] = useState("");
+  const [draggedPageId, setDraggedPageId] = useState<string | null>(null);
+  const [dropTarget, setDropTarget] = useState<PageDropTarget | null>(null);
+  const [keyboardDragPageId, setKeyboardDragPageId] = useState<string | null>(null);
   const resultUrl = useRef<string | null>(null);
+  const dropTargetRef = useRef<PageDropTarget | null>(null);
+  const touchDragRef = useRef<{ pageId: string; pointerId: number } | null>(null);
   const preview = usePdfPreviewDocument(source?.file ?? null);
   const changed = Boolean(
     source &&
@@ -209,12 +238,25 @@ function PdfPageEditor({ locale, mode }: { locale: Locale; mode: EditorMode }) {
     setResult(null);
   }
 
+  function updateDropTarget(target: PageDropTarget | null) {
+    dropTargetRef.current = target;
+    setDropTarget(target);
+  }
+
+  function clearPageDrag() {
+    touchDragRef.current = null;
+    setDraggedPageId(null);
+    updateDropTarget(null);
+  }
+
   function clearSource() {
     discardResult();
     setSource(null);
     setPages([]);
     setError(null);
     setAnnouncement("");
+    setKeyboardDragPageId(null);
+    clearPageDrag();
   }
 
   function updatePages(update: (current: EditorPage[]) => EditorPage[]) {
@@ -250,6 +292,8 @@ function PdfPageEditor({ locale, mode }: { locale: Locale; mode: EditorMode }) {
       setSource({ file, pageCount });
       setPages(createPages(pageCount));
       setAnnouncement("");
+      setKeyboardDragPageId(null);
+      clearPageDrag();
     } catch {
       setError(copy.readError);
     } finally {
@@ -289,10 +333,11 @@ function PdfPageEditor({ locale, mode }: { locale: Locale; mode: EditorMode }) {
   }
 
   function movePage(index: number, offset: -1 | 1) {
+    const nextIndex = index + offset;
+    if (nextIndex < 0 || nextIndex >= pages.length) return;
+
     const pageNumber = pages[index]?.sourceIndex;
     updatePages((current) => {
-      const nextIndex = index + offset;
-      if (nextIndex < 0 || nextIndex >= current.length) return current;
       const next = [...current];
       [next[index], next[nextIndex]] = [next[nextIndex], next[index]];
       return next;
@@ -300,6 +345,23 @@ function PdfPageEditor({ locale, mode }: { locale: Locale; mode: EditorMode }) {
     if (pageNumber !== undefined) {
       setAnnouncement(copy.moved(pageNumber + 1, index + offset + 1));
     }
+  }
+
+  function finishPageDrag(pageId: string) {
+    const target = dropTargetRef.current;
+    const pageNumber = pages.find((page) => page.id === pageId)?.sourceIndex;
+    const next = target ? reorderPages(pages, pageId, target) : pages;
+
+    if (next !== pages && pageNumber !== undefined) {
+      updatePages(() => next);
+      setAnnouncement(
+        copy.moved(
+          pageNumber + 1,
+          next.findIndex((page) => page.id === pageId) + 1,
+        ),
+      );
+    }
+    clearPageDrag();
   }
 
   function deletePage(page: EditorPage) {
@@ -313,6 +375,8 @@ function PdfPageEditor({ locale, mode }: { locale: Locale; mode: EditorMode }) {
     if (!source) return;
     updatePages(() => createPages(source.pageCount));
     setAnnouncement(copy.resetDone);
+    setKeyboardDragPageId(null);
+    clearPageDrag();
   }
 
   async function processPdf() {
@@ -503,15 +567,110 @@ function PdfPageEditor({ locale, mode }: { locale: Locale; mode: EditorMode }) {
                 {pages.map((page, index) => {
                   const sourcePage = page.sourceIndex + 1;
                   return (
-                    <li className="pdf-editor-card" key={page.id}>
+                    <li
+                      className={`pdf-editor-card${draggedPageId === page.id ? " pdf-editor-card--dragging" : ""}${dropTarget?.id === page.id ? ` pdf-editor-card--drop-${dropTarget.edge}` : ""}`}
+                      key={page.id}
+                      data-page-id={page.id}
+                      onDragOver={(event) => {
+                        if (mode !== "organize" || !draggedPageId) return;
+                        event.preventDefault();
+                        event.dataTransfer.dropEffect = "move";
+                        if (draggedPageId === page.id) {
+                          updateDropTarget(null);
+                          return;
+                        }
+                        const bounds = event.currentTarget.getBoundingClientRect();
+                        updateDropTarget({
+                          id: page.id,
+                          edge: event.clientX < bounds.left + bounds.width / 2 ? "before" : "after",
+                        });
+                      }}
+                      onDrop={(event) => {
+                        if (mode !== "organize") return;
+                        event.preventDefault();
+                        finishPageDrag(draggedPageId ?? event.dataTransfer.getData("text/plain"));
+                      }}
+                    >
                       <article className="pdf-page-card">
                         {mode === "organize" && (
-                          <span
-                            className="pdf-page-card__part"
-                            aria-label={copy.outputPosition(index + 1)}
-                          >
-                            {index + 1}
-                          </span>
+                          <>
+                            <span
+                              className="pdf-page-card__part"
+                              aria-label={copy.outputPosition(index + 1)}
+                            >
+                              {index + 1}
+                            </span>
+                            <button
+                              className="pdf-page-card__drag-handle"
+                              type="button"
+                              disabled={busy}
+                              draggable={!busy}
+                              aria-label={copy.dragPage(sourcePage)}
+                              aria-pressed={keyboardDragPageId === page.id}
+                              title={copy.dragPage(sourcePage)}
+                              onClick={() => {
+                                setKeyboardDragPageId((current) =>
+                                  current === page.id ? null : page.id,
+                                );
+                              }}
+                              onKeyDown={(event) => {
+                                if (keyboardDragPageId !== page.id) return;
+                                if (event.key === "ArrowLeft" || event.key === "ArrowRight") {
+                                  event.preventDefault();
+                                  movePage(index, event.key === "ArrowLeft" ? -1 : 1);
+                                } else if (event.key === "Escape") {
+                                  event.preventDefault();
+                                  setKeyboardDragPageId(null);
+                                }
+                              }}
+                              onDragStart={(event) => {
+                                setDraggedPageId(page.id);
+                                event.dataTransfer.effectAllowed = "move";
+                                event.dataTransfer.setData("text/plain", page.id);
+                                const card = event.currentTarget.closest<HTMLElement>(".pdf-editor-card");
+                                if (card) event.dataTransfer.setDragImage(card, card.offsetWidth / 2, 42);
+                              }}
+                              onDragEnd={clearPageDrag}
+                              onPointerDown={(event) => {
+                                if (event.pointerType === "mouse" || busy) return;
+                                event.preventDefault();
+                                event.currentTarget.setPointerCapture(event.pointerId);
+                                touchDragRef.current = {
+                                  pageId: page.id,
+                                  pointerId: event.pointerId,
+                                };
+                                setDraggedPageId(page.id);
+                              }}
+                              onPointerMove={(event) => {
+                                const touchDrag = touchDragRef.current;
+                                if (!touchDrag || touchDrag.pointerId !== event.pointerId) return;
+                                event.preventDefault();
+                                const card = document
+                                  .elementFromPoint(event.clientX, event.clientY)
+                                  ?.closest<HTMLElement>("[data-page-id]");
+                                const targetId = card?.dataset.pageId;
+                                if (!card || !targetId || targetId === touchDrag.pageId) {
+                                  updateDropTarget(null);
+                                  return;
+                                }
+                                const bounds = card.getBoundingClientRect();
+                                updateDropTarget({
+                                  id: targetId,
+                                  edge: event.clientX < bounds.left + bounds.width / 2 ? "before" : "after",
+                                });
+                              }}
+                              onPointerUp={(event) => {
+                                const touchDrag = touchDragRef.current;
+                                if (!touchDrag || touchDrag.pointerId !== event.pointerId) return;
+                                event.preventDefault();
+                                event.currentTarget.releasePointerCapture(event.pointerId);
+                                finishPageDrag(touchDrag.pageId);
+                              }}
+                              onPointerCancel={clearPageDrag}
+                            >
+                              <GripVertical aria-hidden="true" size={17} />
+                            </button>
+                          </>
                         )}
                         <PdfPageThumbnail
                           document={preview.document}
@@ -522,17 +681,6 @@ function PdfPageEditor({ locale, mode }: { locale: Locale; mode: EditorMode }) {
                         <strong>{copy.page(sourcePage)}</strong>
                       </article>
                       <div className="pdf-editor-card__actions">
-                        {mode === "organize" && (
-                          <button
-                            type="button"
-                            disabled={busy || index === 0}
-                            aria-label={copy.moveLeft(sourcePage)}
-                            title={copy.moveLeft(sourcePage)}
-                            onClick={() => movePage(index, -1)}
-                          >
-                            <ArrowLeft aria-hidden="true" size={16} />
-                          </button>
-                        )}
                         <button
                           type="button"
                           disabled={busy}
@@ -552,27 +700,16 @@ function PdfPageEditor({ locale, mode }: { locale: Locale; mode: EditorMode }) {
                           <RotateCw aria-hidden="true" size={16} />
                         </button>
                         {mode === "organize" && (
-                          <>
-                            <button
-                              className="pdf-editor-card__delete"
-                              type="button"
-                              disabled={busy || pages.length === 1}
-                              aria-label={copy.deletePage(sourcePage)}
-                              title={copy.deletePage(sourcePage)}
-                              onClick={() => deletePage(page)}
-                            >
-                              <Trash2 aria-hidden="true" size={16} />
-                            </button>
-                            <button
-                              type="button"
-                              disabled={busy || index === pages.length - 1}
-                              aria-label={copy.moveRight(sourcePage)}
-                              title={copy.moveRight(sourcePage)}
-                              onClick={() => movePage(index, 1)}
-                            >
-                              <ArrowRight aria-hidden="true" size={16} />
-                            </button>
-                          </>
+                          <button
+                            className="pdf-editor-card__delete"
+                            type="button"
+                            disabled={busy || pages.length === 1}
+                            aria-label={copy.deletePage(sourcePage)}
+                            title={copy.deletePage(sourcePage)}
+                            onClick={() => deletePage(page)}
+                          >
+                            <Trash2 aria-hidden="true" size={16} />
+                          </button>
                         )}
                       </div>
                     </li>

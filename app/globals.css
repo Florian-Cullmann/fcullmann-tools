@@ -2502,8 +2502,41 @@ button {
 }
 .pdf-editor-card {
   width: 136px;
+  position: relative;
   flex: 0 0 136px;
   scroll-snap-align: start;
+}
+.pdf-editor-card::before {
+  width: 3px;
+  position: absolute;
+  z-index: 4;
+  top: 4px;
+  bottom: 42px;
+  content: "";
+  background: var(--coral);
+  border-radius: 3px;
+  opacity: 0;
+  pointer-events: none;
+  transform: scaleY(0.82);
+  transition: opacity 120ms ease-out, transform 120ms ease-out;
+}
+.pdf-editor-card--drop-before::before {
+  left: -8px;
+}
+.pdf-editor-card--drop-after::before {
+  right: -8px;
+}
+.pdf-editor-card--drop-before::before,
+.pdf-editor-card--drop-after::before {
+  opacity: 1;
+  transform: scaleY(1);
+}
+.pdf-editor-card .pdf-page-card {
+  transition: transform 140ms ease-out, opacity 140ms ease-out;
+}
+.pdf-editor-card--dragging .pdf-page-card {
+  opacity: 0.55;
+  transform: translateY(-3px);
 }
 .pdf-page-editor--organize .pdf-editor-card {
   width: 184px;
@@ -2512,6 +2545,41 @@ button {
 .pdf-page-editor--organize .pdf-page-card {
   width: 184px;
   flex-basis: 184px;
+}
+.pdf-page-card__drag-handle {
+  width: 32px;
+  height: 32px;
+  position: absolute;
+  z-index: 3;
+  top: 6px;
+  right: 6px;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border: 1px solid color-mix(in srgb, var(--line-strong) 72%, transparent);
+  color: var(--ink-soft);
+  background: color-mix(in srgb, var(--surface) 92%, transparent);
+  border-radius: 8px;
+  box-shadow: 0 3px 10px color-mix(in srgb, var(--ink) 10%, transparent);
+  cursor: grab;
+  touch-action: none;
+}
+.pdf-page-card__drag-handle:hover:not(:disabled),
+.pdf-page-card__drag-handle[aria-pressed="true"] {
+  border-color: var(--coral);
+  color: var(--coral-dark);
+  background: var(--coral-soft);
+}
+.pdf-page-card__drag-handle:active {
+  cursor: grabbing;
+}
+.pdf-page-card__drag-handle:focus-visible {
+  outline: 3px solid color-mix(in srgb, var(--coral) 72%, white);
+  outline-offset: 2px;
+}
+.pdf-page-card__drag-handle:disabled {
+  cursor: not-allowed;
+  opacity: 0.45;
 }
 .pdf-editor-card__actions {
   display: flex;

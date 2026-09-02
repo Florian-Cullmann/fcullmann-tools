@@ -7,6 +7,7 @@ import { ToolGlyph } from "@/components/tools/tool-glyph";
 import type { ArticleRecord, ToolRecord } from "@/lib/content/types";
 import type { Locale } from "@/lib/i18n/types";
 import { getMessages } from "@/lib/i18n/messages";
+import { getToolCategoryLabel } from "@/lib/tools/categories";
 
 const categoryColors: Record<string, string> = {
   documents: "coral",
@@ -16,20 +17,8 @@ const categoryColors: Record<string, string> = {
   converters: "blue",
   text: "amber",
   office: "green",
+  images: "violet",
 };
-
-function categoryLabel(category: string, locale: Locale) {
-  const labels: Record<string, Record<Locale, string>> = {
-    documents: { en: "Documents", de: "Dokumente" },
-    formatters: { en: "Formatters", de: "Formatierer" },
-    encoders: { en: "Encoders", de: "Kodierer" },
-    generators: { en: "Generators", de: "Generatoren" },
-    converters: { en: "Converters", de: "Konverter" },
-    text: { en: "Text", de: "Text" },
-    office: { en: "Office", de: "Office" },
-  };
-  return labels[category]?.[locale] ?? category;
-}
 
 function ToolCard({
   locale,
@@ -108,13 +97,17 @@ export function UtilityHome({
   );
   const featured = tools
     .filter(
-      (tool) => tool.category !== "documents" && tool.category !== "office",
+      (tool) =>
+        tool.category !== "documents" &&
+        tool.category !== "office" &&
+        tool.category !== "images",
     )
     .slice(0, 6);
   const pdfTools = tools
     .filter((tool) => tool.category === "documents")
     .slice(0, 8);
   const officeTools = tools.filter((tool) => tool.category === "office");
+  const imageTools = tools.filter((tool) => tool.category === "images");
   const formatter = new Intl.DateTimeFormat(locale, {
     day: "2-digit",
     month: "short",
@@ -176,7 +169,7 @@ export function UtilityHome({
               onClick={() => setCategory(item)}
               key={item}
             >
-              {categoryLabel(item, locale)}
+              {getToolCategoryLabel(item, locale)}
             </button>
           ))}
         </div>
@@ -250,6 +243,31 @@ export function UtilityHome({
             </div>
             <div className="office-tools-grid">
               {officeTools.map((tool) => (
+                <ToolCard key={tool.id} locale={locale} tool={tool} />
+              ))}
+            </div>
+          </section>
+        )}
+
+        {!query && category === "all" && imageTools.length > 0 && (
+          <section
+            className="utility-section utility-section--images"
+            aria-labelledby="image-tools-title"
+          >
+            <div className="section-heading">
+              <div>
+                <h2 id="image-tools-title">
+                  {locale === "de" ? "Bild-Tools" : "Image tools"}
+                </h2>
+                <p>
+                  {locale === "de"
+                    ? "Bildformate direkt im Browser konvertieren, ohne Upload."
+                    : "Convert image formats directly in your browser, without uploads."}
+                </p>
+              </div>
+            </div>
+            <div className="image-tools-grid">
+              {imageTools.map((tool) => (
                 <ToolCard key={tool.id} locale={locale} tool={tool} />
               ))}
             </div>

@@ -7,6 +7,7 @@ import { ToolGlyph } from "@/components/tools/tool-glyph";
 import type { ToolRecord } from "@/lib/content/types";
 import type { Locale } from "@/lib/i18n/types";
 import { getMessages } from "@/lib/i18n/messages";
+import { getToolCategoryLabel } from "@/lib/tools/categories";
 
 export function ToolCatalog({
   locale,
@@ -66,7 +67,7 @@ export function ToolCatalog({
             onClick={() => setCategory(item)}
             key={item}
           >
-            {item}
+            {getToolCategoryLabel(item, locale)}
           </button>
         ))}
       </div>
@@ -88,7 +89,9 @@ export function ToolCatalog({
               <strong>{tool.name[locale]}</strong>
               <small>{tool.summary[locale]}</small>
             </span>
-            <span className="catalog-item__category">{tool.category}</span>
+            <span className="catalog-item__category">
+              {getToolCategoryLabel(tool.category, locale)}
+            </span>
             <ArrowRight size={19} />
           </Link>
         ))}

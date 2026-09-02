@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, FileText, Search, X } from "lucide-react";
 import { useMemo, useState } from "react";
@@ -140,8 +139,8 @@ export function UtilityHome({
               </h1>
               <p>
                 {locale === "de"
-                  ? "Hier findest du meine Browser-Tools, Softwareprojekte und Notizen aus der Praxis — sorgfältig gebaut und ohne unnötigen Ballast."
-                  : "This is where I share my browser tools, software projects, and practical notes — carefully made and without unnecessary clutter."}
+                  ? "Hier findest du meine Browser-Tools, Softwareprojekte und Notizen aus der Praxis - sorgfältig gebaut und ohne unnötigen Ballast."
+                  : "This is where I share my browser tools, software projects, and practical notes - carefully made and without unnecessary clutter."}
               </p>
               <div className="utility-hero__actions">
                 <Link href={`/${locale}/tools`}>
@@ -154,30 +153,6 @@ export function UtilityHome({
               </div>
             </div>
 
-            <figure className="utility-portrait">
-              <div className="utility-portrait__image">
-                <Image
-                  src="/images/florian-cullmann.webp"
-                  alt={
-                    locale === "de"
-                      ? "Porträt von Florian Cullmann"
-                      : "Portrait of Florian Cullmann"
-                  }
-                  width={720}
-                  height={720}
-                  priority
-                  sizes="(max-width: 760px) 240px, 300px"
-                />
-              </div>
-              <figcaption>
-                <strong>Florian Cullmann</strong>
-                <span>
-                  {locale === "de"
-                    ? "Softwareentwickler & Tool-Macher"
-                    : "Software engineer & toolmaker"}
-                </span>
-              </figcaption>
-            </figure>
           </div>
 
           <div className="utility-toolbox">

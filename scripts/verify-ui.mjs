@@ -18,6 +18,14 @@ for (const viewport of [
     (await page.locator(".locale-switch").textContent())?.trim(),
     "EN",
   );
+  assert.equal(
+    await page.locator('.site-header nav a[href="/en/articles"]').count(),
+    0,
+  );
+  assert.equal(
+    await page.locator('.site-header nav [aria-disabled="true"]').textContent(),
+    "Blog",
+  );
   assert.equal(await page.locator(".featured-grid .utility-card").count(), 6);
   assert.equal(await page.locator(".pdf-tools-grid .utility-card").count(), 5);
   assert.deepEqual(
@@ -51,6 +59,12 @@ for (const viewport of [
     `Horizontal overflow at ${viewport.width}px`,
   );
   assert.equal(await page.locator(".site-footer nav a").count(), 2);
+  await page.goto(`${origin}/en/about`, { waitUntil: "networkidle" });
+  assert.equal(await page.locator("h1").textContent(), "Hi, I'm Florian.");
+  assert.equal(await page.locator(".about-portrait img").count(), 1);
+  assert.equal(await page.locator(".about-paths a").count(), 3);
+  await page.goto(`${origin}/en/articles`, { waitUntil: "networkidle" });
+  assert.equal(await page.locator("h1").textContent(), "Field notes");
   await page.goto(`${origin}/de/datenschutz`, { waitUntil: "networkidle" });
   assert.equal(
     await page.locator("h1").textContent(),

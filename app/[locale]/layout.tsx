@@ -14,8 +14,8 @@ const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://fcullmann.com";
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: "Florian Cullmann — Developer Tools & Software Projects",
-    template: "%s — Florian Cullmann",
+    default: "Florian Cullmann - Developer Tools & Software Projects",
+    template: "%s - Florian Cullmann",
   },
   description:
     "Focused browser tools, selected software projects, and practical engineering notes by Florian Cullmann.",
@@ -26,7 +26,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     siteName: "fcullmann.com",
-    title: "Florian Cullmann — Developer Tools & Software Projects",
+    title: "Florian Cullmann - Developer Tools & Software Projects",
     description: "Useful software, carefully made.",
     url: siteUrl,
   },
@@ -56,7 +56,7 @@ export default async function LocaleLayout({
           className="contents"
           aria-hidden="true"
           dangerouslySetInnerHTML={{
-            __html: `<!-- THESIS: Florian's digital workshop makes the person behind the utilities visible without slowing down access to the tools. OWN-WORLD: cool #F5F7FB canvas, a warm editorial hero, coral primary actions, multicolor functional glyph tiles, and compact sans typography. STORY: visitors meet Florian, understand what he makes, search or filter his toolbox, and then explore projects and writing. FIRST VIEWPORT: slim header, personal introduction with portrait, direct links, search, category filters, and the first tool rows. FORM: Personal Workshop Catalogue. -->`,
+            __html: `<!-- THESIS: Florian's digital workshop connects a focused utility catalogue with a quieter personal layer. OWN-WORLD: cool #F5F7FB canvas, white editorial surfaces, coral primary actions, multicolor functional glyph tiles, and compact sans typography. STORY: visitors understand what Florian makes, search or filter his toolbox, then meet the person behind it on the about page. FIRST VIEWPORT: slim header, concise personal introduction, direct links, search, category filters, and the first tool rows. FORM: Personal Workshop Catalogue. -->`,
           }}
         />
         <a className="skip-link" href="#main-content">

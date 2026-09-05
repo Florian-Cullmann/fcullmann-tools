@@ -967,6 +967,55 @@ button {
   border-radius: 14px;
   overflow: hidden;
 }
+.rotation-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr));
+  gap: 16px;
+  margin: 20px 18px;
+}
+.rotation-card {
+  min-width: 0;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  overflow: hidden;
+}
+.rotation-card--excluded {
+  opacity: .55;
+}
+.rotation-card .image-converter__file {
+  padding: 12px;
+}
+.rotation-preview.image-preview-checkerboard {
+  height: 190px;
+  min-height: 190px;
+}
+.rotation-preview.image-preview-checkerboard img {
+  max-width: none;
+  max-height: none;
+  object-fit: contain;
+}
+.rotation-settings {
+  margin: 20px 18px;
+  border-radius: 12px;
+}
+.rotation-progress, .rotation-results a {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.rotation-progress {
+  margin: 18px;
+}
+.rotation-results {
+  display: grid;
+  gap: 12px;
+  padding: 0 18px 18px;
+  overflow-wrap: anywhere;
+}
+.rotation-workspace > .image-converter__action {
+  width: calc(100% - 36px);
+  margin: 0 18px 18px;
+}
 .image-workspace {
   border: 1px solid var(--line);
   background: var(--surface);

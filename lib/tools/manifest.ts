@@ -13,6 +13,7 @@ export const implementedToolSlugs = [
   "image-to-jpg",
   "image-to-png",
   "image-to-webp",
+  "image-rotate",
   "json-formatter",
   "base64",
   "uuid-generator",

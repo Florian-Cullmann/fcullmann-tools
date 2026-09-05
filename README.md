@@ -12,6 +12,7 @@ Source code for [fcullmann.com](https://fcullmann.com), a bilingual personal sit
 - Local PDF merging, visual splitting, page organization, rotation, numbering, image-based compression, and PDF/JPG conversion
 - Excel-to-CSV conversion with worksheet selection and preview
 - Local DOC/DOCX-to-PDF conversion with an in-browser preview
+- Batch JPG, PNG, and animated GIF rotation with orientation filters, previews, and individual or ZIP downloads
 - JSON, Base64, UUID, hashing, timestamp, text, color, and URL utilities
 - Project and article pages with localized metadata
 - Single-user admin area for tools and articles

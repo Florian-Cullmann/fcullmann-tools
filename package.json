@@ -14,6 +14,7 @@
     "test:pdf-compress": "node scripts/verify-pdf-compress.mjs",
     "test:pdf-split": "node scripts/verify-pdf-split.mjs",
     "test:pdf-images": "node scripts/verify-pdf-images.mjs",
+    "test:image-rotate": "node scripts/verify-image-rotate.mjs",
     "test:pdf-editing": "node scripts/verify-pdf-editing.mjs",
     "test:word-to-pdf": "node scripts/verify-word-to-pdf.mjs",
     "test:ui": "node scripts/verify-ui.mjs",
@@ -41,6 +42,7 @@
     "lucide-react": "^1.37.0",
     "next": "16.3.3",
     "next-auth": "^4.24.15",
+    "omggif": "^1.0.10",
     "pdf-lib": "^1.17.1",
     "pdfjs-dist": "^6.3.289",
     "pg": "^8.16.3",
@@ -53,6 +55,7 @@
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
+    "@types/omggif": "^1.0.5",
     "@types/pg": "^8.23.1",
     "@types/react": "^19",
     "@types/react-dom": "^19",

@@ -204,6 +204,24 @@ export const demoTools: ToolRecord[] = [
     usageCount: 0,
   },
   {
+    id: "demo-image-rotate",
+    slug: "image-rotate",
+    name: { en: "Rotate images", de: "Bild drehen" },
+    summary: {
+      en: "Rotate multiple JPG, PNG, or GIF images at once. Choose all images or only landscape or portrait images.",
+      de: "Mehrere JPG-, PNG- oder GIF-Bilder gleichzeitig drehen. Wahlweise alle oder nur Bilder im Quer- oder Hochformat drehen.",
+    },
+    description: {
+      en: "Rotate images locally by 90°, 180°, or 270°, preview the result, and download individual files or a ZIP. GIF animations are preserved.",
+      de: "Bilder lokal um 90°, 180° oder 270° drehen, das Ergebnis vorab ansehen und einzeln oder als ZIP herunterladen. GIF-Animationen bleiben erhalten.",
+    },
+    category: "images",
+    icon: "rotate",
+    featured: false,
+    sortOrder: 3,
+    usageCount: 0,
+  },
+  {
     id: "demo-excel-to-csv",
     slug: "excel-to-csv",
     name: { en: "Excel to CSV", de: "Excel zu CSV" },

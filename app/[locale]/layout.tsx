@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { JetBrains_Mono, Public_Sans } from "next/font/google";
 import { notFound } from "next/navigation";
+import Script from "next/script";
 import { SiteFooter } from "@/components/layout/site-footer";
 import { SiteHeader } from "@/components/layout/site-header";
 import { isLocale, locales } from "@/lib/i18n/config";
@@ -66,6 +67,11 @@ export default async function LocaleLayout({
         <main id="main-content">{children}</main>
         <SiteFooter locale={locale} />
       </body>
+      <Script
+        async
+        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3136105776325069"
+        crossOrigin="anonymous"
+      />
     </html>
   );
 }

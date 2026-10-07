@@ -16,19 +16,13 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import type { Locale } from "@/lib/i18n/types";
 import { formatFileSize } from "@/lib/tools/files";
 import {
-  createPdfFromJpgs,
-  createPdfFromImages,
   type PdfImageMargin,
   type PdfImageOrientation,
   type PdfImagePageSize,
 } from "@/lib/tools/pdf-images";
 import { reportToolUsage } from "@/lib/tools/usage-client";
-import {
-  IMAGE_INPUT_ACCEPT,
-  convertImage,
-  hasSafeImageDimensions,
-  validateImageFile,
-} from "@/lib/tools/images";
+import { IMAGE_INPUT_ACCEPT } from "@/lib/tools/images";
+import { createImagePdf, ImagePdfProcessingError, preparePdfImages } from "@/lib/tools/image-pdf-client";
 
 const MAX_FILES = 50;
 const MAX_TOTAL_BYTES = 100 * 1024 * 1024;
@@ -117,6 +111,11 @@ function ImagePdfWorkspace({ locale, allImages = false }: { locale: Locale; allI
           ready: (count: number) =>
             `PDF mit ${count} ${count === 1 ? "Seite" : "Seiten"} ist bereit`,
           download: "PDF herunterladen",
+          cancel: "Abbrechen",
+          progress: (completed: number, total: number) => `Bild ${completed} von ${total}`,
+          compact: "Maximal 2 MB pro Bildseite. Große Bilder werden für die PDF optimiert.",
+          browserError: "Die Bildverarbeitung benötigt eine aktuelle Version von Chrome, Firefox, Edge oder Safari.",
+          dimensionError: "Ein Bild ist zu groß. Bitte verwende Bilder mit höchstens 40 Megapixeln.",
         }
       : {
           title: "JPG images",
@@ -158,6 +157,11 @@ function ImagePdfWorkspace({ locale, allImages = false }: { locale: Locale; allI
           ready: (count: number) =>
             `PDF with ${count} ${count === 1 ? "page" : "pages"} is ready`,
           download: "Download PDF",
+          cancel: "Cancel",
+          progress: (completed: number, total: number) => `Image ${completed} of ${total}`,
+          compact: "At most 2 MB per image page. Large images are optimized for the PDF.",
+          browserError: "Image processing requires a current version of Chrome, Firefox, Edge, or Safari.",
+          dimensionError: "An image is too large. Please use images with at most 40 megapixels.",
         };
   const copy = allImages ? {
     ...jpgCopy,
@@ -192,9 +196,11 @@ function ImagePdfWorkspace({ locale, allImages = false }: { locale: Locale; allI
   const [isAdding, setIsAdding] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
   const [isConverting, setIsConverting] = useState(false);
+  const [progress, setProgress] = useState<{ completed: number; total: number } | null>(null);
   const [result, setResult] = useState<PdfResult | null>(null);
   const resultUrl = useRef<string | null>(null);
   const previewUrls = useRef(new Set<string>());
+  const activeTask = useRef<AbortController | null>(null);
   const totalBytes = useMemo(
     () => files.reduce((sum, item) => sum + item.file.size, 0),
     [files],
@@ -202,6 +208,7 @@ function ImagePdfWorkspace({ locale, allImages = false }: { locale: Locale; allI
 
   useEffect(
     () => () => {
+      activeTask.current?.abort();
       if (resultUrl.current) URL.revokeObjectURL(resultUrl.current);
       previewUrls.current.forEach((url) => URL.revokeObjectURL(url));
     },
@@ -248,7 +255,7 @@ function ImagePdfWorkspace({ locale, allImages = false }: { locale: Locale; allI
   }
 
   async function addFiles(incoming: FileList | File[]) {
-    if (isAdding || isConverting) return;
+    if (activeTask.current || isAdding || isConverting) return;
     const selected = Array.from(incoming);
     if (!selected.length) return;
     if (!allImages && selected.some((file) => !isJpgFile(file))) {
@@ -270,39 +277,32 @@ function ImagePdfWorkspace({ locale, allImages = false }: { locale: Locale; allI
     discardResult();
     setError(null);
     setIsAdding(true);
-    let activeFile = selected[0]?.name ?? "JPG";
-
-    const additions: JpgFile[] = [];
+    setProgress({ completed: 0, total: selected.length });
+    const controller = new AbortController();
+    activeTask.current = controller;
     try {
-      for (const file of selected) {
-        activeFile = file.name;
-        if (allImages && !(await validateImageFile(file)).ok) {
-          throw new Error(copy.invalidType);
-        }
-        const bitmap = await createImageBitmap(file);
-        if (!hasSafeImageDimensions(bitmap.width, bitmap.height)) {
-          bitmap.close();
-          throw new Error(copy.readError(file.name));
-        }
-        const previewUrl = URL.createObjectURL(file);
+      const prepared = await preparePdfImages(selected, {
+        signal: controller.signal,
+        onProgress: (completed, total) => setProgress({ completed, total }),
+      });
+      const additions = prepared.map(({ file, width, height, preview }) => {
+        const previewUrl = URL.createObjectURL(preview);
         previewUrls.current.add(previewUrl);
-        additions.push({
-          id: crypto.randomUUID(),
-          file,
-          width: bitmap.width,
-          height: bitmap.height,
-          previewUrl,
-        });
-        bitmap.close();
-      }
+        return { id: crypto.randomUUID(), file, width, height, previewUrl };
+      });
       setFiles((current) => [...current, ...additions]);
     } catch (error) {
-      additions.forEach((item) => {
-        URL.revokeObjectURL(item.previewUrl);
-        previewUrls.current.delete(item.previewUrl);
-      });
-      setError(error instanceof Error && error.message === copy.invalidType ? copy.invalidType : copy.readError(activeFile));
+      if (!(error instanceof Error && error.name === "AbortError")) {
+        setError(error instanceof ImagePdfProcessingError
+          ? error.reason === "unsupported" ? copy.invalidType
+            : error.reason === "dimensions" ? copy.dimensionError
+              : error.reason === "browser" ? copy.browserError
+                : copy.readError(error.fileName || selected[0].name)
+          : copy.readError(selected[0].name));
+      }
     } finally {
+      activeTask.current = null;
+      setProgress(null);
       setIsAdding(false);
     }
   }
@@ -318,27 +318,25 @@ function ImagePdfWorkspace({ locale, allImages = false }: { locale: Locale; allI
   }
 
   async function convertFiles() {
-    if (!files.length || isConverting) return;
+    if (!files.length || activeTask.current || isConverting) return;
 
     discardResult();
     setError(null);
     setIsConverting(true);
+    setProgress({ completed: 0, total: files.length });
+    const controller = new AbortController();
+    activeTask.current = controller;
 
     try {
-      async function* sources() {
-        for (const item of files) {
-          // Normalize one image at a time to keep memory use bounded.
-          const source = allImages ? await convertImage(item.file, "png") : item.file;
-          yield await source.arrayBuffer();
-        }
-      }
-      const createPdf = allImages ? createPdfFromImages : createPdfFromJpgs;
-      const bytes = await createPdf(sources(), {
+      const bytes = await createImagePdf(files.map((item) => item.file), {
         pageSize,
         orientation,
         margin,
+      }, {
+        signal: controller.signal,
+        onProgress: (completed, total) => setProgress({ completed, total }),
       });
-      const blob = new Blob([Uint8Array.from(bytes).buffer], {
+      const blob = new Blob([bytes], {
         type: "application/pdf",
       });
       const url = URL.createObjectURL(blob);
@@ -351,9 +349,13 @@ function ImagePdfWorkspace({ locale, allImages = false }: { locale: Locale; allI
         fileName: `${baseName}-images.pdf`,
       });
       reportToolUsage(slug);
-    } catch {
-      setError(copy.convertError);
+    } catch (error) {
+      if (!(error instanceof Error && error.name === "AbortError")) {
+        setError(error instanceof ImagePdfProcessingError && error.reason === "browser" ? copy.browserError : copy.convertError);
+      }
     } finally {
+      activeTask.current = null;
+      setProgress(null);
       setIsConverting(false);
     }
   }
@@ -366,6 +368,7 @@ function ImagePdfWorkspace({ locale, allImages = false }: { locale: Locale; allI
         <div>
           <h2 id={`${slug}-title`}>{copy.title}</h2>
           <p>{copy.intro}</p>
+          <small>{copy.compact}</small>
         </div>
         {files.length > 0 && (
           <label className="pdf-add-button" aria-disabled={busy}>
@@ -554,11 +557,18 @@ function ImagePdfWorkspace({ locale, allImages = false }: { locale: Locale; allI
 
       <footer className="pdf-workspace__footer">
         <p aria-live="polite">
-          {files.length > 0
+          {progress
+            ? `${isAdding ? copy.adding : copy.converting} ${copy.progress(progress.completed, progress.total)}`
+            : files.length > 0
             ? `${copy.selected(files.length)} · ${formatFileSize(totalBytes, locale)}`
             : copy.limits}
         </p>
         <div>
+          {busy && (
+            <button className="action-secondary" type="button" onClick={() => activeTask.current?.abort()}>
+              {copy.cancel}
+            </button>
+          )}
           {files.length > 0 && (
             <button
               className="action-secondary"

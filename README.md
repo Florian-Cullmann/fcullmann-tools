@@ -13,7 +13,7 @@ Source code for [fcullmann.com](https://fcullmann.com), a bilingual personal sit
 - Excel-to-CSV conversion with worksheet selection and preview
 - Local DOC/DOCX-to-PDF conversion with an in-browser preview
 - Batch JPG, PNG, and animated GIF rotation with orientation filters, previews, and individual or ZIP downloads
-- Multi-image JPG, PNG, and WebP to PDF conversion, with one image per page
+- Multi-image JPG, PNG, and WebP to PDF conversion, with one image per page, background processing, small previews, progress and cancellation, and a maximum of 2 MB per page
 - JSON, Base64, UUID, hashing, timestamp, text, color, and URL utilities
 - Project and article pages with localized metadata
 - Single-user admin area for tools and articles

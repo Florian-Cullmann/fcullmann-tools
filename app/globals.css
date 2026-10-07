@@ -2098,7 +2098,7 @@ button {
   font-size: 0.75rem;
   font-weight: 720;
 }
-.pdf-converter-options__fields select {
+.pdf-converter-options__fields :is(select, input) {
   width: 100%;
   min-height: 42px;
   border: 1px solid var(--line);
@@ -2108,16 +2108,27 @@ button {
   border-radius: 9px;
   outline: none;
 }
-.pdf-converter-options__fields select:hover:not(:disabled) {
+.pdf-converter-options__fields :is(select, input):hover:not(:disabled) {
   border-color: var(--line-strong);
 }
-.pdf-converter-options__fields select:focus-visible {
+.pdf-converter-options__fields :is(select, input):focus-visible {
   border-color: var(--coral);
   box-shadow: 0 0 0 3px var(--coral-soft);
 }
-.pdf-converter-options__fields select:disabled {
+.pdf-converter-options__fields :is(select, input):disabled {
   cursor: not-allowed;
   opacity: 0.55;
+}
+.pdf-converter-options__size-limit {
+  grid-column: 1 / -1;
+}
+.pdf-converter-options__size-limit input {
+  max-width: 160px;
+}
+.pdf-converter-options__size-limit small {
+  color: var(--ink-soft);
+  font-weight: 400;
+  line-height: 1.5;
 }
 .pdf-converter-progress {
   min-height: 64px;

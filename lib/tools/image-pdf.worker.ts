@@ -8,9 +8,6 @@ const scope = self as unknown as {
   postMessage: (message: ImagePdfResponse, transfer?: Transferable[]) => void;
 };
 
-const MAX_PAGE_BYTES = 2_000_000;
-// Leave room for PDF objects, page instructions and document metadata.
-const MAX_JPEG_BYTES = MAX_PAGE_BYTES - 100_000;
 const OUTPUT_DPI = 240;
 const MAX_OUTPUT_SIDE = 3200;
 const MAX_OUTPUT_PIXELS = 8_000_000;
@@ -38,7 +35,7 @@ async function renderJpeg(bitmap: ImageBitmap, width: number, height: number, qu
   }
 }
 
-async function compressPage(bitmap: ImageBitmap, width: number, height: number) {
+async function compressPage(bitmap: ImageBitmap, width: number, height: number, maxJpegBytes: number) {
   let scale = Math.min(
     1,
     width / bitmap.width,
@@ -47,7 +44,8 @@ async function compressPage(bitmap: ImageBitmap, width: number, height: number) 
     Math.sqrt(MAX_OUTPUT_PIXELS / (bitmap.width * bitmap.height)),
   );
   // Prefer high quality. Only reduce dimensions further for unusually complex images.
-  for (let attempt = 0; attempt < 12; attempt += 1) {
+  for (let attempt = 0; attempt < 16; attempt += 1) {
+    let lastSize = 0;
     for (const quality of [0.92, 0.86, 0.8]) {
       const blob = await renderJpeg(
         bitmap,
@@ -55,9 +53,10 @@ async function compressPage(bitmap: ImageBitmap, width: number, height: number) 
         Math.max(1, Math.round(bitmap.height * scale)),
         quality,
       );
-      if (blob.size <= MAX_JPEG_BYTES) return blob;
+      if (blob.size <= maxJpegBytes) return blob;
+      lastSize = blob.size;
     }
-    scale *= 0.8;
+    scale *= Math.min(0.85, Math.sqrt(maxJpegBytes / lastSize) * 0.9);
   }
   throw new ProcessingError("size");
 }
@@ -69,6 +68,11 @@ scope.onmessage = async ({ data }) => {
       throw new ProcessingError("browser");
     }
     if (!data.files.length) throw new ProcessingError("read");
+    if (data.kind === "convert" && (!Number.isInteger(data.maxBytes) || data.maxBytes < 1_000_000 || data.maxBytes > 100_000_000)) {
+      throw new ProcessingError("size");
+    }
+    // Reserve space for document metadata and per-page PDF objects.
+    const maxJpegBytes = data.kind === "convert" ? Math.floor((data.maxBytes - 16_384) / data.files.length) - 2048 : 0;
     const document = data.kind === "convert" ? await PDFDocument.create() : null;
     document?.setCreator("fcullmann.com Tools");
     document?.setProducer("fcullmann.com Tools");
@@ -92,7 +96,7 @@ scope.onmessage = async ({ data }) => {
           scope.postMessage({ kind: "preview", index, width: bitmap.width, height: bitmap.height, preview });
         } else if (document) {
           const layout = getPdfImageLayout(bitmap, data.options);
-          const jpeg = await compressPage(bitmap, layout.imageWidth * OUTPUT_DPI / 72, layout.imageHeight * OUTPUT_DPI / 72);
+          const jpeg = await compressPage(bitmap, layout.imageWidth * OUTPUT_DPI / 72, layout.imageHeight * OUTPUT_DPI / 72, maxJpegBytes);
           const image = await document.embedJpg(await jpeg.arrayBuffer());
           const page = document.addPage([layout.pageWidth, layout.pageHeight]);
           page.drawImage(image, { x: layout.x, y: layout.y, width: layout.imageWidth, height: layout.imageHeight });
@@ -105,7 +109,7 @@ scope.onmessage = async ({ data }) => {
 
     if (document) {
       const bytes = await document.save({ useObjectStreams: true });
-      if (bytes.byteLength > data.files.length * MAX_PAGE_BYTES) throw new ProcessingError("size");
+      if (data.kind !== "convert" || bytes.byteLength > data.maxBytes) throw new ProcessingError("size");
       const buffer = Uint8Array.from(bytes).buffer;
       scope.postMessage({ kind: "pdf", buffer }, [buffer]);
     } else {

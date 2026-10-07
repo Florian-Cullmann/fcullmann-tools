@@ -2,7 +2,7 @@ import type { JpgToPdfOptions } from "@/lib/tools/pdf-images";
 
 export type ImagePdfRequest =
   | { kind: "prepare"; files: File[] }
-  | { kind: "convert"; files: File[]; options: JpgToPdfOptions };
+  | { kind: "convert"; files: File[]; options: JpgToPdfOptions; maxBytes: number };
 
 export type ImagePdfErrorReason = "unsupported" | "dimensions" | "browser" | "read" | "size";
 

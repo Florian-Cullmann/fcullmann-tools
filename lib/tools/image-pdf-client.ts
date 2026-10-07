@@ -59,8 +59,8 @@ export async function preparePdfImages(files: File[], options: TaskOptions) {
   return images;
 }
 
-export async function createImagePdf(files: File[], pdfOptions: JpgToPdfOptions, options: TaskOptions) {
-  const buffer = await runTask({ kind: "convert", files, options: pdfOptions }, options);
+export async function createImagePdf(files: File[], pdfOptions: JpgToPdfOptions, options: TaskOptions & { maxBytes: number }) {
+  const buffer = await runTask({ kind: "convert", files, options: pdfOptions, maxBytes: options.maxBytes }, options);
   if (!buffer) throw new ImagePdfProcessingError("read", "");
   return buffer;
 }

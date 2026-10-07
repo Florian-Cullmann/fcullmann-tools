@@ -113,7 +113,10 @@ function ImagePdfWorkspace({ locale, allImages = false }: { locale: Locale; allI
           download: "PDF herunterladen",
           cancel: "Abbrechen",
           progress: (completed: number, total: number) => `Bild ${completed} von ${total}`,
-          compact: "Maximal 2 MB pro Bildseite. Große Bilder werden für die PDF optimiert.",
+          compact: "Große Bilder werden für die gewählte PDF-Größe optimiert.",
+          maxPdfSize: "Maximale PDF-Größe (MB)",
+          maxPdfSizeHelp: "Standard: 2 MB pro Bild. Kleinere Grenzen können feine Bilddetails reduzieren.",
+          invalidPdfSize: "Wähle eine maximale PDF-Größe zwischen 1 und 100 MB.",
           browserError: "Die Bildverarbeitung benötigt eine aktuelle Version von Chrome, Firefox, Edge oder Safari.",
           dimensionError: "Ein Bild ist zu groß. Bitte verwende Bilder mit höchstens 40 Megapixeln.",
         }
@@ -159,7 +162,10 @@ function ImagePdfWorkspace({ locale, allImages = false }: { locale: Locale; allI
           download: "Download PDF",
           cancel: "Cancel",
           progress: (completed: number, total: number) => `Image ${completed} of ${total}`,
-          compact: "At most 2 MB per image page. Large images are optimized for the PDF.",
+          compact: "Large images are optimized for your selected PDF size limit.",
+          maxPdfSize: "Maximum PDF size (MB)",
+          maxPdfSizeHelp: "Default: 2 MB per image. Smaller limits may reduce fine image detail.",
+          invalidPdfSize: "Choose a maximum PDF size between 1 and 100 MB.",
           browserError: "Image processing requires a current version of Chrome, Firefox, Edge, or Safari.",
           dimensionError: "An image is too large. Please use images with at most 40 megapixels.",
         };
@@ -192,6 +198,7 @@ function ImagePdfWorkspace({ locale, allImages = false }: { locale: Locale; allI
   const [orientation, setOrientation] =
     useState<PdfImageOrientation>("auto");
   const [margin, setMargin] = useState<PdfImageMargin>("standard");
+  const [maxPdfMb, setMaxPdfMb] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [isAdding, setIsAdding] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
@@ -251,6 +258,7 @@ function ImagePdfWorkspace({ locale, allImages = false }: { locale: Locale; allI
     });
     discardResult();
     setFiles([]);
+    setMaxPdfMb(null);
     setError(null);
   }
 
@@ -319,6 +327,11 @@ function ImagePdfWorkspace({ locale, allImages = false }: { locale: Locale; allI
 
   async function convertFiles() {
     if (!files.length || activeTask.current || isConverting) return;
+    const maxMegabytes = Number(maxPdfMb ?? files.length * 2);
+    if (!Number.isFinite(maxMegabytes) || maxMegabytes < 1 || maxMegabytes > 100) {
+      setError(copy.invalidPdfSize);
+      return;
+    }
 
     discardResult();
     setError(null);
@@ -333,6 +346,7 @@ function ImagePdfWorkspace({ locale, allImages = false }: { locale: Locale; allI
         orientation,
         margin,
       }, {
+        maxBytes: Math.floor(maxMegabytes * 1_000_000),
         signal: controller.signal,
         onProgress: (completed, total) => setProgress({ completed, total }),
       });
@@ -489,6 +503,21 @@ function ImagePdfWorkspace({ locale, allImages = false }: { locale: Locale; allI
       {files.length > 0 && (
         <div className="pdf-converter-options pdf-converter-options--compact">
           <div className="pdf-converter-options__fields">
+            <label className="pdf-converter-options__size-limit">
+              <span>{copy.maxPdfSize}</span>
+              <input
+                type="number"
+                min="1"
+                max="100"
+                step="0.1"
+                inputMode="decimal"
+                value={maxPdfMb ?? String(files.length * 2)}
+                disabled={busy}
+                aria-describedby={`${slug}-size-help`}
+                onChange={(event) => updateOption(() => setMaxPdfMb(event.target.value))}
+              />
+              <small id={`${slug}-size-help`}>{copy.maxPdfSizeHelp}</small>
+            </label>
             <label>
               <span>{copy.pageSize}</span>
               <select

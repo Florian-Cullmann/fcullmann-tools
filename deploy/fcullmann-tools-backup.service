@@ -1,0 +1,9 @@
+[Unit]
+Description=Back up tools.fcullmann.com PostgreSQL
+Requires=docker.service
+After=docker.service
+
+[Service]
+Type=oneshot
+ExecStart=/opt/apps/fcullmann-tools/backup.sh
+UMask=0077

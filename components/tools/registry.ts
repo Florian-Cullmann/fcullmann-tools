@@ -2,7 +2,7 @@ import { createElement, type ComponentType, type ReactElement } from "react";
 import { CsvToExcel } from "@/components/tools/csv-to-excel";
 import { ImageRotate } from "@/components/tools/image-rotate";
 import { ExcelToCsv } from "@/components/tools/excel-to-csv";
-import { JpgToPdf } from "@/components/tools/jpg-to-pdf";
+import { ImagesToPdf, JpgToPdf } from "@/components/tools/jpg-to-pdf";
 import {
   ImageToJpg,
   ImageToPng,
@@ -54,6 +54,7 @@ const toolWorkspaceRegistry = {
   "image-to-png": ImageToPng,
   "image-to-webp": ImageToWebp,
   "image-rotate": ImageRotate,
+  "images-to-pdf": ImagesToPdf,
   "json-formatter": JsonFormatter,
   base64: Base64Tool,
   "uuid-generator": UuidTool,

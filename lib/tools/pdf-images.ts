@@ -1,8 +1,11 @@
 import { PageSizes, PDFDocument } from "pdf-lib";
+import { detectImageType } from "@/lib/tools/images";
 
 export type PdfImagePageSize = "a4" | "letter" | "fit";
 export type PdfImageOrientation = "auto" | "portrait" | "landscape";
 export type PdfImageMargin = "none" | "small" | "standard";
+
+type PdfImageSources = ReadonlyArray<ArrayBuffer | Uint8Array> | AsyncIterable<ArrayBuffer | Uint8Array>;
 
 export type JpgToPdfOptions = Readonly<{
   pageSize: PdfImagePageSize;
@@ -106,21 +109,30 @@ export function getPdfImageLayout(
 }
 
 export async function createPdfFromJpgs(
-  images: ReadonlyArray<ArrayBuffer | Uint8Array>,
+  images: PdfImageSources,
   options: JpgToPdfOptions,
 ) {
-  if (!images.length) {
-    throw new Error("At least one JPG image is required.");
-  }
+  return createPdfFromImages(images, options);
+}
 
+export async function createPdfFromImages(
+  images: PdfImageSources,
+  options: JpgToPdfOptions,
+) {
   const document = await PDFDocument.create();
   document.setCreator("fcullmann.com Tools");
   document.setProducer("fcullmann.com Tools");
 
-  for (const source of images) {
-    const image = await document.embedJpg(
-      source instanceof Uint8Array ? Uint8Array.from(source) : source,
-    );
+  let imageCount = 0;
+  for await (const source of images) {
+    const bytes = source instanceof Uint8Array ? Uint8Array.from(source) : new Uint8Array(source);
+    const type = detectImageType(bytes);
+    if (type !== "jpeg" && type !== "png") {
+      throw new Error("Images must be JPEG or PNG before embedding in PDF.");
+    }
+    const image = type === "png"
+      ? await document.embedPng(bytes)
+      : await document.embedJpg(bytes);
     const layout = getPdfImageLayout(image, options);
     const page = document.addPage([layout.pageWidth, layout.pageHeight]);
     page.drawImage(image, {
@@ -129,7 +141,10 @@ export async function createPdfFromJpgs(
       width: layout.imageWidth,
       height: layout.imageHeight,
     });
+    imageCount += 1;
   }
+
+  if (!imageCount) throw new Error("At least one image is required.");
 
   return document.save({ useObjectStreams: true });
 }

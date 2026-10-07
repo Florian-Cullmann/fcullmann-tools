@@ -13,6 +13,7 @@ Source code for [fcullmann.com](https://fcullmann.com), a bilingual personal sit
 - Excel-to-CSV conversion with worksheet selection and preview
 - Local DOC/DOCX-to-PDF conversion with an in-browser preview
 - Batch JPG, PNG, and animated GIF rotation with orientation filters, previews, and individual or ZIP downloads
+- Multi-image JPG, PNG, and WebP to PDF conversion, with one image per page
 - JSON, Base64, UUID, hashing, timestamp, text, color, and URL utilities
 - Project and article pages with localized metadata
 - Single-user admin area for tools and articles
@@ -124,3 +125,7 @@ npm run start
 ```
 
 Production deployments should provide TLS termination, PostgreSQL backups, and all runtime secrets through the host environment.
+
+The deployment at [tools.fcullmann.com](https://tools.fcullmann.com) uses Docker
+and KeyHelp/Apache on `ssh apidego`. See [deploy/README.md](deploy/README.md) for
+updates, administration and backups.

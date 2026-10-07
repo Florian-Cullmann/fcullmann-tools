@@ -222,6 +222,24 @@ export const demoTools: ToolRecord[] = [
     usageCount: 0,
   },
   {
+    id: "demo-images-to-pdf",
+    slug: "images-to-pdf",
+    name: { en: "Images to PDF", de: "Bilder in PDF" },
+    summary: {
+      en: "Combine multiple images into one PDF. One image per page.",
+      de: "Mehrere Bilder zu einer PDF verbinden. Jedes Bild eine Seite.",
+    },
+    description: {
+      en: "Select JPG, PNG, or WebP images, arrange their order, and create one PDF with a separate page for each image. Files are processed locally in your browser.",
+      de: "JPG-, PNG- oder WebP-Bilder auswählen, ihre Reihenfolge festlegen und eine gemeinsame PDF erstellen. Jedes Bild erhält eine eigene Seite. Die Verarbeitung erfolgt lokal im Browser.",
+    },
+    category: "images",
+    icon: "image-pdf",
+    featured: false,
+    sortOrder: 4,
+    usageCount: 0,
+  },
+  {
     id: "demo-excel-to-csv",
     slug: "excel-to-csv",
     name: { en: "Excel to CSV", de: "Excel zu CSV" },

@@ -1,0 +1,14 @@
+node_modules
+.next
+.git
+.env*
+!.env.example
+coverage
+docs
+*.tsbuildinfo
+.DS_Store
+.impeccable
+AGENTS.md
+CLAUDE.md
+DESIGN.md
+PRODUCT.md

@@ -48,10 +48,10 @@ for (const viewport of [
     await page.locator(".office-tools-grid .utility-card strong").allTextContents(),
     ["Excel to CSV", "CSV to Excel", "Word to PDF"],
   );
-  assert.equal(await page.locator(".image-tools-grid .utility-card").count(), 4);
+  assert.equal(await page.locator(".image-tools-grid .utility-card").count(), 5);
   assert.deepEqual(
     await page.locator(".image-tools-grid .utility-card strong").allTextContents(),
-    ["Image to JPG", "Image to PNG", "Image to WebP", "Rotate images"],
+    ["Image to JPG", "Image to PNG", "Image to WebP", "Rotate images", "Images to PDF"],
   );
   await page.locator(".utility-search input").fill("Base64");
   await page.waitForFunction(

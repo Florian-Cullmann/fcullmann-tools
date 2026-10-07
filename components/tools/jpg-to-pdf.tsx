@@ -17,11 +17,18 @@ import type { Locale } from "@/lib/i18n/types";
 import { formatFileSize } from "@/lib/tools/files";
 import {
   createPdfFromJpgs,
+  createPdfFromImages,
   type PdfImageMargin,
   type PdfImageOrientation,
   type PdfImagePageSize,
 } from "@/lib/tools/pdf-images";
 import { reportToolUsage } from "@/lib/tools/usage-client";
+import {
+  IMAGE_INPUT_ACCEPT,
+  convertImage,
+  hasSafeImageDimensions,
+  validateImageFile,
+} from "@/lib/tools/images";
 
 const MAX_FILES = 50;
 const MAX_TOTAL_BYTES = 100 * 1024 * 1024;
@@ -50,7 +57,7 @@ function isJpgFile(file: Pick<File, "name" | "type">) {
 function imageBaseName(fileName: string) {
   return (
     fileName
-      .replace(/\.(?:jpe?g)$/i, "")
+      .replace(/\.(?:jpe?g|png|webp)$/i, "")
       .replace(/[<>:"/\\|?*\u0000-\u001f]/g, "-")
       .replace(/\s+/g, " ")
       .trim() || "images"
@@ -58,7 +65,17 @@ function imageBaseName(fileName: string) {
 }
 
 export function JpgToPdf({ locale }: { locale: Locale }) {
-  const copy =
+  return <ImagePdfWorkspace locale={locale} />;
+}
+
+export function ImagesToPdf({ locale }: { locale: Locale }) {
+  return <ImagePdfWorkspace locale={locale} allImages />;
+}
+
+function ImagePdfWorkspace({ locale, allImages = false }: { locale: Locale; allImages?: boolean }) {
+  const slug = allImages ? "images-to-pdf" : "jpg-to-pdf";
+  const accept = allImages ? IMAGE_INPUT_ACCEPT : "image/jpeg,.jpg,.jpeg";
+  const jpgCopy =
     locale === "de"
       ? {
           title: "JPG-Bilder",
@@ -142,6 +159,30 @@ export function JpgToPdf({ locale }: { locale: Locale }) {
             `PDF with ${count} ${count === 1 ? "page" : "pages"} is ready`,
           download: "Download PDF",
         };
+  const copy = allImages ? {
+    ...jpgCopy,
+    ...(locale === "de" ? {
+      title: "Bilder in PDF",
+      intro: "Wähle mehrere Bilder und lege ihre Reihenfolge fest. Jedes Bild wird eine eigene Seite in einer gemeinsamen PDF. Alles bleibt in deinem Browser.",
+      drop: "Bilder hier ablegen",
+      limits: `Bis zu ${MAX_FILES} JPG-, PNG- oder WebP-Bilder und insgesamt 100 MB`,
+      adding: "Bilder werden geprüft …",
+      addMore: "Weitere Bilder",
+      invalidType: "Wähle gültige JPG-, PNG- oder WebP-Dateien aus.",
+      tooMany: `Du kannst höchstens ${MAX_FILES} Bilder in eine PDF umwandeln.`,
+      convertError: "Die PDF konnte nicht erstellt werden. Prüfe die Bilder und versuche es erneut.",
+    } : {
+      title: "Images to PDF",
+      intro: "Choose multiple images and arrange their order. Each image becomes its own page in one PDF. Everything stays in your browser.",
+      drop: "Drop images here",
+      limits: `Up to ${MAX_FILES} JPG, PNG, or WebP images and 100 MB total`,
+      adding: "Checking images …",
+      addMore: "Add more images",
+      invalidType: "Choose valid JPG, PNG, or WebP files.",
+      tooMany: `You can convert up to ${MAX_FILES} images into one PDF.`,
+      convertError: "The PDF could not be created. Check the images and try again.",
+    }),
+  } : jpgCopy;
   const [files, setFiles] = useState<JpgFile[]>([]);
   const [pageSize, setPageSize] = useState<PdfImagePageSize>("a4");
   const [orientation, setOrientation] =
@@ -210,7 +251,7 @@ export function JpgToPdf({ locale }: { locale: Locale }) {
     if (isAdding || isConverting) return;
     const selected = Array.from(incoming);
     if (!selected.length) return;
-    if (selected.some((file) => !isJpgFile(file))) {
+    if (!allImages && selected.some((file) => !isJpgFile(file))) {
       setError(copy.invalidType);
       return;
     }
@@ -235,7 +276,14 @@ export function JpgToPdf({ locale }: { locale: Locale }) {
     try {
       for (const file of selected) {
         activeFile = file.name;
+        if (allImages && !(await validateImageFile(file)).ok) {
+          throw new Error(copy.invalidType);
+        }
         const bitmap = await createImageBitmap(file);
+        if (!hasSafeImageDimensions(bitmap.width, bitmap.height)) {
+          bitmap.close();
+          throw new Error(copy.readError(file.name));
+        }
         const previewUrl = URL.createObjectURL(file);
         previewUrls.current.add(previewUrl);
         additions.push({
@@ -248,12 +296,12 @@ export function JpgToPdf({ locale }: { locale: Locale }) {
         bitmap.close();
       }
       setFiles((current) => [...current, ...additions]);
-    } catch {
+    } catch (error) {
       additions.forEach((item) => {
         URL.revokeObjectURL(item.previewUrl);
         previewUrls.current.delete(item.previewUrl);
       });
-      setError(copy.readError(activeFile));
+      setError(error instanceof Error && error.message === copy.invalidType ? copy.invalidType : copy.readError(activeFile));
     } finally {
       setIsAdding(false);
     }
@@ -277,10 +325,15 @@ export function JpgToPdf({ locale }: { locale: Locale }) {
     setIsConverting(true);
 
     try {
-      const sources = await Promise.all(
-        files.map((item) => item.file.arrayBuffer()),
-      );
-      const bytes = await createPdfFromJpgs(sources, {
+      async function* sources() {
+        for (const item of files) {
+          // Normalize one image at a time to keep memory use bounded.
+          const source = allImages ? await convertImage(item.file, "png") : item.file;
+          yield await source.arrayBuffer();
+        }
+      }
+      const createPdf = allImages ? createPdfFromImages : createPdfFromJpgs;
+      const bytes = await createPdf(sources(), {
         pageSize,
         orientation,
         margin,
@@ -297,7 +350,7 @@ export function JpgToPdf({ locale }: { locale: Locale }) {
         pageCount: files.length,
         fileName: `${baseName}-images.pdf`,
       });
-      reportToolUsage("jpg-to-pdf");
+      reportToolUsage(slug);
     } catch {
       setError(copy.convertError);
     } finally {
@@ -308,10 +361,10 @@ export function JpgToPdf({ locale }: { locale: Locale }) {
   const busy = isAdding || isConverting;
 
   return (
-    <section className="pdf-workspace" aria-labelledby="jpg-to-pdf-title">
+    <section className="pdf-workspace" aria-labelledby={`${slug}-title`}>
       <header className="pdf-workspace__header">
         <div>
-          <h2 id="jpg-to-pdf-title">{copy.title}</h2>
+          <h2 id={`${slug}-title`}>{copy.title}</h2>
           <p>{copy.intro}</p>
         </div>
         {files.length > 0 && (
@@ -320,7 +373,7 @@ export function JpgToPdf({ locale }: { locale: Locale }) {
             {copy.addMore}
             <input
               type="file"
-              accept="image/jpeg,.jpg,.jpeg"
+              accept={accept}
               multiple
               disabled={busy}
               onChange={(event) => {
@@ -363,7 +416,7 @@ export function JpgToPdf({ locale }: { locale: Locale }) {
           <small>{copy.limits}</small>
           <input
             type="file"
-            accept="image/jpeg,.jpg,.jpeg"
+            accept={accept}
             multiple
             disabled={busy}
             onChange={(event) => {

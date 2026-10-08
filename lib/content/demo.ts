@@ -515,7 +515,7 @@ export const demoProjects: ProjectRecord[] = [
   {
     id: "demo-tool-platform",
     slug: "tool-platform",
-    title: "fcullmann.com Tools",
+    title: "fcuTools",
     summary: {
       en: "A bilingual platform for focused browser utilities and technical writing.",
       de: "Eine zweisprachige Plattform für fokussierte Browser-Tools und technische Artikel.",

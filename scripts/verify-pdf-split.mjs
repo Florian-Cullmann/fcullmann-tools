@@ -102,15 +102,35 @@ await desktop.screenshot({
 });
 
 await desktop.getByRole("button", { name: "Split PDF" }).click();
+const nameInputs = desktop.locator('.pdf-split__outputs input');
+await nameInputs.first().waitFor();
+assert.deepEqual(await nameInputs.evaluateAll((inputs) => inputs.map((input) => input.value)), [
+  "Page 1 - Page 3.pdf",
+  "Page 4 - Page 7.pdf",
+  "Page 8 - Page 10.pdf",
+]);
+await nameInputs.nth(0).fill("Introduction.pdf");
+await nameInputs.nth(1).fill("Vertrag – Müller");
+await nameInputs.nth(1).blur();
+assert.equal(await nameInputs.nth(1).inputValue(), "Vertrag – Müller.pdf");
+
+const individualPromise = desktop.waitForEvent("download");
+await desktop.getByRole("link", { name: "Download PDF: Vertrag – Müller.pdf", exact: true }).click();
+const individual = await individualPromise;
+assert.equal(individual.suggestedFilename(), "Vertrag – Müller.pdf");
+const individualBytes = await readDownload(individual);
+assert.equal((await PDFDocument.load(individualBytes)).getPageCount(), 4);
+
 const downloadPromise = desktop.waitForEvent("download");
-await desktop.getByRole("link", { name: "Download ZIP" }).click();
+await desktop.getByRole("button", { name: "Download ZIP" }).click();
 const archive = await JSZip.loadAsync(await readDownload(await downloadPromise));
 const fileNames = Object.keys(archive.files);
 assert.deepEqual(fileNames, [
-  "pdf-split-visual-source-part-01-pages-1-3.pdf",
-  "pdf-split-visual-source-part-02-pages-4-7.pdf",
-  "pdf-split-visual-source-part-03-pages-8-10.pdf",
+  "Introduction.pdf",
+  "Vertrag – Müller.pdf",
+  "Page 8 - Page 10.pdf",
 ]);
+assert.deepEqual(await archive.file("Vertrag – Müller.pdf").async("nodebuffer"), individualBytes);
 
 const pageCounts = await Promise.all(
   fileNames.map(async (fileName) => {
@@ -119,11 +139,39 @@ const pageCounts = await Promise.all(
   }),
 );
 assert.deepEqual(pageCounts, [3, 4, 3]);
+await nameInputs.nth(0).fill("introduction.PDF");
+await nameInputs.nth(2).fill("Introduction.pdf");
+assert.equal(await desktop.getByRole("button", { name: "Download ZIP" }).isDisabled(), true);
+assert.equal(await desktop.locator('.pdf-split__outputs input[aria-invalid="true"]').count(), 2);
+await nameInputs.nth(2).fill("");
+assert.equal(await desktop.getByRole("button", { name: "Download ZIP" }).isDisabled(), true);
+await nameInputs.nth(2).fill("folder/file.pdf");
+assert.equal(await nameInputs.nth(2).getAttribute("aria-invalid"), "true");
+await nameInputs.nth(2).fill("Conclusion.pdf");
+const secondDownloadPromise = desktop.waitForEvent("download");
+await desktop.getByRole("button", { name: "Download ZIP" }).click();
+const secondArchive = await JSZip.loadAsync(await readDownload(await secondDownloadPromise));
+assert.deepEqual(Object.keys(secondArchive.files), ["introduction.PDF", "Vertrag – Müller.pdf", "Conclusion.pdf"]);
+const zipBounds = await desktop.getByRole("button", { name: "Download ZIP" }).boundingBox();
+const partBounds = await desktop.locator('.pdf-split__download').first().boundingBox();
+assert.equal(partBounds.x + partBounds.width, zipBounds.x + zipBounds.width);
+await desktop.screenshot({ path: `${reviewDirectory}/desktop-split-results.png`, fullPage: true });
+await desktop.getByRole("button", { name: "Remove split after page 3", exact: true }).click();
+assert.equal(await nameInputs.count(), 0);
 await desktop.close();
 
 const mobile = await browser.newPage({ viewport: { width: 390, height: 844 } });
 await mobile.emulateMedia({ reducedMotion: "reduce" });
 await configureSplit(mobile, source, "de");
+await mobile.getByRole("button", { name: "PDF teilen", exact: true }).click();
+await mobile.locator('.pdf-split__outputs input').first().waitFor();
+assert.deepEqual(await mobile.locator('.pdf-split__outputs input').evaluateAll((inputs) => inputs.map((input) => input.value)), [
+  "Seite 1 - Seite 3.pdf", "Seite 4 - Seite 7.pdf", "Seite 8 - Seite 10.pdf",
+]);
+assert.equal(await mobile.evaluate(() => document.documentElement.scrollWidth), 390);
+const mobileDownloadPromise = mobile.waitForEvent("download");
+await mobile.getByRole("link", { name: "PDF herunterladen: Seite 1 - Seite 3.pdf", exact: true }).click();
+assert.equal((await mobileDownloadPromise).suggestedFilename(), "Seite 1 - Seite 3.pdf");
 await mobile.evaluate(() => {
   if (document.activeElement instanceof HTMLElement) document.activeElement.blur();
 });
@@ -144,5 +192,5 @@ await home.close();
 await browser.close();
 
 console.log(
-  "PDF Split verification passed for visual selection, responsive layout, ZIP output, page ranges, and homepage grouping.",
+  "PDF Split verification passed for editable names, individual and ZIP downloads, name validation, page ranges, responsive layout, and result reset.",
 );

@@ -25,7 +25,7 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
       <aside className="admin-sidebar">
         <Link href="/admin" className="admin-brand">
           <Compass size={22} />
-          <span>fcullmann</span>
+          <span>fcuTools</span>
           <small>admin</small>
         </Link>
         <nav>

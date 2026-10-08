@@ -10,31 +10,29 @@ import "@/app/globals.css";
 const sans = Public_Sans({ subsets: ["latin"], variable: "--font-sans" });
 const mono = JetBrains_Mono({ subsets: ["latin"], variable: "--font-mono" });
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://fcullmann.com";
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://tools.fcullmann.com";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: "Florian Cullmann - Developer Tools & Software Projects",
-    template: "%s - Florian Cullmann",
+    default: "fcuTools – Practical online tools",
+    template: "%s – fcuTools",
   },
   description:
-    "Focused browser tools, selected software projects, and practical engineering notes by Florian Cullmann.",
-  applicationName: "fcullmann.com",
-  authors: [{ name: "Florian Cullmann", url: siteUrl }],
-  creator: "Florian Cullmann",
+    "Edit PDFs, convert images and Office files, and format data directly in your browser.",
+  applicationName: "fcuTools",
   alternates: { languages: { en: "/en", de: "/de" } },
   openGraph: {
     type: "website",
-    siteName: "fcullmann.com",
-    title: "Florian Cullmann - Developer Tools & Software Projects",
-    description: "Useful software, carefully made.",
+    siteName: "fcuTools",
+    title: "fcuTools – Practical online tools",
+    description: "Practical tools, right in your browser.",
     url: siteUrl,
   },
   twitter: {
     card: "summary_large_image",
-    title: "Florian Cullmann",
-    description: "Useful software, carefully made.",
+    title: "fcuTools",
+    description: "Practical tools, right in your browser.",
   },
   robots: { index: true, follow: true },
 };
@@ -53,13 +51,6 @@ export default async function LocaleLayout({
   return (
     <html lang={locale} className={`${sans.variable} ${mono.variable}`}>
       <body>
-        <div
-          className="contents"
-          aria-hidden="true"
-          dangerouslySetInnerHTML={{
-            __html: `<!-- THESIS: Florian's digital workshop connects a focused utility catalogue with a quieter personal layer. OWN-WORLD: cool #F5F7FB canvas, white editorial surfaces, coral primary actions, multicolor functional glyph tiles, and compact sans typography. STORY: visitors understand what Florian makes, search or filter his toolbox, then meet the person behind it on the about page. FIRST VIEWPORT: slim header, concise personal introduction, direct links, search, category filters, and the first tool rows. FORM: Personal Workshop Catalogue. -->`,
-          }}
-        />
         <a className="skip-link" href="#main-content">
           Skip to content
         </a>

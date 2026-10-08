@@ -12,8 +12,8 @@ export async function generateMetadata({
     title: locale === "de" ? "Datenschutzerklärung" : "Privacy policy",
     description:
       locale === "de"
-        ? "Informationen zur Verarbeitung personenbezogener Daten auf fcullmann.com."
-        : "Information about the processing of personal data on fcullmann.com.",
+        ? "Informationen zur Verarbeitung personenbezogener Daten auf fcuTools."
+        : "Information about the processing of personal data on fcuTools.",
     alternates: isLocale(locale)
       ? localizedAlternates(locale, "datenschutz")
       : undefined,
@@ -410,8 +410,8 @@ export default async function PrivacyPage({
       title={locale === "de" ? "Datenschutzerklärung" : "Privacy policy"}
       intro={
         locale === "de"
-          ? "Wie fcullmann.com Daten verarbeitet, welche Informationen lokal bleiben und welche Rechte Sie haben."
-          : "How fcullmann.com processes data, which information stays local, and what rights you have."
+          ? "Wie fcuTools Daten verarbeitet, welche Informationen lokal bleiben und welche Rechte Sie haben."
+          : "How fcuTools processes data, which information stays local, and what rights you have."
       }
       updated={
         locale === "de"

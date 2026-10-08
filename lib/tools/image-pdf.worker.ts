@@ -74,8 +74,8 @@ scope.onmessage = async ({ data }) => {
     // Reserve space for document metadata and per-page PDF objects.
     const maxJpegBytes = data.kind === "convert" ? Math.floor((data.maxBytes - 16_384) / data.files.length) - 2048 : 0;
     const document = data.kind === "convert" ? await PDFDocument.create() : null;
-    document?.setCreator("fcullmann.com Tools");
-    document?.setProducer("fcullmann.com Tools");
+    document?.setCreator("fcuTools");
+    document?.setProducer("fcuTools");
 
     // Decode only one original at a time, entirely outside the UI thread.
     for (let index = 0; index < data.files.length; index += 1) {

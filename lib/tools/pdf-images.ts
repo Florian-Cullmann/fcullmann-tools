@@ -120,8 +120,8 @@ export async function createPdfFromImages(
   options: JpgToPdfOptions,
 ) {
   const document = await PDFDocument.create();
-  document.setCreator("fcullmann.com Tools");
-  document.setProducer("fcullmann.com Tools");
+  document.setCreator("fcuTools");
+  document.setProducer("fcuTools");
 
   let imageCount = 0;
   for await (const source of images) {

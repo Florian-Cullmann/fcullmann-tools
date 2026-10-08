@@ -12,7 +12,7 @@ for (const viewport of [
   await page.goto(`${origin}/en`, { waitUntil: "networkidle" });
   assert.equal(
     await page.locator("h1").first().textContent(),
-    "Hi, I'm Florian. I build useful software for everyday work.",
+    "fcuTools. Practical tools for everyday tasks.",
   );
   assert.equal(
     (await page.locator(".locale-switch").textContent())?.trim(),
@@ -23,8 +23,8 @@ for (const viewport of [
     0,
   );
   assert.equal(
-    await page.locator('.site-header nav [aria-disabled="true"]').textContent(),
-    "Blog",
+    await page.locator('.site-header nav [aria-disabled="true"]').count(),
+    0,
   );
   assert.equal(await page.locator(".featured-grid .utility-card").count(), 6);
   assert.equal(await page.locator(".pdf-tools-grid .utility-card").count(), 8);
@@ -73,12 +73,19 @@ for (const viewport of [
     `Horizontal overflow at ${viewport.width}px`,
   );
   assert.equal(await page.locator(".site-footer nav a").count(), 2);
-  await page.goto(`${origin}/en/about`, { waitUntil: "networkidle" });
-  assert.equal(await page.locator("h1").textContent(), "Hi, I'm Florian.");
-  assert.equal(await page.locator(".about-portrait img").count(), 1);
-  assert.equal(await page.locator(".about-paths a").count(), 3);
-  await page.goto(`${origin}/en/articles`, { waitUntil: "networkidle" });
-  assert.equal(await page.locator("h1").textContent(), "Field notes");
+  assert.equal(await page.locator(".wordmark").textContent(), "fcuTools");
+  assert.doesNotMatch(await page.locator("body").innerText(), /Florian|Cullmann|About me|My toolbox/);
+  assert.equal(await page.locator(".latest-writing").count(), 0);
+  assert.match(await page.title(), /fcuTools/);
+  for (const locale of ["en", "de"]) {
+    for (const route of ["about", "projects", "articles", "articles/browser-first-tools"]) {
+      await page.goto(`${origin}/${locale}/${route}`, { waitUntil: "networkidle" });
+      assert.equal(new URL(page.url()).pathname, `/${locale}/tools`);
+    }
+  }
+  await page.goto(`${origin}/de`, { waitUntil: "networkidle" });
+  assert.equal(await page.locator("h1").textContent(), "fcuTools. Praktische Tools für den Alltag.");
+  assert.doesNotMatch(await page.locator("body").innerText(), /Florian|Cullmann|Über mich|Meine Werkzeugkiste/);
   await page.goto(`${origin}/de/datenschutz`, { waitUntil: "networkidle" });
   assert.equal(
     await page.locator("h1").textContent(),
@@ -133,7 +140,13 @@ assert.equal(
 );
 const machineIndex = await priorityPage.request.get(`${origin}/llms.txt`);
 assert.equal(machineIndex.ok(), true);
-assert.match(await machineIndex.text(), /JSON Formatter/);
+const machineText = await machineIndex.text();
+assert.match(machineText, /JSON Formatter/);
+assert.match(machineText, /# fcuTools/);
+assert.doesNotMatch(machineText, /Florian|Personal website|\/about|\/projects|\/articles/);
+const sitemap = await priorityPage.request.get(`${origin}/sitemap.xml`);
+assert.equal(sitemap.ok(), true);
+assert.doesNotMatch(await sitemap.text(), /\/about|\/projects|\/articles/);
 await priorityContext.close();
 await browser.close();
 

@@ -1,10 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowRight, FileText, Search, X } from "lucide-react";
+import { ArrowRight, Search, X } from "lucide-react";
 import { useMemo, useState } from "react";
 import { ToolGlyph } from "@/components/tools/tool-glyph";
-import type { ArticleRecord, ToolRecord } from "@/lib/content/types";
+import type { ToolRecord } from "@/lib/content/types";
 import type { Locale } from "@/lib/i18n/types";
 import { getMessages } from "@/lib/i18n/messages";
 import { getToolCategoryLabel } from "@/lib/tools/categories";
@@ -57,17 +57,11 @@ function ToolCard({
 export function UtilityHome({
   locale,
   tools,
-  articles,
 }: {
   locale: Locale;
   tools: ToolRecord[];
-  articles: ArticleRecord[];
 }) {
-  const {
-    home,
-    tools: toolMessages,
-    articles: articleMessages,
-  } = getMessages(locale);
+  const { home, tools: toolMessages } = getMessages(locale);
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState("all");
   const [sort, setSort] = useState<"usage" | "name">("usage");
@@ -108,11 +102,6 @@ export function UtilityHome({
     .slice(0, 8);
   const officeTools = tools.filter((tool) => tool.category === "office");
   const imageTools = tools.filter((tool) => tool.category === "images");
-  const formatter = new Intl.DateTimeFormat(locale, {
-    day: "2-digit",
-    month: "short",
-    year: "numeric",
-  });
 
   return (
     <div className="utility-home">
@@ -121,37 +110,34 @@ export function UtilityHome({
           <div className="utility-hero__intro">
             <div className="utility-hero__copy">
               <h1 id="home-title">
-                <span>
-                  {locale === "de"
-                    ? "Hi, ich bin Florian."
-                    : "Hi, I'm Florian."}
-                </span>{" "}
+                <span>fcuTools.</span>{" "}
                 {locale === "de"
-                  ? "Ich entwickle nützliche Software für den Alltag."
-                  : "I build useful software for everyday work."}
+                  ? "Praktische Tools für den Alltag."
+                  : "Practical tools for everyday tasks."}
               </h1>
               <p>
                 {locale === "de"
-                  ? "Hier findest du meine Browser-Tools, Softwareprojekte und Notizen aus der Praxis - sorgfältig gebaut und ohne unnötigen Ballast."
-                  : "This is where I share my browser tools, software projects, and practical notes - carefully made and without unnecessary clutter."}
+                  ? "PDFs bearbeiten, Bilder konvertieren, Daten formatieren: Finde das passende Tool und erledige deine Aufgaben direkt im Browser."
+                  : "Edit PDFs, convert images, and format data: Find the right tool and get things done directly in your browser."}
               </p>
               <div className="utility-hero__actions">
                 <Link href={`/${locale}/tools`}>
-                  {locale === "de" ? "Meine Tools" : "Explore my tools"}
+                  {locale === "de" ? "Alle Tools entdecken" : "Explore all tools"}
                   <ArrowRight aria-hidden="true" size={17} />
                 </Link>
-                <Link href={`/${locale}/about`}>
-                  {locale === "de" ? "Mehr über mich" : "More about me"}
+                <Link href="#all-tools-title">
+                  {locale === "de"
+                    ? "Tool-Katalog durchsuchen"
+                    : "Browse the tool catalogue"}
                 </Link>
               </div>
             </div>
-
           </div>
 
           <div className="utility-toolbox">
             <div className="utility-toolbox__heading">
               <strong>
-                {locale === "de" ? "Meine Werkzeugkiste" : "My toolbox"}
+                {locale === "de" ? "Das passende Tool finden" : "Find the right tool"}
               </strong>
               <span>
                 {locale === "de"
@@ -367,48 +353,6 @@ export function UtilityHome({
           )}
         </section>
 
-        {!query && category === "all" && articles.length > 0 && (
-          <section
-            className="utility-section latest-writing"
-            aria-labelledby="latest-writing-title"
-          >
-            <div className="section-heading">
-              <div>
-                <h2 id="latest-writing-title">{home.latest}</h2>
-                <p>
-                  {locale === "de"
-                    ? "Praktische Notizen über Software und Developer Experience."
-                    : "Practical notes on software and developer experience."}
-                </p>
-              </div>
-              <Link href={`/${locale}/articles`}>
-                {home.viewArticles}
-                <ArrowRight size={16} />
-              </Link>
-            </div>
-            <div className="writing-list">
-              {articles.slice(0, 3).map((article) => (
-                <Link
-                  href={`/${locale}/articles/${article.slug}`}
-                  key={article.id}
-                >
-                  <span className="writing-icon">
-                    <FileText size={19} />
-                  </span>
-                  <span>
-                    <strong>{article.title[locale]}</strong>
-                    <small>{article.excerpt[locale]}</small>
-                  </span>
-                  <time dateTime={article.publishedAt.toISOString()}>
-                    {formatter.format(article.publishedAt)}
-                  </time>
-                  {article.isDemo && <em>{articleMessages.sample}</em>}
-                  <ArrowRight size={17} />
-                </Link>
-              ))}
-            </div>
-          </section>
-        )}
       </div>
     </div>
   );

@@ -34,11 +34,15 @@ type SourcePdf = {
 };
 
 type SplitResult = {
-  url: string;
+  parts: { url: string; bytes: Uint8Array; fileName: string }[];
   size: number;
-  partCount: number;
   fileName: string;
 };
+
+function pdfFileName(value: string) {
+  const name = value.trim();
+  return /\.pdf$/i.test(name) ? name : `${name}.pdf`;
+}
 
 function safeBaseName(fileName: string) {
   return pdfBaseName(fileName)
@@ -76,6 +80,15 @@ export function PdfSplit({ locale }: { locale: Locale }) {
           ready: (count: number) =>
             `${count} ${count === 1 ? "Datei ist" : "Dateien sind"} bereit`,
           download: "ZIP herunterladen",
+          downloadPart: "PDF herunterladen",
+          fileName: (index: number) => `Dateiname für Teil ${index}`,
+          defaultName: (start: number, end: number) =>
+            `Seite ${start} - Seite ${end}.pdf`,
+          invalidName:
+            'Gib einen Dateinamen ohne folgende Zeichen ein: < > : " / \\ | ? *',
+          duplicateName: "Vergib für jede Datei einen eigenen Namen.",
+          zipping: "ZIP wird erstellt …",
+          zipError: "Die ZIP-Datei konnte nicht erstellt werden. Versuche es erneut.",
           clear: "Datei entfernen",
         }
       : {
@@ -104,6 +117,15 @@ export function PdfSplit({ locale }: { locale: Locale }) {
           ready: (count: number) =>
             `${count} ${count === 1 ? "file is" : "files are"} ready`,
           download: "Download ZIP",
+          downloadPart: "Download PDF",
+          fileName: (index: number) => `File name for part ${index}`,
+          defaultName: (start: number, end: number) =>
+            `Page ${start} - Page ${end}.pdf`,
+          invalidName:
+            'Enter a file name without these characters: < > : " / \\ | ? *',
+          duplicateName: "Use a different name for each file.",
+          zipping: "Creating ZIP …",
+          zipError: "The ZIP file could not be created. Please try again.",
           clear: "Remove file",
         };
   const [source, setSource] = useState<SourcePdf | null>(null);
@@ -112,8 +134,31 @@ export function PdfSplit({ locale }: { locale: Locale }) {
   const [isChecking, setIsChecking] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
   const [isSplitting, setIsSplitting] = useState(false);
+  const [isZipping, setIsZipping] = useState(false);
   const [result, setResult] = useState<SplitResult | null>(null);
-  const resultUrl = useRef<string | null>(null);
+  const resultUrls = useRef<string[]>([]);
+  const zipUrl = useRef<string | null>(null);
+
+  const fileNames = result?.parts.map((part) => pdfFileName(part.fileName)) ?? [];
+  const nameErrors =
+    result?.parts.map((part, index) => {
+      if (
+        !part.fileName.trim().replace(/\.pdf$/i, "").trim() ||
+        /[<>:"/\\|?*\u0000-\u001f]/.test(part.fileName)
+      ) {
+        return copy.invalidName;
+      }
+      if (
+        fileNames.some(
+          (name, other) =>
+            other !== index &&
+            name.toLowerCase() === fileNames[index].toLowerCase(),
+        )
+      ) {
+        return copy.duplicateName;
+      }
+      return null;
+    }) ?? [];
 
   const splitPlan =
     source && splitPoints.length
@@ -122,14 +167,17 @@ export function PdfSplit({ locale }: { locale: Locale }) {
 
   useEffect(
     () => () => {
-      if (resultUrl.current) URL.revokeObjectURL(resultUrl.current);
+      resultUrls.current.forEach((url) => URL.revokeObjectURL(url));
+      if (zipUrl.current) URL.revokeObjectURL(zipUrl.current);
     },
     [],
   );
 
   function discardResult() {
-    if (resultUrl.current) URL.revokeObjectURL(resultUrl.current);
-    resultUrl.current = null;
+    resultUrls.current.forEach((url) => URL.revokeObjectURL(url));
+    resultUrls.current = [];
+    if (zipUrl.current) URL.revokeObjectURL(zipUrl.current);
+    zipUrl.current = null;
     setResult(null);
   }
 
@@ -141,7 +189,7 @@ export function PdfSplit({ locale }: { locale: Locale }) {
   }
 
   async function selectFile(incoming: FileList | File[]) {
-    if (isChecking || isSplitting) return;
+    if (isChecking || isSplitting || isZipping) return;
     const selected = Array.from(incoming);
     if (!selected.length) return;
     if (selected.length !== 1) {
@@ -192,43 +240,72 @@ export function PdfSplit({ locale }: { locale: Locale }) {
     setIsSplitting(true);
 
     try {
-      const [parts, { default: JSZip }] = await Promise.all([
-        splitPdfDocument(await source.file.arrayBuffer(), splitPlan),
-        import("jszip"),
-      ]);
+      const parts = await splitPdfDocument(
+        await source.file.arrayBuffer(),
+        splitPlan,
+      );
       const baseName = safeBaseName(source.file.name);
-      const archive = new JSZip();
-
-      parts.forEach((part, index) => {
+      const outputs = parts.map((bytes, index) => {
         const range = splitPlan[index];
-        const partNumber = String(index + 1).padStart(2, "0");
-        archive.file(
-          `${baseName}-part-${partNumber}-pages-${range.start}-${range.end}.pdf`,
-          part,
+        const url = URL.createObjectURL(
+          new Blob([Uint8Array.from(bytes).buffer], { type: "application/pdf" }),
         );
+        resultUrls.current.push(url);
+        return { bytes, url, fileName: copy.defaultName(range.start, range.end) };
       });
-
-      const bytes = await archive.generateAsync({ type: "uint8array" });
-      const blob = new Blob([Uint8Array.from(bytes).buffer], {
-        type: "application/zip",
-      });
-      const url = URL.createObjectURL(blob);
-      resultUrl.current = url;
       setResult({
-        url,
-        size: blob.size,
-        partCount: parts.length,
+        parts: outputs,
+        size: parts.reduce((total, part) => total + part.byteLength, 0),
         fileName: `${baseName}-split.zip`,
       });
       reportToolUsage("pdf-split");
     } catch {
+      discardResult();
       setError(copy.splitError);
     } finally {
       setIsSplitting(false);
     }
   }
 
-  const busy = isChecking || isSplitting;
+  function renamePart(index: number, fileName: string) {
+    setResult((current) =>
+      current && {
+        ...current,
+        parts: current.parts.map((part, other) =>
+          other === index ? { ...part, fileName } : part,
+        ),
+      },
+    );
+  }
+
+  async function downloadZip() {
+    if (!result || isZipping || nameErrors.some(Boolean)) return;
+    setIsZipping(true);
+    setError(null);
+    try {
+      const { default: JSZip } = await import("jszip");
+      const archive = new JSZip();
+      result.parts.forEach((part, index) =>
+        archive.file(fileNames[index], part.bytes),
+      );
+      const blob = await archive.generateAsync({ type: "blob" });
+      if (zipUrl.current) URL.revokeObjectURL(zipUrl.current);
+      const url = URL.createObjectURL(blob);
+      zipUrl.current = url;
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = result.fileName;
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+    } catch {
+      setError(copy.zipError);
+    } finally {
+      setIsZipping(false);
+    }
+  }
+
+  const busy = isChecking || isSplitting || isZipping;
 
   return (
     <section className="pdf-workspace pdf-split" aria-labelledby="pdf-split-title">
@@ -340,17 +417,84 @@ export function PdfSplit({ locale }: { locale: Locale }) {
       )}
 
       {result && (
-        <div className="pdf-workspace__result" role="status">
-          <CheckCircle2 aria-hidden="true" size={20} />
-          <span>
-            <strong>{copy.ready(result.partCount)}</strong>
-            <small>{formatFileSize(result.size, locale)}</small>
-          </span>
-          <a href={result.url} download={result.fileName}>
-            <Download aria-hidden="true" size={17} />
-            {copy.download}
-          </a>
-        </div>
+        <>
+          <ul
+            className="pdf-file-list pdf-split__outputs"
+            aria-label={copy.preview(result.parts.length)}
+          >
+            {result.parts.map((part, index) => (
+              <li className="pdf-file" key={part.url}>
+                <span className="pdf-file__icon">
+                  <FileText aria-hidden="true" size={21} />
+                </span>
+                <div className="pdf-file__details">
+                  <label htmlFor={`pdf-split-name-${index}`}>
+                    {copy.fileName(index + 1)}
+                  </label>
+                  <input
+                    id={`pdf-split-name-${index}`}
+                    type="text"
+                    value={part.fileName}
+                    disabled={busy}
+                    spellCheck={false}
+                    aria-invalid={Boolean(nameErrors[index])}
+                    aria-describedby={
+                      nameErrors[index] ? `pdf-split-name-error-${index}` : undefined
+                    }
+                    onChange={(event) => renamePart(index, event.target.value)}
+                    onBlur={() => {
+                      if (part.fileName.trim()) {
+                        renamePart(index, pdfFileName(part.fileName));
+                      }
+                    }}
+                  />
+                  <small>{formatFileSize(part.bytes.byteLength, locale)}</small>
+                  {nameErrors[index] && (
+                    <small
+                      className="pdf-split__name-error"
+                      id={`pdf-split-name-error-${index}`}
+                    >
+                      {nameErrors[index]}
+                    </small>
+                  )}
+                </div>
+                <a
+                  className="action-secondary pdf-split__download"
+                  href={nameErrors[index] ? undefined : part.url}
+                  download={fileNames[index]}
+                  aria-disabled={Boolean(nameErrors[index])}
+                  aria-label={`${copy.downloadPart}: ${fileNames[index]}`}
+                >
+                  <Download aria-hidden="true" size={17} />
+                  {copy.downloadPart}
+                </a>
+              </li>
+            ))}
+          </ul>
+          <div className="pdf-workspace__result">
+            <CheckCircle2 aria-hidden="true" size={20} />
+            <span role="status">
+              <strong>{copy.ready(result.parts.length)}</strong>
+              <small>{formatFileSize(result.size, locale)}</small>
+            </span>
+            <button
+              type="button"
+              onClick={downloadZip}
+              disabled={busy || nameErrors.some(Boolean)}
+            >
+              {isZipping ? (
+                <LoaderCircle
+                  className="pdf-workspace__spinner"
+                  aria-hidden="true"
+                  size={17}
+                />
+              ) : (
+                <Download aria-hidden="true" size={17} />
+              )}
+              {isZipping ? copy.zipping : copy.download}
+            </button>
+          </div>
+        </>
       )}
 
       <footer className="pdf-workspace__footer">

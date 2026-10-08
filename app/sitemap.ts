@@ -1,18 +1,15 @@
 import type { MetadataRoute } from "next";
-import { getArticles, getTools } from "@/lib/content/repository";
+import { getTools } from "@/lib/content/repository";
 
 export const revalidate = 60;
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://fcullmann.com";
-  const [tools, articles] = await Promise.all([getTools(), getArticles()]);
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://tools.fcullmann.com";
+  const tools = await getTools();
   const locales = ["en", "de"];
   const fixed = [
     "",
     "/tools",
-    "/projects",
-    "/articles",
-    "/about",
     "/impressum",
     "/datenschutz",
   ];
@@ -39,15 +36,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         alternates: alternates(`/tools/${tool.slug}`),
         changeFrequency: "monthly" as const,
         priority: 0.8,
-      })),
-    ),
-    ...locales.flatMap((locale) =>
-      articles.map((article) => ({
-        url: `${baseUrl}/${locale}/articles/${article.slug}`,
-        alternates: alternates(`/articles/${article.slug}`),
-        lastModified: article.publishedAt,
-        changeFrequency: "yearly" as const,
-        priority: 0.6,
       })),
     ),
   ];

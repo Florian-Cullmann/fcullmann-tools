@@ -12,8 +12,8 @@ export async function generateMetadata({
     title: locale === "de" ? "Impressum" : "Legal notice",
     description:
       locale === "de"
-        ? "Impressum und Anbieterkennzeichnung von Florian Cullmann."
-        : "Legal notice and provider information for Florian Cullmann.",
+        ? "Impressum und Anbieterkennzeichnung für fcuTools."
+        : "Legal notice and provider information for fcuTools.",
     alternates: isLocale(locale)
       ? localizedAlternates(locale, "impressum")
       : undefined,

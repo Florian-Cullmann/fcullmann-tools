@@ -2157,6 +2157,40 @@ button {
 .pdf-split__source {
   border-bottom: 1px solid var(--line);
 }
+.pdf-split__outputs label {
+  display: block;
+  margin-bottom: 5px;
+  color: var(--ink-soft);
+  font-size: 0.72rem;
+}
+.pdf-split__outputs input {
+  width: 100%;
+  min-height: 40px;
+  padding: 8px 10px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  color: var(--ink);
+  background: var(--surface);
+  font: inherit;
+  font-size: 0.86rem;
+}
+.pdf-split__outputs input:focus-visible {
+  outline: 2px solid var(--coral-dark);
+  outline-offset: 2px;
+}
+.pdf-split__outputs input[aria-invalid="true"] {
+  border-color: var(--danger);
+}
+.pdf-split__outputs .pdf-split__name-error {
+  color: var(--danger);
+}
+.pdf-split__download {
+  text-decoration: none;
+}
+.pdf-split__download[aria-disabled="true"] {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
 .pdf-compress__source {
   border-bottom: 1px solid var(--line);
 }
@@ -2747,7 +2781,8 @@ button {
   margin-top: 2px;
   font-size: 0.72rem;
 }
-.pdf-workspace__result a {
+.pdf-workspace__result a,
+.pdf-workspace__result button {
   min-height: 40px;
   display: inline-flex;
   align-items: center;
@@ -2761,9 +2796,15 @@ button {
   font-size: 0.78rem;
   font-weight: 720;
   text-decoration: none;
+  cursor: pointer;
 }
-.pdf-workspace__result a:hover {
+.pdf-workspace__result a:hover,
+.pdf-workspace__result button:hover:not(:disabled) {
   background: color-mix(in srgb, var(--success) 88%, black);
+}
+.pdf-workspace__result button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
 }
 .pdf-workspace__result--neutral {
   border-top-color: color-mix(in srgb, var(--amber) 20%, white);
@@ -3981,8 +4022,13 @@ button {
   .pdf-workspace__result {
     grid-template-columns: auto minmax(0, 1fr);
   }
-  .pdf-workspace__result a {
+  .pdf-workspace__result a,
+  .pdf-workspace__result button,
+  .pdf-split__download {
     grid-column: 1 / -1;
+  }
+  .pdf-split__outputs .pdf-file {
+    padding-inline: 18px;
   }
   .pdf-workspace__footer {
     align-items: stretch;

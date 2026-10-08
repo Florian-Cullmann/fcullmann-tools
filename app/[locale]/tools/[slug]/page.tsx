@@ -32,7 +32,7 @@ export async function generateMetadata({
     url: `/${locale}/opengraph-image`,
     width: 1200,
     height: 630,
-    alt: "Florian Cullmann - developer tools and software projects",
+    alt: "fcuTools – practical online tools",
   };
   return {
     title: tool.name[locale],
@@ -66,7 +66,7 @@ export default async function ToolPage({
   const workspace = renderToolWorkspace(slug, { locale });
   if (!workspace) notFound();
 
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://fcullmann.com";
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://tools.fcullmann.com";
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "WebApplication",
@@ -77,7 +77,6 @@ export default async function ToolPage({
     operatingSystem: "Any",
     inLanguage: locale,
     isAccessibleForFree: true,
-    author: { "@type": "Person", name: "Florian Cullmann" },
   };
   return (
     <>

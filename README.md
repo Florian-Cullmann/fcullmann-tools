@@ -1,10 +1,10 @@
-# fcullmann.com
+# fcuTools
 
 [![CI](https://github.com/Florian-Cullmann/fcullmann-tools/actions/workflows/ci.yml/badge.svg)](https://github.com/Florian-Cullmann/fcullmann-tools/actions/workflows/ci.yml)
 
-Source code for [fcullmann.com](https://fcullmann.com), a bilingual personal site with a growing collection of small browser-based tools.
+Source code for [fcuTools](https://tools.fcullmann.com), a bilingual tool website for PDFs, images, Office files, text, and data.
 
-![fcullmann.com tool catalogue](docs/home.png)
+![fcuTools tool catalogue](docs/home.png)
 
 ## Features
 
@@ -15,7 +15,7 @@ Source code for [fcullmann.com](https://fcullmann.com), a bilingual personal sit
 - Batch JPG, PNG, and animated GIF rotation with orientation filters, previews, and individual or ZIP downloads
 - Multi-image JPG, PNG, and WebP to PDF conversion, with one image per page, background processing, small previews, progress and cancellation, and an adjustable total PDF size limit (2 MB per page by default)
 - JSON, Base64, UUID, hashing, timestamp, text, color, and URL utilities
-- Project and article pages with localized metadata
+- Tool pages with localized metadata
 - Single-user admin area for tools and articles
 - Demo content fallback when no database is configured
 - Sitemap, structured data, `robots.txt`, and `llms.txt`

@@ -150,7 +150,7 @@ export async function createExcelWorkbook(
 ): Promise<Uint8Array<ArrayBuffer>> {
   const { Workbook } = await import("exceljs");
   const workbook = new Workbook();
-  workbook.creator = "fcullmann.com";
+  workbook.creator = "fcuTools";
   workbook.created = new Date();
   const worksheet = workbook.addWorksheet(csvSheetName(options.sheetName));
   worksheet.addRows(csv.rows);

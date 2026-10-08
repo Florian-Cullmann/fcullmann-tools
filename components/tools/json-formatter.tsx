@@ -7,7 +7,7 @@ import { getMessages } from "@/lib/i18n/messages";
 import { formatJson as parseAndFormatJson } from "@/lib/tools/json";
 import { reportToolUsage } from "@/lib/tools/usage-client";
 
-const initialJson = `{"name":"Florian Cullmann","website":"fcullmann.com","focus":["tools","systems","developer experience"],"available":true}`;
+const initialJson = `{"name":"fcuTools","categories":["pdf","images","office","data"],"available":true}`;
 
 export function JsonFormatter({
   locale,

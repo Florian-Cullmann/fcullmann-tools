@@ -5,25 +5,10 @@ const messages = {
     nav: {
       home: "Home",
       tools: "Tools",
-      projects: "Projects",
-      articles: "Blog",
-      about: "About",
     },
     home: {
-      title: "Florian Cullmann",
-      role: "Senior Software Engineer",
-      statement: "Useful software, carefully made.",
-      intro:
-        "I design dependable software and focused developer tools that make everyday work clearer.",
-      legend: "Tools, projects, writing",
-      legendTools: "Practical utilities that solve one task well.",
-      legendProjects: "Selected systems, products, and experiments.",
-      legendWriting: "Notes on software design and delivery.",
       featured: "Featured tools",
-      latest: "Latest writing",
       viewTools: "View all tools",
-      viewArticles: "View all articles",
-      route: "Destination: tools",
     },
     tools: {
       title: "Tools for focused work",
@@ -32,24 +17,6 @@ const messages = {
       search: "Search tools",
       noResults: "No tools match this search.",
       open: "Open tool",
-    },
-    articles: {
-      title: "Field notes",
-      intro:
-        "Practical writing about software architecture, developer experience, and the decisions behind useful tools.",
-      sample: "Sample content",
-      read: "Read article",
-    },
-    projects: {
-      title: "Selected work",
-      intro:
-        "A curated view of systems, tools, and experiments. Verified project records will replace the initial examples before launch.",
-      sample: "Sample project",
-    },
-    about: {
-      title: "Software should earn its complexity.",
-      body: "I am Florian Cullmann. I build reliable systems, clear interfaces, and developer tools that solve concrete problems.",
-      note: "A full biography, availability, and verified project history will be added before launch.",
     },
     common: {
       sample: "Sample",
@@ -70,25 +37,10 @@ const messages = {
     nav: {
       home: "Start",
       tools: "Tools",
-      projects: "Projekte",
-      articles: "Artikel",
-      about: "Über mich",
     },
     home: {
-      title: "Florian Cullmann",
-      role: "Senior Software Engineer",
-      statement: "Nützliche Software, sorgfältig entwickelt.",
-      intro:
-        "Ich entwickle verlässliche Software und fokussierte Developer-Tools, die tägliche Arbeit übersichtlicher machen.",
-      legend: "Tools, Projekte, Artikel",
-      legendTools: "Praktische Werkzeuge, die eine Aufgabe richtig lösen.",
-      legendProjects: "Ausgewählte Systeme, Produkte und Experimente.",
-      legendWriting: "Notizen über Softwaredesign und Umsetzung.",
       featured: "Beliebte Tools",
-      latest: "Neue Artikel",
       viewTools: "Alle Tools ansehen",
-      viewArticles: "Alle Artikel ansehen",
-      route: "Ziel: Tools",
     },
     tools: {
       title: "Tools für fokussiertes Arbeiten",
@@ -97,24 +49,6 @@ const messages = {
       search: "Tools durchsuchen",
       noResults: "Keine passenden Tools gefunden.",
       open: "Tool öffnen",
-    },
-    articles: {
-      title: "Notizen aus der Praxis",
-      intro:
-        "Praxisnahe Texte über Softwarearchitektur, Developer Experience und die Entscheidungen hinter nützlichen Tools.",
-      sample: "Beispielinhalt",
-      read: "Artikel lesen",
-    },
-    projects: {
-      title: "Ausgewählte Arbeiten",
-      intro:
-        "Ein kuratierter Blick auf Systeme, Tools und Experimente. Verifizierte Projekte ersetzen vor dem Launch die ersten Beispiele.",
-      sample: "Beispielprojekt",
-    },
-    about: {
-      title: "Software sollte ihre Komplexität verdienen.",
-      body: "Ich bin Florian Cullmann. Ich entwickle verlässliche Systeme, klare Oberflächen und Developer-Tools für konkrete Probleme.",
-      note: "Eine vollständige Biografie, Verfügbarkeit und verifizierte Projekthistorie werden vor dem Launch ergänzt.",
     },
     common: {
       sample: "Beispiel",

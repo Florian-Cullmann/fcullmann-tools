@@ -1,6 +1,6 @@
 import { ImageResponse } from "next/og";
 
-export const alt = "Florian Cullmann - developer tools and software projects";
+export const alt = "fcuTools – practical online tools";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -37,7 +37,7 @@ export default function OpenGraphImage() {
           {"</>"}
         </div>
         <div style={{ display: "flex", fontSize: 22, fontWeight: 750 }}>
-          fcullmann.com
+          fcuTools
         </div>
       </div>
       <div style={{ display: "flex", flexDirection: "column", maxWidth: 940 }}>
@@ -50,7 +50,7 @@ export default function OpenGraphImage() {
             lineHeight: 1.04,
           }}
         >
-          Developer tools for focused work
+          Practical tools for everyday tasks
         </div>
         <div
           style={{
@@ -61,7 +61,7 @@ export default function OpenGraphImage() {
             marginTop: 22,
           }}
         >
-          Fast, privacy-conscious browser utilities by Florian Cullmann
+          PDFs, images, Office files, and data — directly in your browser
         </div>
       </div>
       <div
@@ -72,9 +72,9 @@ export default function OpenGraphImage() {
           justifyContent: "space-between",
         }}
       >
-        <span>Useful software, carefully made.</span>
+        <span>Simple. Useful. Ready to use.</span>
         <span style={{ color: "#e84b3c", display: "flex", fontWeight: 700 }}>
-          Tools · Projects · Writing
+          PDF · Images · Office · Data
         </span>
       </div>
     </div>,

@@ -59,6 +59,12 @@ export default async function LocaleLayout({
         <SiteFooter locale={locale} />
       </body>
       <Script
+        src="http://localhost:3000/widget.js"
+        data-site="cmv2866xg002fim5o7ghjogde"
+        strategy="afterInteractive"
+        defer
+      />
+      <Script
         async
         src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3136105776325069"
         crossOrigin="anonymous"
